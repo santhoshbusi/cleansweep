@@ -27,47 +27,7 @@ class BareFloorCell implements ICell {
 		//Set AdjacentCell for this to cell if there is nothing there
 		if(_adjacentCells[direction.ordinal()] == null)
 			_adjacentCells[direction.ordinal()] = cell;
-		
-		//DEBUG CODE
-		//System.out.println(direction.toString());
-		//System.out.println(direction.getOpposite().toString());
-		
-		//if(cell.getAdjacentCell(direction.getOpposite()) != this)
-		//	setReciprocalConnection(direction, cell, this);
 			
-	}
-	
-	private void setReciprocalConnection(Direction direction, ICell fromCell, ICell toCell){
-		
-		
-		switch(direction){
-		
-		case NORTH:
-			fromCell.setAdjacentCell(Direction.NORTH.getOpposite(), toCell);
-			break;
-		case NORTHEAST:
-			fromCell.setAdjacentCell(Direction.NORTHEAST.getOpposite(), toCell);
-			break;
-		case EAST:
-			fromCell.setAdjacentCell(Direction.EAST.getOpposite(), toCell);
-			break;
-		case SOUTHEAST:
-			fromCell.setAdjacentCell(Direction.SOUTHEAST.getOpposite(), toCell);
-			break;
-		case SOUTH:
-			fromCell.setAdjacentCell(Direction.SOUTH.getOpposite(), toCell);
-			break;
-		case SOUTHWEST:
-			fromCell.setAdjacentCell(Direction.SOUTHWEST.getOpposite(), toCell);
-			break;
-		case WEST:
-			fromCell.setAdjacentCell(Direction.WEST.getOpposite(), toCell);
-			break;
-		case NORTHWEST:
-			fromCell.setAdjacentCell(Direction.NORTHWEST.getOpposite(), toCell);
-			break;
-		}
-
 	}
 	
 	/**

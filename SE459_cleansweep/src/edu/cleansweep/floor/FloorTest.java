@@ -10,7 +10,7 @@ public class FloorTest {
 		
 		
 		System.out.println(f.queryCellAt(0,7));
-		System.out.println(f.seeCellAt(0,7));
+		System.out.println(f.markCellAt(0,7));
 		System.out.println(f.visitAllCells());
 		
 	}

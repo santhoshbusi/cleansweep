@@ -3,6 +3,7 @@ package edu.cleansweep.floor;
 public class Floor {
 
 	private ICell[][] _floor;
+	private ICell _startingCell;
 	
 	public Floor(){
 		_floor = new ICell[17][18];
@@ -21,16 +22,87 @@ public class Floor {
 	}
 	
 	public String queryCellAt(int x, int y){
+		
 		StringBuilder sb = new StringBuilder();
 		sb.append("Location: (").append(x).append(",").append(y).append(")").append("\n");
 		sb.append("Cell Type: ").append(_floor[x][y].getType()).append("\n");
 		sb.append("Grade: ").append(_floor[x][y].getCellGrade()).append("\n");
 		sb.append("Dirty?: ").append(!_floor[x][y].isClean()).append("\n");
 		sb.append("Obstructed?: ").append(_floor[x][y].isObstructed()).append("\n");
+		sb.append("AdjacentCells:\n");
+		sb.append(printAdjacentCells(_floor[x][y]));
 		return sb.toString();
 	}
 	
-	public String seeCellAt(int x, int y){
+	public String printAdjacentCells(ICell cell){
+		
+		StringBuilder sb = new StringBuilder();
+		
+		if(cell != null)
+		{
+			ICell northCell = cell.getAdjacentCell(Direction.NORTH);
+			ICell northEastCell = cell.getAdjacentCell(Direction.NORTHEAST);
+			ICell eastCell = cell.getAdjacentCell(Direction.EAST);
+			ICell southEastCell = cell.getAdjacentCell(Direction.SOUTHEAST);
+			ICell southCell = cell.getAdjacentCell(Direction.SOUTH);
+			ICell southWestCell = cell.getAdjacentCell(Direction.SOUTHWEST);
+			ICell westCell = cell.getAdjacentCell(Direction.WEST);
+			ICell northWestCell = cell.getAdjacentCell(Direction.NORTHWEST);
+			
+			if(northWestCell != null)
+				sb.append(northWestCell.toString());
+			else
+				sb.append("-");
+			
+			if(northCell != null)
+				sb.append(northCell.toString());
+			else
+				sb.append("-");
+			
+			if(northEastCell != null)
+				sb.append(northEastCell.toString());
+			else
+				sb.append("-");
+			
+			// always print new line here
+			sb.append("\n");
+			
+			if(westCell != null)
+				sb.append(westCell.toString());
+			else
+				sb.append("-");
+			
+			// always print parent cell
+			sb.append("*");
+			
+			if(eastCell != null)
+				sb.append(eastCell.toString());
+			else
+				sb.append("-");
+			
+			// always print new line here
+			sb.append("\n");
+			
+			if(southWestCell != null)
+				sb.append(southWestCell.toString());
+			else
+				sb.append("-");
+			
+			if(southCell != null)
+				sb.append(southCell.toString());
+			else
+				sb.append("-");
+			
+			if(southEastCell != null)
+				sb.append(southEastCell.toString());
+			else
+				sb.append("-");
+			
+		}
+		return sb.toString();
+	}
+	
+	public String markCellAt(int x, int y){
 		StringBuilder sb = new StringBuilder();
 		for(int xi=0; xi<_floor.length; xi++){
 			for(int yi=0; yi<_floor[0].length; yi++){
@@ -48,7 +120,7 @@ public class Floor {
 		StringBuilder sb = new StringBuilder();
 		for(int x=0; x<_floor.length; x++){
 			for(int y=0; y<_floor[0].length; y++){
-				sb.append(queryCellAt(x, y)).append("\n").append(seeCellAt(y,x)).append("\n");
+				sb.append(queryCellAt(x, y)).append("\n").append(markCellAt(y,x)).append("\n");
 			}
 		}
 		return sb.toString();
@@ -395,20 +467,133 @@ public class Floor {
 		placeCellAt(16,15, new WallCell());
 		placeCellAt(16,16, new WallCell());
 		placeCellAt(16,17, new WallCell());
+		
+		populateAdjacentCells();
 	}
 	
 	//Must run after collection has been filled
-	private void populateAdjacentCells(ICell cell){
-		//TODO 
-		return;
-		/*{
+	private void populateAdjacentCells(){
 		for(int x=0; x<_floor.length; x++){
 			for(int y=0; y<_floor[0].length; y++){
-				if(x == 0)
+				
+				// Lower Left Corner Case, No cells West and No cells South
+				if(x == 0 && y==0)
+				{
+					_floor[x][y].setAdjacentCell(Direction.NORTH, _floor[x][y+1]);
+					_floor[x][y].setAdjacentCell(Direction.NORTHEAST, _floor[x+1][y+1]);
+					_floor[x][y].setAdjacentCell(Direction.EAST, _floor[x+1][y]);
+					_floor[x][y].setAdjacentCell(Direction.SOUTHEAST, null);
+					_floor[x][y].setAdjacentCell(Direction.SOUTH, null);
+					_floor[x][y].setAdjacentCell(Direction.SOUTHWEST, null);
+					_floor[x][y].setAdjacentCell(Direction.WEST, null);
+					_floor[x][y].setAdjacentCell(Direction.NORTHWEST, null);
+				}
+				
+				// Upper Right Corner Case, No Cells East and No Cells North
+				else if(x == _floor.length - 1 && y == _floor[0].length - 1 ){
+					_floor[x][y].setAdjacentCell(Direction.NORTH, null);
+					_floor[x][y].setAdjacentCell(Direction.NORTHEAST, null);
+					_floor[x][y].setAdjacentCell(Direction.EAST, null);
+					_floor[x][y].setAdjacentCell(Direction.SOUTHEAST, null);
+					_floor[x][y].setAdjacentCell(Direction.SOUTH, _floor[x][y-1]);
+					_floor[x][y].setAdjacentCell(Direction.SOUTHWEST, _floor[x-1][y-1]);
+					_floor[x][y].setAdjacentCell(Direction.WEST, _floor[x-1][y]);
+					_floor[x][y].setAdjacentCell(Direction.NORTHWEST, null);
 					
+				}
+				
+				// Upper Left Corner Case, No Cells West, No Cells North
+				else if(x == 0 && y == _floor[0].length - 1)
+				{
+					_floor[x][y].setAdjacentCell(Direction.NORTH, null);
+					_floor[x][y].setAdjacentCell(Direction.NORTHEAST, null);
+					_floor[x][y].setAdjacentCell(Direction.EAST, _floor[x+1][y]);
+					_floor[x][y].setAdjacentCell(Direction.SOUTHEAST, _floor[x+1][y-1]);
+					_floor[x][y].setAdjacentCell(Direction.SOUTH, _floor[x][y-1]);
+					_floor[x][y].setAdjacentCell(Direction.SOUTHWEST, null);
+					_floor[x][y].setAdjacentCell(Direction.WEST, null);
+					_floor[x][y].setAdjacentCell(Direction.NORTHWEST, null);
+				}
+				
+				// Lower Right Corner Case, No Cells East, No Cells South
+				else if(x == _floor.length - 1 && y == 0)
+				{
+					_floor[x][y].setAdjacentCell(Direction.NORTH, _floor[x][y+1]);
+					_floor[x][y].setAdjacentCell(Direction.NORTHEAST, null);
+					_floor[x][y].setAdjacentCell(Direction.EAST, null);
+					_floor[x][y].setAdjacentCell(Direction.SOUTHEAST, null);
+					_floor[x][y].setAdjacentCell(Direction.SOUTH, null);
+					_floor[x][y].setAdjacentCell(Direction.SOUTHWEST, null);
+					_floor[x][y].setAdjacentCell(Direction.WEST, _floor[x-1][y]);
+					_floor[x][y].setAdjacentCell(Direction.NORTHWEST, _floor[x-1][y+1]);
+				}
+				
+				// Left Side Boundary, Case No Cells West
+				else if(x == 0 && (y != 0 && y !=_floor[0].length - 1))
+				{
+					_floor[x][y].setAdjacentCell(Direction.NORTH, _floor[x][y+1]);
+					_floor[x][y].setAdjacentCell(Direction.NORTHEAST, _floor[x+1][y+1]);
+					_floor[x][y].setAdjacentCell(Direction.EAST, _floor[x+1][y]);
+					_floor[x][y].setAdjacentCell(Direction.SOUTHEAST, _floor[x+1][y-1]);
+					_floor[x][y].setAdjacentCell(Direction.SOUTH, _floor[x][y-1]);
+					_floor[x][y].setAdjacentCell(Direction.SOUTHWEST, null);
+					_floor[x][y].setAdjacentCell(Direction.WEST, null);
+					_floor[x][y].setAdjacentCell(Direction.NORTHWEST, null);
+				}
+				
+				// Right Side Boundary, Case No Cells East
+				else if(x == _floor.length - 1 && (y != 0 && y != _floor[0].length - 1))
+				{
+					_floor[x][y].setAdjacentCell(Direction.NORTH, _floor[x][y+1]);
+					_floor[x][y].setAdjacentCell(Direction.NORTHEAST, null);
+					_floor[x][y].setAdjacentCell(Direction.EAST, null);
+					_floor[x][y].setAdjacentCell(Direction.SOUTHEAST, null);
+					_floor[x][y].setAdjacentCell(Direction.SOUTH, _floor[x][y-1]);
+					_floor[x][y].setAdjacentCell(Direction.SOUTHWEST, _floor[x-1][y-1]);
+					_floor[x][y].setAdjacentCell(Direction.WEST, _floor[x-1][y]);
+					_floor[x][y].setAdjacentCell(Direction.NORTHWEST, _floor[x-1][y+1]);	
+				}
+				
+				// Top Boundary, Case No Cells North
+				else if(y == _floor[0].length - 1 && (x != 0 && x != _floor.length - 1))
+				{
+					_floor[x][y].setAdjacentCell(Direction.NORTH, null);
+					_floor[x][y].setAdjacentCell(Direction.NORTHEAST, null);
+					_floor[x][y].setAdjacentCell(Direction.EAST, _floor[x+1][y]);
+					_floor[x][y].setAdjacentCell(Direction.SOUTHEAST, _floor[x+1][y-1]);
+					_floor[x][y].setAdjacentCell(Direction.SOUTH, _floor[x][y-1]);
+					_floor[x][y].setAdjacentCell(Direction.SOUTHWEST, _floor[x-1][y-1]);
+					_floor[x][y].setAdjacentCell(Direction.WEST, _floor[x-1][y]);
+					_floor[x][y].setAdjacentCell(Direction.NORTHWEST, null);
+				}
+				
+				// Bottom Boundary, Case No Cells South
+				else if(y == 0 && (x != 0 && x != _floor.length - 1) )
+				{
+					_floor[x][y].setAdjacentCell(Direction.NORTH, _floor[x][y+1]);
+					_floor[x][y].setAdjacentCell(Direction.NORTHEAST, _floor[x+1][y+1]);
+					_floor[x][y].setAdjacentCell(Direction.EAST, _floor[x+1][y]);
+					_floor[x][y].setAdjacentCell(Direction.SOUTHEAST, null);
+					_floor[x][y].setAdjacentCell(Direction.SOUTH, null);
+					_floor[x][y].setAdjacentCell(Direction.SOUTHWEST, null);
+					_floor[x][y].setAdjacentCell(Direction.WEST, _floor[x-1][y]);
+					_floor[x][y].setAdjacentCell(Direction.NORTHWEST, _floor[x-1][y+1]);
+				}
+				// Locations that fall outside of the special cases
+				else
+				{
+					_floor[x][y].setAdjacentCell(Direction.NORTH, _floor[x][y+1]);
+					_floor[x][y].setAdjacentCell(Direction.NORTHEAST, _floor[x+1][y+1]);
+					_floor[x][y].setAdjacentCell(Direction.EAST, _floor[x+1][y]);
+					_floor[x][y].setAdjacentCell(Direction.SOUTHEAST, _floor[x+1][y-1]);
+					_floor[x][y].setAdjacentCell(Direction.SOUTH, _floor[x][y-1]);
+					_floor[x][y].setAdjacentCell(Direction.SOUTHWEST, _floor[x-1][y-1]);
+					_floor[x][y].setAdjacentCell(Direction.WEST, _floor[x-1][y]);
+					_floor[x][y].setAdjacentCell(Direction.NORTHWEST, _floor[x-1][y+1]);
+				}
+				
 			}
 		}
-	}*/
 	}
 	
 	

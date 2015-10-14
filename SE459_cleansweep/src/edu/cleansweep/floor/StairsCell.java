@@ -2,16 +2,21 @@ package edu.cleansweep.floor;
 
 class StairsCell implements ICell {
 	
+	private ICell [] _adjacentCells;
+	
+	public StairsCell(){
+		_adjacentCells = new ICell[8];
+	}
+	
 	@Override
 	public ICell getAdjacentCell(Direction direction) {
-		// TODO Auto-generated method stub
-		return null;
+		return _adjacentCells[direction.ordinal()];
 	}
 
 	@Override
 	public void setAdjacentCell(Direction direction, ICell cell) {
-		// TODO Auto-generated method stub
-
+		if(_adjacentCells[direction.ordinal()] == null)
+			_adjacentCells[direction.ordinal()] = cell;
 	}
 
 	@Override

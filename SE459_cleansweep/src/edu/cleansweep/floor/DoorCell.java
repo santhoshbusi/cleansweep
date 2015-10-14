@@ -3,21 +3,24 @@ package edu.cleansweep.floor;
 class DoorCell implements ICell {
 
 	private boolean _open;
+	private ICell [] _adjacentCells;
 	
 	public DoorCell(){
 		_open = true;
+		_adjacentCells = new ICell[8];
 	}
 	
 	@Override
 	public ICell getAdjacentCell(Direction direction) {
-		// TODO Auto-generated method stub
-		return null;
+		return _adjacentCells[direction.ordinal()];
+
 	}
 
 	@Override
 	public void setAdjacentCell(Direction direction, ICell cell) {
-		// TODO Auto-generated method stub
-
+		//Set AdjacentCell for this to cell if there is nothing there
+		if(_adjacentCells[direction.ordinal()] == null)
+			_adjacentCells[direction.ordinal()] = cell;
 	}
 
 	@Override
