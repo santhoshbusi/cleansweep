@@ -2,11 +2,11 @@ package edu.cleansweep.simulator.floor;
 
 public class FloorSimulator {
 	
-	FloorState bareFloorState;
-	FloorState lowPileState;
-	FloorState highPileState;
+	private FloorState bareFloorState;
+	private FloorState lowPileState;
+	private FloorState highPileState;
 	
-	FloorState current;
+	private FloorState current;
 	
 	public FloorSimulator(){
 		bareFloorState = new BareFloorState(this);
