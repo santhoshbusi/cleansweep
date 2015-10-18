@@ -83,6 +83,7 @@ public class FloorTest {
 		currentLocation = floorNavProxy.move(currentLocation, Direction.WEST);
 		System.out.println(currentLocation.toString());
 		f.displayLocationOnFloorInConsole(currentLocation);
+		
 	}
 	
 	
