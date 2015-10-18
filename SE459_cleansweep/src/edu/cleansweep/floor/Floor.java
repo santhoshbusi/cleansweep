@@ -8,6 +8,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
+/**
+ * A collection of ICell objects that represent a floor
+ * 
+ * @author ajscilingo
+ *
+ */
+
 public class Floor {
 
 	private ICell[][] _floor;
@@ -19,14 +26,28 @@ public class Floor {
 		_setOfChargingStations = new ArrayList<ChargingStationCell>();
 	}
 	
+	/**
+	 * Used to set the starting cell for this floor
+	 * @param cell the ICell that will be the starting cell for this floor
+	 */
 	private void setStartingCell(ICell cell){
 		_startingCell = cell;
 	}
 	
+	/**
+	 * Returns starting cell for this floor
+	 * @return the ICell that is the starting cell for this floor.
+	 */
 	ICell getStartingCell(){
 		return _startingCell;
 	}
 	
+	/**
+	 * Helper method used to return cell based on x and y location in collection
+	 * @param x x-coordinate location in collection
+	 * @param y y-coordinate location in collection
+	 * @return the ICell located at _floor[x][y]
+	 */
 	ICell getCellAt(int x, int y){
 		if(_floor == null)
 			return null;
@@ -39,6 +60,12 @@ public class Floor {
 			return null;
 	}
 	
+	/**
+	 * Used for directly modifying the floor, (MAY REMOVE?)
+	 * @param x x-coordinate location in collection
+	 * @param y y-coordinate location in collection
+	 * @param cell the ICell that will be placed at _floor[x][y]
+	 */
 	private void placeCellAt(int x, int y, ICell cell){
 		if(x > _floor.length)
 			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
@@ -50,7 +77,12 @@ public class Floor {
 			
 	}
 	
-	private void placeChargingStationCellAt(int x, int y){
+	/** 
+	 * Used for placing a ChargingStationCell on the floor at coordinates x,y
+	 * @param x x-coordinate location on floor
+	 * @param y y-coordinate location on floor
+	 */
+	public void placeChargingStationCellAt(int x, int y){
 		if(x > _floor.length)
 			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
 		else if(y > _floor[x].length)
@@ -62,7 +94,12 @@ public class Floor {
 		}
 	}
 	
-	private void placeWallCellAt(int x, int y){
+	/**
+	 * Used for placing a WallCell on the floor at coordinates x,y
+	 * @param x x-coordinate location on floor
+	 * @param y y-coordinate location on floor
+	 */
+	public void placeWallCellAt(int x, int y){
 		if(x > _floor.length)
 			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
 		else if(y > _floor[x].length)
@@ -72,7 +109,12 @@ public class Floor {
 		}
 	}
 	
-	private void placeDoorCellAt(int x, int y){
+	/**
+	 * Used for placing a DoorCell on the floor at coordinates x,y
+	 * @param x x-coordinate location on floor
+	 * @param y y-coordinate location on floor
+	 */
+	public void placeDoorCellAt(int x, int y){
 		if(x > _floor.length)
 			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
 		else if(y > _floor[x].length)
@@ -82,7 +124,12 @@ public class Floor {
 		}
 	}
 	
-	private void placeStairsCellAt(int x, int y){
+	/**
+	 * Used for placing a StairsCell on the floor at coordinates x,y
+	 * @param x x-coordinate location on floor
+	 * @param y y-coordinate location on floor
+	 */
+	public void placeStairsCellAt(int x, int y){
 		if(x > _floor.length)
 			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
 		else if(y > _floor[x].length)
@@ -92,7 +139,12 @@ public class Floor {
 		}
 	}
 	
-	private void placeBareFloorCellAt(int x, int y){
+	/**
+	 * Used for placing a BareFloorCell on the floor at coordinates x,y
+	 * @param x x-coordinate location on floor
+	 * @param y y-coordinate location on floor
+	 */
+	public void placeBareFloorCellAt(int x, int y){
 		if(x > _floor.length)
 			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
 		else if(y > _floor[x].length)
@@ -102,7 +154,12 @@ public class Floor {
 		}
 	}
 	
-	private void placeLowPileCarpetCellAt(int x, int y){
+	/**
+	 * Used for placing a LowPileCarpetCell on the floor at coordinates x,y
+	 * @param x x-coordinate location on floor
+	 * @param y y-coordinate location on floor
+	 */
+	public void placeLowPileCarpetCellAt(int x, int y){
 		if(x > _floor.length)
 			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
 		else if(y > _floor[x].length)
@@ -112,7 +169,12 @@ public class Floor {
 		}
 	}
 	
-	private void placeHighPileCarpetCellAt(int x, int y){
+	/**
+	 * Used for placing a HighPileCarpetCell on the floor at coordinates x,y
+	 * @param x x-coordinate location on floor
+	 * @param y y-coordinate location on floor
+	 */
+	public void placeHighPileCarpetCellAt(int x, int y){
 		if(x > _floor.length)
 			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
 		else if(y > _floor[x].length)
@@ -122,6 +184,12 @@ public class Floor {
 		}
 	}
 	
+	/**
+	 * Used for querying the cell at coordinates x,y (MAY REMOVE as this is done by Location)
+	 * @param x x-coordinate location on floor
+	 * @param y y-coordinate location on floor
+	 * @return
+	 */
 	public String queryCellAt(int x, int y){
 		
 		StringBuilder sb = new StringBuilder();
@@ -135,6 +203,11 @@ public class Floor {
 		return sb.toString();
 	}
 	
+	/**
+	 * String representational display of the cell and surrounding cells
+	 * @param cell the primary cell 
+	 * @return String representing the primary cell (in the middle) and the possible 8 surrounding cells
+	 */
 	private String printAdjacentCells(ICell cell){
 		
 		StringBuilder sb = new StringBuilder();
@@ -203,10 +276,20 @@ public class Floor {
 		return sb.toString();
 	}
 	
+	/**
+	 * Displays output of the location on floor to console, location denoted by *
+	 * @param location the Location object representing a particular location on floor
+	 */
 	public void displayLocationOnFloorInConsole(Location location){
 		 System.out.println(markCellAt(location.getLongitude(), location.getLatitude()));
 	}
 	
+	/**
+	 * Helper method for displayLocationOnFloorInConsole
+	 * @param x	x-coordinate of _floor
+	 * @param y y-coordinate of _floor 
+	 * @return
+	 */
 	String markCellAt(int x, int y){
 		StringBuilder sb = new StringBuilder();
 		for(int xi=0; xi<_floor.length; xi++){
@@ -221,7 +304,11 @@ public class Floor {
 		return sb.toString();
 	}
 	
-	public String visitAllCells(){
+	/**
+	 * CURRENTLY BROKE REFACTORING in PROGRESS
+	 * @return
+	 */
+	String visitAllCells(){
 		StringBuilder sb = new StringBuilder();
 		for(int x=0; x<_floor.length; x++){
 			for(int y=0; y<_floor[x].length; y++){
@@ -231,6 +318,11 @@ public class Floor {
 		return sb.toString();
 	}
 	
+	/**
+	 * Creates floor structure from .cft file
+	 * @param filename name of .cft file
+	 * @return true if floor construction is successful , false if not.
+	 */
 	public boolean createFloorPlanFromFile(String filename){
 		ArrayList<ArrayList<ICell>> cellsFromLine = new ArrayList<ArrayList<ICell>>();
 		Path path = FileSystems.getDefault().getPath("src/edu/cleansweep/tests",filename);
@@ -342,6 +434,9 @@ public class Floor {
 		return true;
 	}
 	
+	/**
+	 * NEEDS TO BE REFACTORED
+	 */
 	public void createDefaultFloorPlan() {
 		_floor = new ICell[17][18];
 		//Left Most Column Of Floor Plan
@@ -695,6 +790,11 @@ public class Floor {
 	}
 	
 	//Must run after collection has been filled
+	/**
+	 * Helper method for constructing _floor structure
+	 * must be called in order to complete the construction of
+	 * floor, links each ICell to its adjacent neighbors
+	 */
 	private void populateAdjacentCells(){
 		for(int x=0; x<_floor.length; x++){
 			for(int y=0; y<_floor[x].length; y++){
@@ -819,6 +919,9 @@ public class Floor {
 		}
 	}
 		
+	/**
+	 * String representation of floor
+	 */
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
