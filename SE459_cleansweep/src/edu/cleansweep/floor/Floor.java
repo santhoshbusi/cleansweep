@@ -10,7 +10,7 @@ public class Floor {
 	private LinkedHashSet<ChargingStationCell> _setOfChargingStations;
 	
 	public Floor(){
-		_floor = new ICell[17][18];
+		_floor = new ICell[1][1];
 		_setOfChargingStations = new LinkedHashSet<ChargingStationCell>();
 	}
 	
@@ -223,7 +223,7 @@ public class Floor {
 	}
 	
 	public void createDefaultFloorPlan() {
-		
+		_floor = new ICell[17][18];
 		//Left Most Column Of Floor Plan
 		placeWallCellAt(0,0);
 		placeWallCellAt(0,1);
