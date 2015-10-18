@@ -35,7 +35,7 @@ public class ObstacleCell implements ICell {
 
 	@Override
 	public String getType() {
-		return "Stairs";
+		return "Obstacle";
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class ObstacleCell implements ICell {
 	
 	@Override
 	public String toString() {
-		return "Obstacle";
+		return "O";
 	}
 
 }
