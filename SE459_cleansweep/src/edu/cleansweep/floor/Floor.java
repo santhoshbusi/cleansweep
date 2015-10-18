@@ -12,11 +12,11 @@ public class Floor {
 
 	private ICell[][] _floor;
 	private ICell _startingCell;
-	private LinkedHashSet<ChargingStationCell> _setOfChargingStations;
+	private ArrayList<ChargingStationCell> _setOfChargingStations;
 	
 	public Floor(){
 		_floor = new ICell[1][1];
-		_setOfChargingStations = new LinkedHashSet<ChargingStationCell>();
+		_setOfChargingStations = new ArrayList<ChargingStationCell>();
 	}
 	
 	private void setStartingCell(ICell cell){
@@ -203,11 +203,15 @@ public class Floor {
 		return sb.toString();
 	}
 	
-	public String markCellAt(int x, int y){
+	public void displayLocationOnFloorInConsole(Location location){
+		 System.out.println(markCellAt(location.getLongitude(), location.getLatitude()));
+	}
+	
+	String markCellAt(int x, int y){
 		StringBuilder sb = new StringBuilder();
 		for(int xi=0; xi<_floor.length; xi++){
 			for(int yi=0; yi<_floor[xi].length; yi++){
-				if(xi == y && yi == x)
+				if(xi == x && yi == y)
 					sb.append("* ");
 				else
 					sb.append(_floor[xi][yi].toString()).append(" ");
@@ -231,13 +235,17 @@ public class Floor {
 		ArrayList<ArrayList<ICell>> cellsFromLine = new ArrayList<ArrayList<ICell>>();
 		Path path = FileSystems.getDefault().getPath("src/edu/cleansweep/tests",filename);
 		
+		//Reset list of charging stations
+		_setOfChargingStations = new ArrayList<ChargingStationCell>();
+		
 		// keep track of x and y coordinates 
 		int x = 0;
 		int y = 0;
 		
 		// keep track of max x and max y
-		int xMax = 0;
-		int yMax = 0;
+		// assume there's at least one line and one character 
+		int xMax = 1;
+		int yMax = 1;
 		
 		try{
 			BufferedReader reader = Files.newBufferedReader(path, Charset.defaultCharset());
@@ -251,54 +259,55 @@ public class Floor {
 				case '\n':
 					cellsFromLine.add(line);
 					line = new ArrayList<ICell>();
-					y++;
-					yMax = y;
-					x=0;
+					x++;
+					xMax = x;
+					y=0;
 					break;
 				case 'W':
 					line.add(new WallCell(x,y));
-					x++;
-					if(xMax < x){ xMax = x;}
+					y++;
+					if(yMax < y){ yMax = y;}
 					break;
 				case 'C':
-					line.add(new ChargingStationCell(x,y));
-					x++;
-					if(xMax < x){ xMax = x;}
+					ChargingStationCell cStation = new ChargingStationCell(x,y);
+					line.add(cStation);
+					_setOfChargingStations.add(cStation);
+					y++;
+					if(yMax < y){ yMax = y;}
 					break;
 				case 'B':
 					line.add(new BareFloorCell(x,y));
-					x++;
-					if(xMax < x){ xMax = x;}
+					y++;
+					if(yMax < y){ yMax = y;}
 					break;
 				case 'D':
 					line.add(new DoorCell(x,y));
-					x++;
-					if(xMax < x){ xMax = x;}
+					y++;
+					if(yMax < y){ yMax = y;}
 					break;
 				case 'H':
 					line.add(new HighPileCarpetCell(x,y));
-					x++;
-					if(xMax < x){ xMax = x;}
+					y++;
+					if(yMax < y){yMax = y;}
 					break;
 				case 'L':
 					line.add(new LowPileCarpetCell(x,y));
-					x++;
-					if(xMax < x){ xMax = x;}
+					y++;
+					if(yMax < y){ yMax = y;}
 					break;
 				case 'O':
 					line.add(new ObstacleCell(x,y));
-					x++;
-					if(xMax < x){ xMax = x;}
+					y++;
+					if(yMax < y){ yMax = y;}
 					break;
 				case 'S':
 					line.add(new StairsCell(x,y));
-					x++;
-					if(xMax < x){ xMax = x;}
+					y++;
+					if(yMax < x){ yMax = y;}
 					break;
 				}
-				
-			}
 			
+			}
 		}
 		catch(Exception e){
 			return false;
@@ -307,12 +316,29 @@ public class Floor {
 		//resize underlying structure 
 		_floor = new ICell[xMax][yMax];
 		
-		for(int yi=0; yi<yMax; yi++)
+		for(int xi=0; xi<xMax; xi++)
 		{
-			_floor[yi] = cellsFromLine.get(yi).toArray(new ICell[cellsFromLine.get(yi).size()]);
+			if(cellsFromLine.get(xi).size() < yMax)
+			{
+				ICell [] tempArray = new ICell[yMax];
+				for(int t=0; t<yMax; t++)
+				{
+					if(t < cellsFromLine.get(xi).size())
+						tempArray[t] = cellsFromLine.get(xi).get(t);
+					else
+						tempArray[t] = new NullCell(xi,t);
+				}
+				_floor[xi] = tempArray;
+			}
+			else
+				_floor[xi] = cellsFromLine.get(xi).toArray(new ICell[yMax]);
 		}
 	
 		populateAdjacentCells();
+		
+		//Set starting location to first charging station in list
+		setStartingCell(_setOfChargingStations.get(0));
+
 		return true;
 	}
 	

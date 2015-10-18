@@ -13,12 +13,12 @@ public class NullCell extends ObstacleCell {
 
 	@Override
 	public String getType() {
-		return "";
+		return "Null Cell";
 	}
 	
 	@Override
 	public String toString() {
-		return "";
+		return "-";
 	}
 	
 }

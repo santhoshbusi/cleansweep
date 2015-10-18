@@ -43,6 +43,9 @@ public class FloorNavigationProxy {
 					System.out.println("Bump!");
 					
 			}
+			if(newCell.getClass() == ObstacleCell.class){
+				System.out.println("Bump!");
+			}
 			if(newCell.getClass() == StairsCell.class)
 			{
 				System.out.println("CRASH!!!");
