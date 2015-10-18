@@ -40,6 +40,19 @@ interface ICell {
 	public String getType();
 	
 	/**
+	 * Implement to return x-coordinate of cell
+	 * @return
+	 */
+	public int getX();
+	
+	/**
+	 * Implement to return y-coordinate of cell
+	 * @return
+	 */
+	public int getY();
+	
+	
+	/**
 	 * Implement to indicate dirt status of your ICell Type
 	 * @return true if clean, false if dirty
 	 */

@@ -22,6 +22,11 @@ public enum Direction {
 		public Direction getOpposite() {
 			return SOUTH;
 		}
+		
+		@Override
+		public String toString() {
+			return "North";
+		}
 	}, 
 	/**
 	 * Direction North East relative of current position
@@ -30,6 +35,11 @@ public enum Direction {
 		@Override
 		public Direction getOpposite() {
 			return SOUTHWEST;
+		}
+		
+		@Override
+		public String toString() {
+			return "North East";
 		}
 	}, 
 	/**
@@ -40,6 +50,11 @@ public enum Direction {
 		public Direction getOpposite() {
 			return WEST;
 		}
+		
+		@Override
+		public String toString() {
+			return "East";
+		}
 	}, 
 	/**
 	 * Direction South East relative of current position 
@@ -48,6 +63,11 @@ public enum Direction {
 		@Override
 		public Direction getOpposite() {
 			return NORTHWEST;
+		}
+		
+		@Override
+		public String toString() {
+			return "South East";
 		}
 	}, 
 	/**
@@ -58,6 +78,11 @@ public enum Direction {
 		public Direction getOpposite() {
 			return NORTH;
 		}
+		
+		@Override
+		public String toString() {
+			return "South";
+		}
 	}, 
 	/**
 	 * Direction South West relative of current position
@@ -66,6 +91,11 @@ public enum Direction {
 		@Override
 		public Direction getOpposite() {
 			return NORTHEAST;
+		}
+		
+		@Override
+		public String toString() {
+			return "South West";
 		}
 	}, 
 	/**
@@ -76,6 +106,11 @@ public enum Direction {
 		public Direction getOpposite() {
 			return EAST;
 		}
+		
+		@Override
+		public String toString() {
+			return "West";
+		}
 	}, 
 	/**
 	 * Direction North West relative of current position
@@ -84,6 +119,11 @@ public enum Direction {
 		@Override
 		public Direction getOpposite() {
 			return SOUTHEAST;
+		}
+		
+		@Override
+		public String toString() {
+			return "North West";
 		}
 	};
 	

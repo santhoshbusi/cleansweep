@@ -5,9 +5,13 @@ class BareFloorCell implements ICell {
 	private ICell [] _adjacentCells;
 	private int _dirt;
 	private int _grade = 0;
+	private int _x;
+	private int _y;
 	
-	public BareFloorCell(){
+	public BareFloorCell(int x, int y){
 		_adjacentCells = new ICell[8];
+		_x = x;
+		_y = y;
 		_dirt = (int)(Math.random() * (10 - 0) + 1);
 	}
 	
@@ -81,10 +85,19 @@ class BareFloorCell implements ICell {
 	public boolean isObstructed() {
 		return false;
 	}
-	
+
+	@Override
+	public int getX() {
+		return _x;
+	}
+
+	@Override
+	public int getY() {
+		return _y;
+	}
+
 	@Override
 	public String toString() {
 		return "B";
 	}
-
 }

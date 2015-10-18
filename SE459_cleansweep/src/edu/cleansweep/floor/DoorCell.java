@@ -4,10 +4,14 @@ class DoorCell implements ICell {
 
 	private boolean _open;
 	private ICell [] _adjacentCells;
+	private int _x;
+	private int _y;
 	
-	public DoorCell(){
+	public DoorCell(int x, int y){
 		_open = true;
 		_adjacentCells = new ICell[8];
+		_x = x;
+		_y = y;
 	}
 	
 	@Override
@@ -53,13 +57,23 @@ class DoorCell implements ICell {
 	
 	@Override
 	public boolean isObstructed() {
-		return _open;
+		return !_open;
 	}
 	
 	
 	@Override
 	public String toString() {
 		return "D";
+	}
+
+	@Override
+	public int getX() {
+		return _x;
+	}
+
+	@Override
+	public int getY() {
+		return _y;
 	}
 
 }

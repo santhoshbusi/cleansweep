@@ -3,9 +3,13 @@ package edu.cleansweep.floor;
 class WallCell implements ICell {
 	
 	private ICell [] _adjacentCells;
+	private int _x;
+	private int _y;
 	
-	public WallCell(){
+	public WallCell(int x, int y){
 		_adjacentCells = new ICell[8];
+		_x = x;
+		_y = y;
 	}
 	
 	@Override
@@ -43,6 +47,16 @@ class WallCell implements ICell {
 	@Override
 	public boolean isObstructed() {
 		return true;
+	}
+
+	@Override
+	public int getX() {
+		return _x;
+	}
+
+	@Override
+	public int getY() {
+		return _y;
 	}
 	
 	@Override
