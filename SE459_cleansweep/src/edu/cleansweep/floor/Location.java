@@ -36,14 +36,6 @@ public class Location {
 		return _currentCell.isObstructed();
 	}
 	
-	/**
-	 * Removes 1 unit of dirt each time method is called 
-	 * if there is dirt to be removed
-	 * @return 1 if there is dirt to be removed, 0 if there is no more dirt
-	 */
-	public int getDirt(){
-		return _currentCell.getDirt();
-	}
 	
 	/**
 	 * gets longitude for this location
