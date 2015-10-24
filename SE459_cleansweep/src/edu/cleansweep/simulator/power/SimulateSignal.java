@@ -10,13 +10,13 @@ public class SimulateSignal implements StationSimulator {
 	@Override
 	public void simulateSignal() {
 		powerStationSimulator.setCurrentOutput(powerStationSimulator.getSimulateSignal());
-		System.out.println("Emitting Singal...");
+		System.out.println("Emitting Signal...");
 	}
 
 	@Override
 	public void dontsimulateSignal() {
 		powerStationSimulator.setCurrentOutput(powerStationSimulator.getDontSimulateSignal());
-		System.out.println("Not Emitting Singal...");
+		System.out.println("Not Emitting Signal...");
 	}
 	
 	@Override

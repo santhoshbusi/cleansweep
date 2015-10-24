@@ -51,7 +51,7 @@ public class FloorNavigationProxy {
 			}
 			return new Location(sameCell, _headingDirection);
 		}
-			
+
 	}
 	
 	public Location getStaringLocation(){;
