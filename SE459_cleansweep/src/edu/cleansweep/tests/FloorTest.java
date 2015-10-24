@@ -87,7 +87,11 @@ public class FloorTest {
 		
 		FloorType ft = floorNavProxy.getFloorType(currentLocation);
 		System.out.println(ft);
+		System.out.println(currentLocation.toString());
 		
+		while(!currentLocation.isClean())
+			floorNavProxy.clean(currentLocation); //removes dirt and prints Removing Dirt Message
+		floorNavProxy.clean(currentLocation); //Prints clean message
 	}
 	
 	

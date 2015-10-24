@@ -64,10 +64,10 @@ public enum FloorType {
 	/**
 	 * Corresponds to Obstacle / Other floor type
 	 */
-	UNKNOWN{
+	OBSTACLE{
 		@Override
 		public String toString(){
-			return "Unknown";
+			return "UNKNOWN OBSTACLE";
 		}
 	}
 }

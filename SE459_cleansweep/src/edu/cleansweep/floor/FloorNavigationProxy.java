@@ -21,15 +21,40 @@ public class FloorNavigationProxy {
 			return true;
 	}
 	
+	public void clean(Location location){
+		ICell cell = _floor.getCellAt(location.getLongitude(), location.getLatitude());
+		int x = cell.getDirt();
+		if(x == 0)
+			System.out.println("Clean");
+		else
+			System.out.println("Removing Dirt");
+	}
 	
+	/**
+	 * Returns a new Location relative to current location and direction 
+	 * @param location is the current location object
+	 * @param direction relative to current location that leads to new location
+	 * @return
+	 */
 	public Location move(Location location, Direction direction){
 		
 		ICell newCell = _floor.getCellAt(location.getLongitude(), location.getLatitude()).getAdjacentCell(direction);
-		ICell sameCell = _floor.getCellAt(location.getLongitude(), location.getLatitude());
+		_headingDirection = direction;
 		
-		if(canMove(location,direction)){
-			_headingDirection = direction;
-			return new Location(newCell, _headingDirection);
+		return new Location(newCell, _headingDirection);
+		
+		/*
+		 * 
+		 * Removing checks for moves as this functionality belongs 
+		 * to control system 10/24
+		 * 
+		 */
+		
+		/*ICell sameCell = _floor.getCellAt(location.getLongitude(), location.getLatitude());
+		
+		if (canMove(location,direction)){
+			 _headingDirection = direction;
+			 return new Location(newCell, _headingDirection);
 		}
 		else{
 			_headingDirection = direction.getOpposite();
@@ -53,10 +78,15 @@ public class FloorNavigationProxy {
 				return null;
 			}
 			return new Location(sameCell, _headingDirection);
-		}
+		}*/
 			
 	}
 	
+	/**
+	 * Returns the type of floor at location
+	 * @param location is the lo
+	 * @return
+	 */
 	public FloorType getFloorType(Location location){
 		ICell cell = _floor.getCellAt(location.getLongitude(), location.getLatitude());
 		
@@ -67,7 +97,12 @@ public class FloorNavigationProxy {
 			return FloorType.CHARGINGSTATION;
 		}
 		else if(cell.getClass() == DoorCell.class){
-			return FloorType.DOOR;
+			
+			//Check to see if Door is open or close
+			if(cell.isObstructed())
+				return FloorType.OBSTACLE;
+			else
+				return FloorType.DOOR;
 		}
 		else if(cell.getClass() == HighPileCarpetCell.class){
 			return FloorType.HIGHPILECARPET;
@@ -76,7 +111,7 @@ public class FloorNavigationProxy {
 			return FloorType.LOWPILECARPET;
 		}
 		else{
-			return FloorType.UNKNOWN;
+			return FloorType.OBSTACLE;
 		}
 		
 	}
