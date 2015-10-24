@@ -1,5 +1,11 @@
 package edu.cleansweep.floor;
 
+/**
+ * FloorNavigationProxy is used to maniuplate a Floor object
+ * it is also response for creating instances of Location.xw
+ * @author ajscilingo
+ */
+
 public class FloorNavigationProxy {
 
 	private Floor _floor;
