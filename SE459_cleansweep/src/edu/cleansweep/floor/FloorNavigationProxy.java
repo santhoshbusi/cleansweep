@@ -2,10 +2,10 @@ package edu.cleansweep.floor;
 
 /**
  * FloorNavigationProxy is used to maniuplate a Floor object
- * it is also response for creating instances of Location
+ * it is also response for creating instances of Location.xw
  * @author ajscilingo
+ *
  */
-
 public class FloorNavigationProxy {
 
 	private Floor _floor;
@@ -18,7 +18,12 @@ public class FloorNavigationProxy {
 		_headingDirection = Direction.NORTH;
 	}
 	
-	
+	/**
+	 * Indicates whether adjacent location relative to current location and direction is obstructed or clear
+	 * @param location the current location
+	 * @param direction the direction of the adjacent location relative to current location
+	 * @return
+	 */
 	public boolean canMove(Location location, Direction direction){
 		ICell peakCell = _floor.getCellAt(location.getLongitude(), location.getLatitude()).getAdjacentCell(direction);
 		
@@ -28,6 +33,10 @@ public class FloorNavigationProxy {
 			return true;
 	}
 	
+	/**
+	 * Removes dirt from location
+	 * @param location the current location or Location objection in which you would like to clean
+	 */
 	public void clean(Location location){
 		ICell cell = _floor.getCellAt(location.getLongitude(), location.getLatitude());
 		int x = cell.getDirt();
@@ -91,7 +100,7 @@ public class FloorNavigationProxy {
 	
 	/**
 	 * Returns the type of floor at location
-	 * @param location is the lo
+	 * @param location is the current location or Location object in which you would like to query
 	 * @return
 	 */
 	public FloorType getFloorType(Location location){
@@ -103,7 +112,6 @@ public class FloorNavigationProxy {
 		else if(cell.getClass() == ChargingStationCell.class){
 			return FloorType.CHARGINGSTATION;
 		}
-
 		else if(cell.getClass() == DoorCell.class){
 			
 			//Check to see if Door is open or close
