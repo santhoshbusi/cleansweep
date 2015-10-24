@@ -3,6 +3,7 @@ package edu.cleansweep.tests;
 import edu.cleansweep.floor.Direction;
 import edu.cleansweep.floor.Floor;
 import edu.cleansweep.floor.FloorNavigationProxy;
+import edu.cleansweep.floor.FloorType;
 import edu.cleansweep.floor.Location;
 
 public class FloorTest {
@@ -83,6 +84,9 @@ public class FloorTest {
 		currentLocation = floorNavProxy.move(currentLocation, Direction.WEST);
 		System.out.println(currentLocation.toString());
 		f.displayLocationOnFloorInConsole(currentLocation);
+		
+		FloorType ft = floorNavProxy.getFloorType(currentLocation);
+		System.out.println(ft);
 		
 	}
 	

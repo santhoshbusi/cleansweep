@@ -57,6 +57,30 @@ public class FloorNavigationProxy {
 			
 	}
 	
+	public FloorType getFloorType(Location location){
+		ICell cell = _floor.getCellAt(location.getLongitude(), location.getLatitude());
+		
+		if(cell.getClass() == BareFloorCell.class){
+			return FloorType.BAREFLOOR;
+		}
+		else if(cell.getClass() == ChargingStationCell.class){
+			return FloorType.CHARGINGSTATION;
+		}
+		else if(cell.getClass() == DoorCell.class){
+			return FloorType.DOOR;
+		}
+		else if(cell.getClass() == HighPileCarpetCell.class){
+			return FloorType.HIGHPILECARPET;
+		}
+		else if(cell.getClass() == LowPileCarpetCell.class){
+			return FloorType.LOWPILECARPET;
+		}
+		else{
+			return FloorType.UNKNOWN;
+		}
+		
+	}
+	
 	public Location getStaringLocation(){;
 		return new Location(_startingCell,_headingDirection);
 	}
