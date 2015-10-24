@@ -4,16 +4,13 @@ import edu.cleansweep.floor.*;
 
 public class ControlSystem {
 
-	Floor f;
+	//Floor f;
 	Location currentLocation;
 	FloorNavigationProxy floorNavProxy;
 
 	public ControlSystem(){
 		
-		//I shouldn't have access to these objects; can we create them in Nav Proxy?
-		f = new Floor();
-		f.createDefaultFloorPlan();
-		floorNavProxy = new FloorNavigationProxy(f);
+		floorNavProxy = new FloorNavigationProxy("TEST_C.cft");
 		currentLocation = floorNavProxy.getStaringLocation();
 	}
 
@@ -27,7 +24,6 @@ public class ControlSystem {
 				if(floorNavProxy.canMove(currentLocation, Direction.NORTH)){
 					currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
 					System.out.println("Moving North");
-					f.displayLocationOnFloorInConsole(currentLocation);
 				}
 			break;
 			
@@ -35,7 +31,6 @@ public class ControlSystem {
 				if(floorNavProxy.canMove(currentLocation, Direction.SOUTH)){
 					currentLocation = floorNavProxy.move(currentLocation, Direction.SOUTH);
 					System.out.println("Moving South");
-					f.displayLocationOnFloorInConsole(currentLocation);
 				}
 			break;
 			
@@ -43,7 +38,6 @@ public class ControlSystem {
 				if (floorNavProxy.canMove(currentLocation, Direction.WEST)){
 					currentLocation = floorNavProxy.move(currentLocation, Direction.WEST);
 					System.out.println("Moving West");
-					f.displayLocationOnFloorInConsole(currentLocation);
 				}
 			break;
 			
@@ -51,7 +45,6 @@ public class ControlSystem {
 				 if (floorNavProxy.canMove(currentLocation, Direction.EAST)){
 					 currentLocation = floorNavProxy.move(currentLocation, Direction.EAST);
 					 System.out.println("Moving East");
-					 f.displayLocationOnFloorInConsole(currentLocation);
 			}
 			break;
 		}

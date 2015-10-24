@@ -6,8 +6,10 @@ public class FloorNavigationProxy {
 	private Direction _headingDirection;
 	private ICell _startingCell;
 	
-	public FloorNavigationProxy(Floor floor){
-		_floor = floor;
+	public FloorNavigationProxy(String _floorPlan){
+		_floor = new Floor();
+		_floor.createFloorPlanFromFile(_floorPlan);
+		
 		_startingCell = _floor.getStartingCell();
 		_headingDirection = Direction.NORTH;
 	}

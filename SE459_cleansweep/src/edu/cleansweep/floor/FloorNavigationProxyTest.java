@@ -12,7 +12,7 @@ public class FloorNavigationProxyTest {
 	public void testStaringLocation() {
 		Floor fl = new Floor();		
 		fl.createDefaultFloorPlan();
-		FloorNavigationProxy pxy = new FloorNavigationProxy(fl);	
+		FloorNavigationProxy pxy = new FloorNavigationProxy("TEST_B.cft");	
 		
 		assertEquals("North",pxy.getStaringLocation().getDirectionHeading().toString());
 		assertEquals(1,pxy.getStaringLocation().getLongitude());
@@ -28,7 +28,7 @@ public class FloorNavigationProxyTest {
 		Floor fl = new Floor();		
 		
 		fl.createDefaultFloorPlan();
-		FloorNavigationProxy pxy = new FloorNavigationProxy(fl);
+		FloorNavigationProxy pxy = new FloorNavigationProxy("TEST_B.cft");
 		
 		Location location = new Location(fl.getCellAt(0, 7),Direction.NORTHEAST);
 

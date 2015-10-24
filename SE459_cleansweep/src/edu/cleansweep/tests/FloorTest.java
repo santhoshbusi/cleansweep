@@ -15,7 +15,7 @@ public class FloorTest {
 		f.createFloorPlanFromFile("TEST_C.cft");
 		System.out.println(f.toString());
 		
-		FloorNavigationProxy floorNavProxy = new FloorNavigationProxy(f);
+		FloorNavigationProxy floorNavProxy = new FloorNavigationProxy("TEST_C.cft");
 		Location currentLocation = floorNavProxy.getStaringLocation();
 		System.out.println(currentLocation.toString());
 		f.displayLocationOnFloorInConsole(currentLocation);
@@ -55,7 +55,7 @@ public class FloorTest {
 		f.createFloorPlanFromFile("TEST_B.cft");
 		System.out.println(f.toString());
 		
-		floorNavProxy = new FloorNavigationProxy(f);
+		floorNavProxy = new FloorNavigationProxy("TEST_B.cft");
 		currentLocation = floorNavProxy.getStaringLocation();
 		
 		System.out.println(currentLocation.toString());
