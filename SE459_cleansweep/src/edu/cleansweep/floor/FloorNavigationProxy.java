@@ -12,6 +12,7 @@ public class FloorNavigationProxy {
 		_headingDirection = Direction.NORTH;
 	}
 	
+	
 	public boolean canMove(Location location, Direction direction){
 		ICell peakCell = _floor.getCellAt(location.getLongitude(), location.getLatitude()).getAdjacentCell(direction);
 		
@@ -117,6 +118,10 @@ public class FloorNavigationProxy {
 		
 	}
 	
+	/**
+	 * Call the first time you setup a floor, this is used to get "entrance" location on the floor
+	 * @return the starting location on the floor.
+	 */
 	public Location getStaringLocation(){;
 		return new Location(_startingCell,_headingDirection);
 	}
