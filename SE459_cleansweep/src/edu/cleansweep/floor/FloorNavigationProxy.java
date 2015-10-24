@@ -103,6 +103,7 @@ public class FloorNavigationProxy {
 		else if(cell.getClass() == ChargingStationCell.class){
 			return FloorType.CHARGINGSTATION;
 		}
+
 		else if(cell.getClass() == DoorCell.class){
 			
 			//Check to see if Door is open or close
