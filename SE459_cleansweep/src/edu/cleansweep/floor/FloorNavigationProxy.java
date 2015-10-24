@@ -2,7 +2,7 @@ package edu.cleansweep.floor;
 
 /**
  * FloorNavigationProxy is used to maniuplate a Floor object
- * it is also response for creating instances of Location.xw
+ * it is also response for creating instances of Location
  * @author ajscilingo
  */
 
