@@ -1,5 +1,7 @@
 package edu.cleansweep.floor;
 
+import java.util.Arrays;
+
 class ChargingStationCell implements ICell {
 
 	private ICell [] _adjacentCells;
@@ -57,6 +59,34 @@ class ChargingStationCell implements ICell {
 	@Override
 	public int getY() {
 		return _y;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(_adjacentCells);
+		result = prime * result + _x;
+		result = prime * result + _y;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ChargingStationCell other = (ChargingStationCell) obj;
+		if (!Arrays.equals(_adjacentCells, other._adjacentCells))
+			return false;
+		if (_x != other._x)
+			return false;
+		if (_y != other._y)
+			return false;
+		return true;
 	}
 
 	@Override

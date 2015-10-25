@@ -1,4 +1,7 @@
 package edu.cleansweep.floor;
+
+import java.io.Serializable;
+
 /**
  * Used to represent a location on the floor
  * Locations can be created through the move and getStartingLocation 
@@ -6,8 +9,12 @@ package edu.cleansweep.floor;
  * @author ajscilingo
  *
  */
-public class Location {
+public class Location implements Serializable{
 	
+	/**
+	 * Generated servialVersionUID
+	 */
+	private static final long serialVersionUID = 8781241666543820240L;
 	private Direction _heading;
 	private int _latitude;
 	private int _longitude;

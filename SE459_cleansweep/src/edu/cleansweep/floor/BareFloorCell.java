@@ -1,5 +1,7 @@
 package edu.cleansweep.floor;
 
+import java.util.Arrays;
+
 class BareFloorCell implements ICell {
 
 	private ICell [] _adjacentCells;
@@ -96,8 +98,44 @@ class BareFloorCell implements ICell {
 		return _y;
 	}
 
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(_adjacentCells);
+		result = prime * result + _dirt;
+		result = prime * result + _grade;
+		result = prime * result + _x;
+		result = prime * result + _y;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BareFloorCell other = (BareFloorCell) obj;
+		if (!Arrays.equals(_adjacentCells, other._adjacentCells))
+			return false;
+		if (_dirt != other._dirt)
+			return false;
+		if (_grade != other._grade)
+			return false;
+		if (_x != other._x)
+			return false;
+		if (_y != other._y)
+			return false;
+		return true;
+	}
+
 	@Override
 	public String toString() {
 		return "B";
 	}
+	
 }

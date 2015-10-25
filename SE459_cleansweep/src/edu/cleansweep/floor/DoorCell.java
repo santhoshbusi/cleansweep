@@ -1,5 +1,7 @@
 package edu.cleansweep.floor;
 
+import java.util.Arrays;
+
 class DoorCell implements ICell {
 
 	private boolean _open;
@@ -60,11 +62,6 @@ class DoorCell implements ICell {
 		return !_open;
 	}
 	
-	
-	@Override
-	public String toString() {
-		return "D";
-	}
 
 	@Override
 	public int getX() {
@@ -75,5 +72,40 @@ class DoorCell implements ICell {
 	public int getY() {
 		return _y;
 	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(_adjacentCells);
+		result = prime * result + (_open ? 1231 : 1237);
+		result = prime * result + _x;
+		result = prime * result + _y;
+		return result;
+	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DoorCell other = (DoorCell) obj;
+		if (!Arrays.equals(_adjacentCells, other._adjacentCells))
+			return false;
+		if (_open != other._open)
+			return false;
+		if (_x != other._x)
+			return false;
+		if (_y != other._y)
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "D";
+	}
 }

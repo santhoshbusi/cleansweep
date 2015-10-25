@@ -11,6 +11,7 @@ class HighPileCarpetCell extends BareFloorCell {
 		return "High Pile Carpet";
 	}
 	
+	
 	@Override
 	public String toString() {
 		return "H";
