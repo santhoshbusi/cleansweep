@@ -278,14 +278,6 @@ public class Floor {
 	}
 	
 	/**
-	 * Displays output of the location on floor to console, location denoted by *
-	 * @param location the Location object representing a particular location on floor
-	 */
-	public void displayLocationOnFloorInConsole(Location location){
-		 System.out.println(markCellAt(location.getLongitude(), location.getLatitude()));
-	}
-	
-	/**
 	 * Helper method for displayLocationOnFloorInConsole
 	 * @param x	x-coordinate of _floor
 	 * @param y y-coordinate of _floor 

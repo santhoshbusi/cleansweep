@@ -135,6 +135,14 @@ public class FloorNavigationProxy {
 	}
 	
 	/**
+	 * Displays output of the location on floor to console, location denoted by *
+	 * @param location the Location object representing a particular location on floor
+	 */
+	public void displayLocationOnFloorInConsole(Location location){
+		 System.out.println(_floor.markCellAt(location.getLongitude(), location.getLatitude()));
+	}
+	
+	/**
 	 * Call the first time you setup a floor, this is used to get "entrance" location on the floor
 	 * @return the starting location on the floor.
 	 */
