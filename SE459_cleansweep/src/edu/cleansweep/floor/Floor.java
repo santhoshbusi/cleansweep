@@ -16,7 +16,7 @@ import java.util.Arrays;
  *
  */
 
-public class Floor {
+class Floor {
 
 	private ICell[][] _floor;
 	private ICell _startingCell;
@@ -83,7 +83,7 @@ public class Floor {
 	 * @param x x-coordinate location on floor
 	 * @param y y-coordinate location on floor
 	 */
-	public void placeChargingStationCellAt(int x, int y){
+	 void placeChargingStationCellAt(int x, int y){
 		if(x > _floor.length)
 			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
 		else if(y > _floor[x].length)
@@ -100,7 +100,7 @@ public class Floor {
 	 * @param x x-coordinate location on floor
 	 * @param y y-coordinate location on floor
 	 */
-	public void placeWallCellAt(int x, int y){
+	 void placeWallCellAt(int x, int y){
 		if(x > _floor.length)
 			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
 		else if(y > _floor[x].length)
@@ -115,7 +115,7 @@ public class Floor {
 	 * @param x x-coordinate location on floor
 	 * @param y y-coordinate location on floor
 	 */
-	public void placeDoorCellAt(int x, int y){
+	 void placeDoorCellAt(int x, int y){
 		if(x > _floor.length)
 			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
 		else if(y > _floor[x].length)
@@ -130,7 +130,7 @@ public class Floor {
 	 * @param x x-coordinate location on floor
 	 * @param y y-coordinate location on floor
 	 */
-	public void placeStairsCellAt(int x, int y){
+	void placeStairsCellAt(int x, int y){
 		if(x > _floor.length)
 			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
 		else if(y > _floor[x].length)
@@ -145,7 +145,7 @@ public class Floor {
 	 * @param x x-coordinate location on floor
 	 * @param y y-coordinate location on floor
 	 */
-	public void placeBareFloorCellAt(int x, int y){
+	void placeBareFloorCellAt(int x, int y){
 		if(x > _floor.length)
 			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
 		else if(y > _floor[x].length)
@@ -160,7 +160,7 @@ public class Floor {
 	 * @param x x-coordinate location on floor
 	 * @param y y-coordinate location on floor
 	 */
-	public void placeLowPileCarpetCellAt(int x, int y){
+	void placeLowPileCarpetCellAt(int x, int y){
 		if(x > _floor.length)
 			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
 		else if(y > _floor[x].length)
@@ -175,7 +175,7 @@ public class Floor {
 	 * @param x x-coordinate location on floor
 	 * @param y y-coordinate location on floor
 	 */
-	public void placeHighPileCarpetCellAt(int x, int y){
+	void placeHighPileCarpetCellAt(int x, int y){
 		if(x > _floor.length)
 			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
 		else if(y > _floor[x].length)
@@ -191,7 +191,7 @@ public class Floor {
 	 * @param y y-coordinate location on floor
 	 * @return
 	 */
-	public String queryCellAt(int x, int y){
+	String queryCellAt(int x, int y){
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append("Location: (").append(x).append(",").append(y).append(")").append("\n");
@@ -316,7 +316,7 @@ public class Floor {
 	 * @param filename name of .cft file
 	 * @return true if floor construction is successful , false if not.
 	 */
-	public boolean createFloorPlanFromFile(String filename){
+	boolean createFloorPlanFromFile(String filename){
 		ArrayList<ArrayList<ICell>> cellsFromLine = new ArrayList<ArrayList<ICell>>();
 		Path path = FileSystems.getDefault().getPath("src/edu/cleansweep/tests",filename);
 		
@@ -430,7 +430,7 @@ public class Floor {
 	/**
 	 * NEEDS TO BE REFACTORED
 	 */
-	public void createDefaultFloorPlan() {
+	void createDefaultFloorPlan() {
 		_floor = new ICell[17][18];
 		//Left Most Column Of Floor Plan
 		placeWallCellAt(0,0);

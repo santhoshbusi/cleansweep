@@ -17,6 +17,11 @@ public class Message implements Serializable {
 	private Location _location;
 	private Direction _direction;
 	
+	public Message(String operation, Location location){
+		_operation = operation;
+		_location = location;
+	}
+	
 	public Message(String operation, Location location, Direction direction){
 		_operation = operation;
 		_location = location;
@@ -46,6 +51,4 @@ public class Message implements Serializable {
 	public void set_direction(Direction _direction) {
 		this._direction = _direction;
 	}
-	
-	
 }
