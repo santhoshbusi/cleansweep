@@ -1,9 +1,14 @@
 package edu.cleansweep.floor;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-class BareFloorCell implements ICell {
+class BareFloorCell implements ICell, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7566728965045014529L;
 	private ICell [] _adjacentCells;
 	private int _dirt;
 	private int _grade = 0;

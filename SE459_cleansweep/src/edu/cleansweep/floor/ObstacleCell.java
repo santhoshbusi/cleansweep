@@ -1,9 +1,14 @@
 package edu.cleansweep.floor;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class ObstacleCell implements ICell {
+public class ObstacleCell implements ICell, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6521485866250467349L;
 	private ICell [] _adjacentCells;
 	private int _x;
 	private int _y;

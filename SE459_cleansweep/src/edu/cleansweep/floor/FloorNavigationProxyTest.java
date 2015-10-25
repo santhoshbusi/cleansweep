@@ -15,6 +15,8 @@ public class FloorNavigationProxyTest {
 		FloorNavigationProxy pxy = new FloorNavigationProxy("TEST_B.cft");	
 		
 		assertEquals("North",pxy.getStaringLocation().getDirectionHeading().toString());
+		// You can't assume that the starting location is going to be 1,1 we never 
+		// put this in the specification
 		assertEquals(1,pxy.getStaringLocation().getLongitude());
 		assertEquals(1,pxy.getStaringLocation().getLatitude());
 		assertTrue(pxy.getStaringLocation().isClean());

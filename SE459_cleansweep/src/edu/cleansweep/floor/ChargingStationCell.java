@@ -1,9 +1,14 @@
 package edu.cleansweep.floor;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-class ChargingStationCell implements ICell {
+class ChargingStationCell implements ICell, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2398805126052156212L;
 	private ICell [] _adjacentCells;
 	private int _x;
 	private int _y;

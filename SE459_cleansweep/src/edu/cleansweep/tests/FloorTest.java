@@ -1,7 +1,6 @@
 package edu.cleansweep.tests;
 
 import edu.cleansweep.floor.Direction;
-import edu.cleansweep.floor.Floor;
 import edu.cleansweep.floor.FloorNavigationProxy;
 import edu.cleansweep.floor.FloorType;
 import edu.cleansweep.floor.Location;
@@ -48,10 +47,14 @@ public class FloorTest {
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
 		
 		floorNavProxy = new FloorNavigationProxy("TEST_B.cft");
-		System.out.println(floorNavProxy.toString());
+		//System.out.println(floorNavProxy.toString());
 		
 		floorNavProxy = new FloorNavigationProxy("TEST_B.cft");
-		currentLocation = floorNavProxy.getStaringLocation();
+		Location startingLocation = floorNavProxy.getStaringLocation();
+		
+		currentLocation = startingLocation;
+		//are these two locations really equal?
+		System.out.println(currentLocation.equals(startingLocation));
 		
 		System.out.println(currentLocation.toString());
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
@@ -87,6 +90,7 @@ public class FloorTest {
 		while(!currentLocation.isClean())
 			floorNavProxy.clean(currentLocation); //removes dirt and prints Removing Dirt Message
 		floorNavProxy.clean(currentLocation); //Prints clean message
+		
 	}
 	
 	

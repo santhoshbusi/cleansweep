@@ -1,9 +1,14 @@
 package edu.cleansweep.floor;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-class DoorCell implements ICell {
+class DoorCell implements ICell, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3650207702512000586L;
 	private boolean _open;
 	private ICell [] _adjacentCells;
 	private int _x;
