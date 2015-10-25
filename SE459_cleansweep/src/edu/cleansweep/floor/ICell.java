@@ -63,4 +63,19 @@ interface ICell {
 	 * @return true if ICell cannot be traversed, false if can be
 	 */
 	public boolean isObstructed();
+	
+	/**
+	 * Implement for hashing
+	 * @return
+	 */
+	@Override
+	int hashCode();
+	
+	/**
+	 * Implement for equality test
+	 * @param obj
+	 * @return
+	 */
+	@Override
+	boolean equals(Object obj);
 }

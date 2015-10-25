@@ -7,6 +7,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * A collection of ICell objects that represent a floor
@@ -918,7 +919,42 @@ public class Floor {
 			}
 		}
 	}
-		
+	
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.deepHashCode(_floor);
+		result = prime * result + ((_setOfChargingStations == null) ? 0 : _setOfChargingStations.hashCode());
+		result = prime * result + ((_startingCell == null) ? 0 : _startingCell.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Floor other = (Floor) obj;
+		if (!Arrays.deepEquals(_floor, other._floor))
+			return false;
+		if (_setOfChargingStations == null) {
+			if (other._setOfChargingStations != null)
+				return false;
+		} else if (!_setOfChargingStations.equals(other._setOfChargingStations))
+			return false;
+		if (_startingCell == null) {
+			if (other._startingCell != null)
+				return false;
+		} else if (!_startingCell.equals(other._startingCell))
+			return false;
+		return true;
+	}
+
 	/**
 	 * String representation of floor
 	 */

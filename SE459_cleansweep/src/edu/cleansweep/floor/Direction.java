@@ -1,5 +1,7 @@
 package edu.cleansweep.floor;
 
+import java.io.Serializable;
+
 /**
  * Direction relative to current ICell position, 
  * ordered in clockwise starting from North
@@ -13,7 +15,7 @@ package edu.cleansweep.floor;
  * <li>{@link #NORTHWEST}</li>
  * @author ajscilingo
  */
-public enum Direction {
+public enum Direction implements Serializable{
 	/**
 	 * Direction North relative of current position
 	 */
@@ -128,4 +130,5 @@ public enum Direction {
 	};
 	
 	public abstract Direction getOpposite();
+	
 }
