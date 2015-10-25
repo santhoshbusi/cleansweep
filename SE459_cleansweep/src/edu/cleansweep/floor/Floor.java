@@ -1,6 +1,5 @@
 package edu.cleansweep.floor;
 
-import java.util.LinkedHashSet;
 import java.io.BufferedReader;
 import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
