@@ -1,6 +1,6 @@
 package edu.cleansweep.floor;
 
-public class NullCell extends ObstacleCell {
+class NullCell extends ObstacleCell {
 
 	public NullCell(int x, int y){
 		super(x,y);

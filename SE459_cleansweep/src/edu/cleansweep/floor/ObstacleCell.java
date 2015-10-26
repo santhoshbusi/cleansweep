@@ -3,7 +3,7 @@ package edu.cleansweep.floor;
 import java.io.Serializable;
 import java.util.Arrays;
 
-public class ObstacleCell implements ICell, Serializable {
+class ObstacleCell implements ICell, Serializable {
 
 	/**
 	 * 

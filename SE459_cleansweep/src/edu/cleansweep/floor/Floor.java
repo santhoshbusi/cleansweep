@@ -21,7 +21,7 @@ class Floor {
 	private ICell _startingCell;
 	private ArrayList<ChargingStationCell> _setOfChargingStations;
 	
-	public Floor(){
+	Floor(){
 		_floor = new ICell[1][1];
 		_setOfChargingStations = new ArrayList<ChargingStationCell>();
 	}

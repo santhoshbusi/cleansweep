@@ -12,9 +12,9 @@ public class FloorNavigationProxy {
 	private Direction _headingDirection;
 	private ICell _startingCell;
 	
-	public FloorNavigationProxy(String _floorPlan){
+	public FloorNavigationProxy(String floorPlanFilename){
 		_floor = new Floor();
-		_floor.createFloorPlanFromFile(_floorPlan);
+		_floor.createFloorPlanFromFile(floorPlanFilename);
 		
 		_startingCell = _floor.getStartingCell();
 		_headingDirection = Direction.NORTH;
@@ -33,19 +33,6 @@ public class FloorNavigationProxy {
 			return false;
 		else
 			return true;
-	}
-	
-	/**
-	 * Removes dirt from location
-	 * @param location the current location or Location objection in which you would like to clean
-	 */
-	public void clean(Location location){
-		ICell cell = _floor.getCellAt(location.getLongitude(), location.getLatitude());
-		int x = cell.getDirt();
-		if(x == 0)
-			System.out.println("Clean");
-		else
-			System.out.println("Removing Dirt");
 	}
 	
 	/**
@@ -98,6 +85,19 @@ public class FloorNavigationProxy {
 			return new Location(sameCell, _headingDirection);
 		}*/
 			
+	}
+	
+	/**
+	 * Removes dirt from location
+	 * @param location the current location or Location objection in which you would like to clean
+	 */
+	public void clean(Location location){
+		ICell cell = _floor.getCellAt(location.getLongitude(), location.getLatitude());
+		int x = cell.getDirt();
+		if(x == 0)
+			System.out.println("Clean");
+		else
+			System.out.println("Removing Dirt");
 	}
 	
 	/**

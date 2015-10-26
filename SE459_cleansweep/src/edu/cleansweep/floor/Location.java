@@ -68,6 +68,39 @@ public class Location implements Serializable{
 		return _heading;
 	}
 	
+	
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((_currentCell == null) ? 0 : _currentCell.hashCode());
+		result = prime * result + _latitude;
+		result = prime * result + _longitude;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Location other = (Location) obj;
+		if (_currentCell == null) {
+			if (other._currentCell != null)
+				return false;
+		} else if (!_currentCell.equals(other._currentCell))
+			return false;
+		if (_latitude != other._latitude)
+			return false;
+		if (_longitude != other._longitude)
+			return false;
+		return true;
+	}
+
 	/**
 	 * Get general information about location as a string
 	 * @return String with general information about location
