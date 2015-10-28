@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * A collection of AbstractCell objects that represent a floor
@@ -17,12 +18,13 @@ import java.util.Arrays;
 
 class Floor {
 
-	private AbstractCell[][] _floor;
+	//private AbstractCell[][] _floor;
+	private List<List<AbstractCell>> _floor;
 	private AbstractCell _startingCell;
-	private ArrayList<ChargingStationCell> _setOfChargingStations;
+	private List<ChargingStationCell> _setOfChargingStations;
 	
 	Floor(){
-		_floor = new AbstractCell[1][1];
+		_floor = new ArrayList<List<AbstractCell>>();
 		_setOfChargingStations = new ArrayList<ChargingStationCell>();
 	}
 	
@@ -46,16 +48,16 @@ class Floor {
 	 * Helper method used to return cell based on x and y location in collection
 	 * @param x x-coordinate location in collection
 	 * @param y y-coordinate location in collection
-	 * @return the AbstractCell located at _floor[x][y]
+	 * @return the AbstractCell located at _floor.get(x).get(y)
 	 */
 	AbstractCell getCellAt(int x, int y){
 		if(_floor == null)
 			return null;
-		else if(_floor.length < 1)
+		else if(_floor.size() < 1)
 			return null;
 		
-		if(x < _floor.length && y < _floor[x].length)
-			return _floor[x][y];
+		if(x < _floor.size() && y < _floor.get(x).size())
+			return _floor.get(x).get(y);
 		else
 			return null;
 	}
@@ -64,15 +66,13 @@ class Floor {
 	 * Used for directly modifying the floor, (MAY REMOVE?)
 	 * @param x x-coordinate location in collection
 	 * @param y y-coordinate location in collection
-	 * @param cell the AbstractCell that will be placed at _floor[x][y]
+	 * @param cell the AbstractCell that will be placed at _floor.get(x).get(y)
 	 */
 	private void placeCellAt(int x, int y, AbstractCell cell){
-		if(x > _floor.length)
-			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
-		else if(y > _floor[x].length)
-			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
+		if(x >= _floor.size())
+			_floor.add(x,new ArrayList<AbstractCell>());
 		else{
-			_floor[x][y] = cell;
+			_floor.get(x).add(y,cell);
 		}
 			
 	}
@@ -83,13 +83,11 @@ class Floor {
 	 * @param y y-coordinate location on floor
 	 */
 	 void placeChargingStationCellAt(int x, int y){
-		if(x > _floor.length)
-			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
-		else if(y > _floor[x].length)
-			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
+		if(x >= _floor.size())
+			_floor.add(x,new ArrayList<AbstractCell>());
 		else{
 			ChargingStationCell c = new ChargingStationCell(x,y);
-			_floor[x][y] = c;
+			_floor.get(x).add(y,c);
 			_setOfChargingStations.add(c);
 		}
 	}
@@ -100,12 +98,10 @@ class Floor {
 	 * @param y y-coordinate location on floor
 	 */
 	 void placeWallCellAt(int x, int y){
-		if(x > _floor.length)
-			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
-		else if(y > _floor[x].length)
-			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
+		if(x >= _floor.size())
+			_floor.add(x,new ArrayList<AbstractCell>());
 		else{
-			_floor[x][y] = new WallCell(x,y);
+			_floor.get(x).add(y,new WallCell(x,y));
 		}
 	}
 	
@@ -115,12 +111,10 @@ class Floor {
 	 * @param y y-coordinate location on floor
 	 */
 	 void placeDoorCellAt(int x, int y){
-		if(x > _floor.length)
-			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
-		else if(y > _floor[x].length)
-			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
+		if(x >= _floor.size())
+			_floor.add(x,new ArrayList<AbstractCell>());
 		else{
-			_floor[x][y] = new DoorCell(x,y);
+			_floor.get(x).add(y, new DoorCell(x,y));
 		}
 	}
 	
@@ -130,12 +124,10 @@ class Floor {
 	 * @param y y-coordinate location on floor
 	 */
 	void placeStairsCellAt(int x, int y){
-		if(x > _floor.length)
-			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
-		else if(y > _floor[x].length)
-			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
+		if(x >= _floor.size())
+			_floor.add(x,new ArrayList<AbstractCell>());
 		else{
-			_floor[x][y] = new StairsCell(x,y);
+			_floor.get(x).add(y,new StairsCell(x,y));
 		}
 	}
 	
@@ -145,12 +137,10 @@ class Floor {
 	 * @param y y-coordinate location on floor
 	 */
 	void placeBareFloorCellAt(int x, int y){
-		if(x > _floor.length)
-			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
-		else if(y > _floor[x].length)
-			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
+		if(x >= _floor.size())
+			_floor.add(x, new ArrayList<AbstractCell>());
 		else{
-			_floor[x][y] = new BareFloorCell(x,y);
+			_floor.get(x).add(y,new BareFloorCell(x,y));
 		}
 	}
 	
@@ -160,12 +150,10 @@ class Floor {
 	 * @param y y-coordinate location on floor
 	 */
 	void placeLowPileCarpetCellAt(int x, int y){
-		if(x > _floor.length)
-			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
-		else if(y > _floor[x].length)
-			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
+		if(x >= _floor.size())
+			_floor.add(x, new ArrayList<AbstractCell>());
 		else{
-			_floor[x][y] = new LowPileCarpetCell(x,y);
+			_floor.get(x).add(y, new LowPileCarpetCell(x,y));
 		}
 	}
 	
@@ -175,12 +163,10 @@ class Floor {
 	 * @param y y-coordinate location on floor
 	 */
 	void placeHighPileCarpetCellAt(int x, int y){
-		if(x > _floor.length)
-			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
-		else if(y > _floor[x].length)
-			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
+		if(x >= _floor.size())
+			_floor.add(x, new ArrayList<AbstractCell>());
 		else{
-			_floor[x][y] = new HighPileCarpetCell(x,y);
+			_floor.get(x).add(y, new HighPileCarpetCell(x,y));
 		}
 	}
 	
@@ -194,12 +180,12 @@ class Floor {
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append("Location: (").append(x).append(",").append(y).append(")").append("\n");
-		sb.append("Cell Type: ").append(_floor[x][y].getFloorType()).append("\n");
-		sb.append("Grade: ").append(_floor[x][y].getElevationGrade()).append("\n");
-		sb.append("Dirty?: ").append(!_floor[x][y].isClean()).append("\n");
-		sb.append("Obstructed?: ").append(_floor[x][y].isObstructed()).append("\n");
+		sb.append("Cell Type: ").append(_floor.get(x).get(y).getFloorType()).append("\n");
+		sb.append("Grade: ").append(_floor.get(x).get(y).getElevationGrade()).append("\n");
+		sb.append("Dirty?: ").append(!_floor.get(x).get(y).isClean()).append("\n");
+		sb.append("Obstructed?: ").append(_floor.get(x).get(y).isObstructed()).append("\n");
 		sb.append("AdjacentCells:\n");
-		sb.append(printAdjacentCells(_floor[x][y]));
+		sb.append(printAdjacentCells(_floor.get(x).get(y)));
 		return sb.toString();
 	}
 	
@@ -284,12 +270,12 @@ class Floor {
 	 */
 	String markCellAt(int x, int y){
 		StringBuilder sb = new StringBuilder();
-		for(int xi=0; xi<_floor.length; xi++){
-			for(int yi=0; yi<_floor[xi].length; yi++){
+		for(int xi=0; xi<_floor.size(); xi++){
+			for(int yi=0; yi<_floor.get(xi).size(); yi++){
 				if(xi == x && yi == y)
 					sb.append("* ");
 				else
-					sb.append(_floor[xi][yi].toString()).append(" ");
+					sb.append(_floor.get(xi).get(yi).toString()).append(" ");
 			}
 			sb.append("\n");
 		}
@@ -302,8 +288,8 @@ class Floor {
 	 */
 	String visitAllCells(){
 		StringBuilder sb = new StringBuilder();
-		for(int x=0; x<_floor.length; x++){
-			for(int y=0; y<_floor[x].length; y++){
+		for(int x=0; x<_floor.size(); x++){
+			for(int y=0; y<_floor.get(x).size(); y++){
 				sb.append(queryCellAt(x, y)).append("\n").append(markCellAt(y,x)).append("\n");
 			}
 		}
@@ -316,7 +302,7 @@ class Floor {
 	 * @return true if floor construction is successful , false if not.
 	 */
 	boolean createFloorPlanFromFile(String filename){
-		ArrayList<ArrayList<AbstractCell>> cellsFromLine = new ArrayList<ArrayList<AbstractCell>>();
+		//ArrayList<ArrayList<AbstractCell>> cellsFromLine = new ArrayList<ArrayList<AbstractCell>>();
 		Path path = FileSystems.getDefault().getPath("src/edu/cleansweep/tests",filename);
 		
 		//Reset list of charging stations
@@ -341,51 +327,52 @@ class Floor {
 				switch (c) {
 				
 				case '\n':
-					cellsFromLine.add(line);
+					//cellsFromLine.add(line);
+					_floor.add(x,line);
 					line = new ArrayList<AbstractCell>();
 					x++;
 					xMax = x;
 					y=0;
 					break;
 				case 'W':
-					line.add(new WallCell(x,y));
+					line.add(y,new WallCell(x,y));
 					y++;
 					if(yMax < y){ yMax = y;}
 					break;
 				case 'C':
 					ChargingStationCell cStation = new ChargingStationCell(x,y);
-					line.add(cStation);
+					line.add(y,cStation);
 					_setOfChargingStations.add(cStation);
 					y++;
 					if(yMax < y){ yMax = y;}
 					break;
 				case 'B':
-					line.add(new BareFloorCell(x,y));
+					line.add(y,new BareFloorCell(x,y));
 					y++;
 					if(yMax < y){ yMax = y;}
 					break;
 				case 'D':
-					line.add(new DoorCell(x,y));
+					line.add(y,new DoorCell(x,y));
 					y++;
 					if(yMax < y){ yMax = y;}
 					break;
 				case 'H':
-					line.add(new HighPileCarpetCell(x,y));
+					line.add(y,new HighPileCarpetCell(x,y));
 					y++;
 					if(yMax < y){yMax = y;}
 					break;
 				case 'L':
-					line.add(new LowPileCarpetCell(x,y));
+					line.add(y,new LowPileCarpetCell(x,y));
 					y++;
 					if(yMax < y){ yMax = y;}
 					break;
 				case 'O':
-					line.add(new ObstacleCell(x,y));
+					line.add(y,new ObstacleCell(x,y));
 					y++;
 					if(yMax < y){ yMax = y;}
 					break;
 				case 'S':
-					line.add(new StairsCell(x,y));
+					line.add(y,new StairsCell(x,y));
 					y++;
 					if(yMax < x){ yMax = y;}
 					break;
@@ -397,26 +384,18 @@ class Floor {
 			return false;
 		}
 		
-		//resize underlying structure 
-		_floor = new AbstractCell[xMax][yMax];
-		
-		for(int xi=0; xi<xMax; xi++)
-		{
-			if(cellsFromLine.get(xi).size() < yMax)
-			{
-				AbstractCell [] tempArray = new AbstractCell[yMax];
-				for(int t=0; t<yMax; t++)
-				{
-					if(t < cellsFromLine.get(xi).size())
-						tempArray[t] = cellsFromLine.get(xi).get(t);
-					else
-						tempArray[t] = new NullCell(xi,t);
-				}
-				_floor[xi] = tempArray;
+		// Still need to re-loop through array list to
+		// adjust for empty spaces and add null cells
+		int xCoordinate = 0;
+		for(List<AbstractCell> a : _floor){
+			if(a.size() < yMax){
+				for(int t=a.size(); t<yMax; t++)
+					a.add(t,new NullCell(xCoordinate,t));
 			}
-			else
-				_floor[xi] = cellsFromLine.get(xi).toArray(new AbstractCell[yMax]);
+			xCoordinate++;
 		}
+		
+	
 	
 		populateAdjacentCells();
 		
@@ -430,7 +409,7 @@ class Floor {
 	 * NEEDS TO BE REFACTORED
 	 */
 	void createDefaultFloorPlan() {
-		_floor = new AbstractCell[17][18];
+		//_floor = new AbstractCell[17][18];
 		//Left Most Column Of Floor Plan
 		placeWallCellAt(0,0);
 		placeWallCellAt(0,1);
@@ -788,123 +767,123 @@ class Floor {
 	 * floor, links each AbstractCell to its adjacent neighbors
 	 */
 	private void populateAdjacentCells(){
-		for(int x=0; x<_floor.length; x++){
-			for(int y=0; y<_floor[x].length; y++){
+		for(int x=0; x < _floor.size(); x++){
+			for(int y=0; y < _floor.get(x).size(); y++){
 				
 				// Lower Left Corner Case, No cells West and No cells South
 				if(x == 0 && y==0)
 				{
-					_floor[x][y].setAdjacentCell(Direction.NORTH, _floor[x][y+1]);
-					_floor[x][y].setAdjacentCell(Direction.NORTHEAST, _floor[x+1][y+1]);
-					_floor[x][y].setAdjacentCell(Direction.EAST, _floor[x+1][y]);
-					_floor[x][y].setAdjacentCell(Direction.SOUTHEAST, null);
-					_floor[x][y].setAdjacentCell(Direction.SOUTH, null);
-					_floor[x][y].setAdjacentCell(Direction.SOUTHWEST, null);
-					_floor[x][y].setAdjacentCell(Direction.WEST, null);
-					_floor[x][y].setAdjacentCell(Direction.NORTHWEST, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.NORTH, _floor.get(x).get(y+1));
+					_floor.get(x).get(y).setAdjacentCell(Direction.NORTHEAST, _floor.get(x+1).get(y+1));
+					_floor.get(x).get(y).setAdjacentCell(Direction.EAST, _floor.get(x+1).get(y));
+					_floor.get(x).get(y).setAdjacentCell(Direction.SOUTHEAST, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.SOUTH, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.SOUTHWEST, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.WEST, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.NORTHWEST, null);
 				}
 				
 				// Upper Right Corner Case, No Cells East and No Cells North
-				else if(x == _floor.length - 1 && y == _floor[x].length - 1 ){
-					_floor[x][y].setAdjacentCell(Direction.NORTH, null);
-					_floor[x][y].setAdjacentCell(Direction.NORTHEAST, null);
-					_floor[x][y].setAdjacentCell(Direction.EAST, null);
-					_floor[x][y].setAdjacentCell(Direction.SOUTHEAST, null);
-					_floor[x][y].setAdjacentCell(Direction.SOUTH, _floor[x][y-1]);
-					_floor[x][y].setAdjacentCell(Direction.SOUTHWEST, _floor[x-1][y-1]);
-					_floor[x][y].setAdjacentCell(Direction.WEST, _floor[x-1][y]);
-					_floor[x][y].setAdjacentCell(Direction.NORTHWEST, null);
+				else if(x == _floor.size() - 1 && y == _floor.get(x).size() - 1 ){
+					_floor.get(x).get(y).setAdjacentCell(Direction.NORTH, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.NORTHEAST, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.EAST, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.SOUTHEAST, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.SOUTH, _floor.get(x).get(y-1));
+					_floor.get(x).get(y).setAdjacentCell(Direction.SOUTHWEST, _floor.get(x-1).get(y-1));
+					_floor.get(x).get(y).setAdjacentCell(Direction.WEST, _floor.get(x-1).get(y));
+					_floor.get(x).get(y).setAdjacentCell(Direction.NORTHWEST, null);
 					
 				}
 				
 				// Upper Left Corner Case, No Cells West, No Cells North
-				else if(x == 0 && y == _floor[x].length - 1)
+				else if(x == 0 && y == _floor.get(x).size() - 1)
 				{
-					_floor[x][y].setAdjacentCell(Direction.NORTH, null);
-					_floor[x][y].setAdjacentCell(Direction.NORTHEAST, null);
-					_floor[x][y].setAdjacentCell(Direction.EAST, _floor[x+1][y]);
-					_floor[x][y].setAdjacentCell(Direction.SOUTHEAST, _floor[x+1][y-1]);
-					_floor[x][y].setAdjacentCell(Direction.SOUTH, _floor[x][y-1]);
-					_floor[x][y].setAdjacentCell(Direction.SOUTHWEST, null);
-					_floor[x][y].setAdjacentCell(Direction.WEST, null);
-					_floor[x][y].setAdjacentCell(Direction.NORTHWEST, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.NORTH, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.NORTHEAST, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.EAST, _floor.get(x+1).get(y));
+					_floor.get(x).get(y).setAdjacentCell(Direction.SOUTHEAST, _floor.get(x+1).get(y-1));
+					_floor.get(x).get(y).setAdjacentCell(Direction.SOUTH, _floor.get(x).get(y-1));
+					_floor.get(x).get(y).setAdjacentCell(Direction.SOUTHWEST, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.WEST, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.NORTHWEST, null);
 				}
 				
 				// Lower Right Corner Case, No Cells East, No Cells South
-				else if(x == _floor.length - 1 && y == 0)
+				else if(x == _floor.size() - 1 && y == 0)
 				{
-					_floor[x][y].setAdjacentCell(Direction.NORTH, _floor[x][y+1]);
-					_floor[x][y].setAdjacentCell(Direction.NORTHEAST, null);
-					_floor[x][y].setAdjacentCell(Direction.EAST, null);
-					_floor[x][y].setAdjacentCell(Direction.SOUTHEAST, null);
-					_floor[x][y].setAdjacentCell(Direction.SOUTH, null);
-					_floor[x][y].setAdjacentCell(Direction.SOUTHWEST, null);
-					_floor[x][y].setAdjacentCell(Direction.WEST, _floor[x-1][y]);
-					_floor[x][y].setAdjacentCell(Direction.NORTHWEST, _floor[x-1][y+1]);
+					_floor.get(x).get(y).setAdjacentCell(Direction.NORTH, _floor.get(x).get(y+1));
+					_floor.get(x).get(y).setAdjacentCell(Direction.NORTHEAST, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.EAST, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.SOUTHEAST, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.SOUTH, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.SOUTHWEST, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.WEST, _floor.get(x-1).get(y));
+					_floor.get(x).get(y).setAdjacentCell(Direction.NORTHWEST, _floor.get(x-1).get(y+1));
 				}
 				
 				// Left Side Boundary, Case No Cells West
-				else if(x == 0 && (y != 0 && y !=_floor[x].length - 1))
+				else if(x == 0 && (y != 0 && y !=_floor.get(x).size() - 1))
 				{
-					_floor[x][y].setAdjacentCell(Direction.NORTH, _floor[x][y+1]);
-					_floor[x][y].setAdjacentCell(Direction.NORTHEAST, _floor[x+1][y+1]);
-					_floor[x][y].setAdjacentCell(Direction.EAST, _floor[x+1][y]);
-					_floor[x][y].setAdjacentCell(Direction.SOUTHEAST, _floor[x+1][y-1]);
-					_floor[x][y].setAdjacentCell(Direction.SOUTH, _floor[x][y-1]);
-					_floor[x][y].setAdjacentCell(Direction.SOUTHWEST, null);
-					_floor[x][y].setAdjacentCell(Direction.WEST, null);
-					_floor[x][y].setAdjacentCell(Direction.NORTHWEST, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.NORTH, _floor.get(x).get(y+1));
+					_floor.get(x).get(y).setAdjacentCell(Direction.NORTHEAST, _floor.get(x+1).get(y+1));
+					_floor.get(x).get(y).setAdjacentCell(Direction.EAST, _floor.get(x+1).get(y));
+					_floor.get(x).get(y).setAdjacentCell(Direction.SOUTHEAST, _floor.get(x+1).get(y-1));
+					_floor.get(x).get(y).setAdjacentCell(Direction.SOUTH, _floor.get(x).get(y-1));
+					_floor.get(x).get(y).setAdjacentCell(Direction.SOUTHWEST, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.WEST, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.NORTHWEST, null);
 				}
 				
 				// Right Side Boundary, Case No Cells East
-				else if(x == _floor.length - 1 && (y != 0 && y != _floor[x].length - 1))
+				else if(x == _floor.size() - 1 && (y != 0 && y != _floor.get(x).size() - 1))
 				{
-					_floor[x][y].setAdjacentCell(Direction.NORTH, _floor[x][y+1]);
-					_floor[x][y].setAdjacentCell(Direction.NORTHEAST, null);
-					_floor[x][y].setAdjacentCell(Direction.EAST, null);
-					_floor[x][y].setAdjacentCell(Direction.SOUTHEAST, null);
-					_floor[x][y].setAdjacentCell(Direction.SOUTH, _floor[x][y-1]);
-					_floor[x][y].setAdjacentCell(Direction.SOUTHWEST, _floor[x-1][y-1]);
-					_floor[x][y].setAdjacentCell(Direction.WEST, _floor[x-1][y]);
-					_floor[x][y].setAdjacentCell(Direction.NORTHWEST, _floor[x-1][y+1]);	
+					_floor.get(x).get(y).setAdjacentCell(Direction.NORTH, _floor.get(x).get(y+1));
+					_floor.get(x).get(y).setAdjacentCell(Direction.NORTHEAST, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.EAST, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.SOUTHEAST, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.SOUTH, _floor.get(x).get(y-1));
+					_floor.get(x).get(y).setAdjacentCell(Direction.SOUTHWEST, _floor.get(x-1).get(y-1));
+					_floor.get(x).get(y).setAdjacentCell(Direction.WEST, _floor.get(x-1).get(y));
+					_floor.get(x).get(y).setAdjacentCell(Direction.NORTHWEST, _floor.get(x-1).get(y+1));	
 				}
 				
 				// Top Boundary, Case No Cells North
-				else if(y == _floor[x].length - 1 && (x != 0 && x != _floor.length - 1))
+				else if(y == _floor.get(x).size() - 1 && (x != 0 && x != _floor.size() - 1))
 				{
-					_floor[x][y].setAdjacentCell(Direction.NORTH, null);
-					_floor[x][y].setAdjacentCell(Direction.NORTHEAST, null);
-					_floor[x][y].setAdjacentCell(Direction.EAST, _floor[x+1][y]);
-					_floor[x][y].setAdjacentCell(Direction.SOUTHEAST, _floor[x+1][y-1]);
-					_floor[x][y].setAdjacentCell(Direction.SOUTH, _floor[x][y-1]);
-					_floor[x][y].setAdjacentCell(Direction.SOUTHWEST, _floor[x-1][y-1]);
-					_floor[x][y].setAdjacentCell(Direction.WEST, _floor[x-1][y]);
-					_floor[x][y].setAdjacentCell(Direction.NORTHWEST, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.NORTH, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.NORTHEAST, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.EAST, _floor.get(x+1).get(y));
+					_floor.get(x).get(y).setAdjacentCell(Direction.SOUTHEAST, _floor.get(x+1).get(y-1));
+					_floor.get(x).get(y).setAdjacentCell(Direction.SOUTH, _floor.get(x).get(y-1));
+					_floor.get(x).get(y).setAdjacentCell(Direction.SOUTHWEST, _floor.get(x-1).get(y-1));
+					_floor.get(x).get(y).setAdjacentCell(Direction.WEST, _floor.get(x-1).get(y));
+					_floor.get(x).get(y).setAdjacentCell(Direction.NORTHWEST, null);
 				}
 				
 				// Bottom Boundary, Case No Cells South
-				else if(y == 0 && (x != 0 && x != _floor.length - 1) )
+				else if(y == 0 && (x != 0 && x != _floor.size() - 1) )
 				{
-					_floor[x][y].setAdjacentCell(Direction.NORTH, _floor[x][y+1]);
-					_floor[x][y].setAdjacentCell(Direction.NORTHEAST, _floor[x+1][y+1]);
-					_floor[x][y].setAdjacentCell(Direction.EAST, _floor[x+1][y]);
-					_floor[x][y].setAdjacentCell(Direction.SOUTHEAST, null);
-					_floor[x][y].setAdjacentCell(Direction.SOUTH, null);
-					_floor[x][y].setAdjacentCell(Direction.SOUTHWEST, null);
-					_floor[x][y].setAdjacentCell(Direction.WEST, _floor[x-1][y]);
-					_floor[x][y].setAdjacentCell(Direction.NORTHWEST, _floor[x-1][y+1]);
+					_floor.get(x).get(y).setAdjacentCell(Direction.NORTH, _floor.get(x).get(y+1));
+					_floor.get(x).get(y).setAdjacentCell(Direction.NORTHEAST, _floor.get(x+1).get(y+1));
+					_floor.get(x).get(y).setAdjacentCell(Direction.EAST, _floor.get(x+1).get(y));
+					_floor.get(x).get(y).setAdjacentCell(Direction.SOUTHEAST, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.SOUTH, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.SOUTHWEST, null);
+					_floor.get(x).get(y).setAdjacentCell(Direction.WEST, _floor.get(x-1).get(y));
+					_floor.get(x).get(y).setAdjacentCell(Direction.NORTHWEST, _floor.get(x-1).get(y+1));
 				}
 				// Locations that fall outside of the special cases
 				else
 				{
-					_floor[x][y].setAdjacentCell(Direction.NORTH, _floor[x][y+1]);
-					_floor[x][y].setAdjacentCell(Direction.NORTHEAST, _floor[x+1][y+1]);
-					_floor[x][y].setAdjacentCell(Direction.EAST, _floor[x+1][y]);
-					_floor[x][y].setAdjacentCell(Direction.SOUTHEAST, _floor[x+1][y-1]);
-					_floor[x][y].setAdjacentCell(Direction.SOUTH, _floor[x][y-1]);
-					_floor[x][y].setAdjacentCell(Direction.SOUTHWEST, _floor[x-1][y-1]);
-					_floor[x][y].setAdjacentCell(Direction.WEST, _floor[x-1][y]);
-					_floor[x][y].setAdjacentCell(Direction.NORTHWEST, _floor[x-1][y+1]);
+					_floor.get(x).get(y).setAdjacentCell(Direction.NORTH, _floor.get(x).get(y+1));
+					_floor.get(x).get(y).setAdjacentCell(Direction.NORTHEAST, _floor.get(x+1).get(y+1));
+					_floor.get(x).get(y).setAdjacentCell(Direction.EAST, _floor.get(x+1).get(y));
+					_floor.get(x).get(y).setAdjacentCell(Direction.SOUTHEAST, _floor.get(x+1).get(y-1));
+					_floor.get(x).get(y).setAdjacentCell(Direction.SOUTH, _floor.get(x).get(y-1));
+					_floor.get(x).get(y).setAdjacentCell(Direction.SOUTHWEST, _floor.get(x-1).get(y-1));
+					_floor.get(x).get(y).setAdjacentCell(Direction.WEST, _floor.get(x-1).get(y));
+					_floor.get(x).get(y).setAdjacentCell(Direction.NORTHWEST, _floor.get(x-1).get(y+1));
 				}
 				
 			}
@@ -912,39 +891,6 @@ class Floor {
 	}
 	
 	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + Arrays.deepHashCode(_floor);
-		result = prime * result + ((_setOfChargingStations == null) ? 0 : _setOfChargingStations.hashCode());
-		result = prime * result + ((_startingCell == null) ? 0 : _startingCell.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Floor other = (Floor) obj;
-		if (!Arrays.deepEquals(_floor, other._floor))
-			return false;
-		if (_setOfChargingStations == null) {
-			if (other._setOfChargingStations != null)
-				return false;
-		} else if (!_setOfChargingStations.equals(other._setOfChargingStations))
-			return false;
-		if (_startingCell == null) {
-			if (other._startingCell != null)
-				return false;
-		} else if (!_startingCell.equals(other._startingCell))
-			return false;
-		return true;
-	}
 
 	/**
 	 * String representation of floor
@@ -952,9 +898,9 @@ class Floor {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		for(int x=0; x<_floor.length; x++){
-			for(int y=0; y<_floor[x].length; y++){
-				sb.append(_floor[x][y].toString()).append(" ");
+		for(int x=0; x<_floor.size(); x++){
+			for(int y=0; y<_floor.get(x).size(); y++){
+				sb.append(_floor.get(x).get(y).toString()).append(" ");
 			}
 			sb.append("\n");
 		}

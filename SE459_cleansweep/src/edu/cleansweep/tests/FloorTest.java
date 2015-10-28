@@ -30,7 +30,7 @@ public class FloorTest {
 			// Is Starting Location a Charging Station?  It Should Be
 			assertEquals(floorNavProxy.getFloorType(startingLocation), FloorType.CHARGINGSTATION);
 			// Is Starting Location "Clean" It Should be 
-			assertTrue(startingLocation.isClean());  
+			assertTrue(startingLocation.isClean()); 
 		}
 
 	}
@@ -265,6 +265,63 @@ public class FloorTest {
 			
 		}
 		
+	}
+	
+	@Test
+	public void testTraversePathFileC(){
+		
+		floorNavProxy = new FloorNavigationProxy("TEST_C.cft");
+		Location currentLocation = floorNavProxy.getStaringLocation();
+		
+		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+		
+		for(int i=0; i<5; i++){
+			if(floorNavProxy.canMove(currentLocation, Direction.NORTH)){
+				currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
+				
+				// assert not null
+				assertNotNull(currentLocation);
+				// assert not obstacle
+				assertNotEquals(FloorType.OBSTACLE, floorNavProxy.getFloorType(currentLocation));
+				// assert not obstructed
+				assertFalse(currentLocation.isObstructed());
+				
+				floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+			}
+		}
+		
+		for(int i=0; i<3; i++){
+			
+			if(floorNavProxy.canMove(currentLocation, Direction.WEST)){
+				currentLocation = floorNavProxy.move(currentLocation, Direction.WEST);
+				
+				// assert not null
+				assertNotNull(currentLocation);
+				// assert not obstacle
+				assertNotEquals(FloorType.OBSTACLE, floorNavProxy.getFloorType(currentLocation));
+				// assert not obstructed
+				assertFalse(currentLocation.isObstructed());
+				
+				floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+			}
+			
+		}
+	
+		// assert can't move North
+		assertFalse(floorNavProxy.canMove(currentLocation, Direction.NORTH));
+		// assert can't move West
+		assertFalse(floorNavProxy.canMove(currentLocation, Direction.WEST));
+		// assert can move south
+		assertTrue(floorNavProxy.canMove(currentLocation, Direction.SOUTH));
+		// Move South
+		currentLocation = floorNavProxy.move(currentLocation, Direction.SOUTH);
+		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+		// assert not null, not obstacle, not obstructed
+		assertNotNull(currentLocation);
+		assertNotEquals(FloorType.OBSTACLE, floorNavProxy.getFloorType(currentLocation));
+		assertFalse(currentLocation.isObstructed());
+		// assert high pile carpet
+		assertEquals(FloorType.HIGHPILECARPET, floorNavProxy.getFloorType(currentLocation));
 	}
 		/*currentLocation = floorNavProxy.move(currentLocation, Direction.SOUTH);
 		System.out.println(currentLocation.toString());
