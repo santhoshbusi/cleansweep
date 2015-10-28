@@ -2,8 +2,6 @@ package edu.cleansweep.floor;
 
 import static org.junit.Assert.*;
 
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.Test;
 
 public class FloorNavigationProxyTest {
@@ -17,8 +15,8 @@ public class FloorNavigationProxyTest {
 		assertEquals("North",pxy.getStaringLocation().getDirectionHeading().toString());
 		// You can't assume that the starting location is going to be 1,1 we never 
 		// put this in the specification
-		assertEquals(1,pxy.getStaringLocation().getLongitude());
-		assertEquals(1,pxy.getStaringLocation().getLatitude());
+		//assertEquals(1,pxy.getStaringLocation().getLongitude());
+		//assertEquals(1,pxy.getStaringLocation().getLatitude());
 		assertTrue(pxy.getStaringLocation().isClean());
 		assertFalse(pxy.getStaringLocation().isObstructed());
 	

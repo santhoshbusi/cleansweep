@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * A collection of ICell objects that represent a floor
+ * A collection of AbstractCell objects that represent a floor
  * 
  * @author ajscilingo
  *
@@ -17,28 +17,28 @@ import java.util.Arrays;
 
 class Floor {
 
-	private ICell[][] _floor;
-	private ICell _startingCell;
+	private AbstractCell[][] _floor;
+	private AbstractCell _startingCell;
 	private ArrayList<ChargingStationCell> _setOfChargingStations;
 	
 	Floor(){
-		_floor = new ICell[1][1];
+		_floor = new AbstractCell[1][1];
 		_setOfChargingStations = new ArrayList<ChargingStationCell>();
 	}
 	
 	/**
 	 * Used to set the starting cell for this floor
-	 * @param cell the ICell that will be the starting cell for this floor
+	 * @param cell the AbstractCell that will be the starting cell for this floor
 	 */
-	private void setStartingCell(ICell cell){
+	private void setStartingCell(AbstractCell cell){
 		_startingCell = cell;
 	}
 	
 	/**
 	 * Returns starting cell for this floor
-	 * @return the ICell that is the starting cell for this floor.
+	 * @return the AbstractCell that is the starting cell for this floor.
 	 */
-	ICell getStartingCell(){
+	AbstractCell getStartingCell(){
 		return _startingCell;
 	}
 	
@@ -46,9 +46,9 @@ class Floor {
 	 * Helper method used to return cell based on x and y location in collection
 	 * @param x x-coordinate location in collection
 	 * @param y y-coordinate location in collection
-	 * @return the ICell located at _floor[x][y]
+	 * @return the AbstractCell located at _floor[x][y]
 	 */
-	ICell getCellAt(int x, int y){
+	AbstractCell getCellAt(int x, int y){
 		if(_floor == null)
 			return null;
 		else if(_floor.length < 1)
@@ -64,9 +64,9 @@ class Floor {
 	 * Used for directly modifying the floor, (MAY REMOVE?)
 	 * @param x x-coordinate location in collection
 	 * @param y y-coordinate location in collection
-	 * @param cell the ICell that will be placed at _floor[x][y]
+	 * @param cell the AbstractCell that will be placed at _floor[x][y]
 	 */
-	private void placeCellAt(int x, int y, ICell cell){
+	private void placeCellAt(int x, int y, AbstractCell cell){
 		if(x > _floor.length)
 			throw new ArrayIndexOutOfBoundsException("Cells cannot be placed outside of floor");
 		else if(y > _floor[x].length)
@@ -194,8 +194,8 @@ class Floor {
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append("Location: (").append(x).append(",").append(y).append(")").append("\n");
-		sb.append("Cell Type: ").append(_floor[x][y].getType()).append("\n");
-		sb.append("Grade: ").append(_floor[x][y].getCellGrade()).append("\n");
+		sb.append("Cell Type: ").append(_floor[x][y].getFloorType()).append("\n");
+		sb.append("Grade: ").append(_floor[x][y].getElevationGrade()).append("\n");
 		sb.append("Dirty?: ").append(!_floor[x][y].isClean()).append("\n");
 		sb.append("Obstructed?: ").append(_floor[x][y].isObstructed()).append("\n");
 		sb.append("AdjacentCells:\n");
@@ -208,20 +208,20 @@ class Floor {
 	 * @param cell the primary cell 
 	 * @return String representing the primary cell (in the middle) and the possible 8 surrounding cells
 	 */
-	private String printAdjacentCells(ICell cell){
+	private String printAdjacentCells(AbstractCell cell){
 		
 		StringBuilder sb = new StringBuilder();
 		
 		if(cell != null)
 		{
-			ICell northCell = cell.getAdjacentCell(Direction.NORTH);
-			ICell northEastCell = cell.getAdjacentCell(Direction.NORTHEAST);
-			ICell eastCell = cell.getAdjacentCell(Direction.EAST);
-			ICell southEastCell = cell.getAdjacentCell(Direction.SOUTHEAST);
-			ICell southCell = cell.getAdjacentCell(Direction.SOUTH);
-			ICell southWestCell = cell.getAdjacentCell(Direction.SOUTHWEST);
-			ICell westCell = cell.getAdjacentCell(Direction.WEST);
-			ICell northWestCell = cell.getAdjacentCell(Direction.NORTHWEST);
+			AbstractCell northCell = cell.getAdjacentCell(Direction.NORTH);
+			AbstractCell northEastCell = cell.getAdjacentCell(Direction.NORTHEAST);
+			AbstractCell eastCell = cell.getAdjacentCell(Direction.EAST);
+			AbstractCell southEastCell = cell.getAdjacentCell(Direction.SOUTHEAST);
+			AbstractCell southCell = cell.getAdjacentCell(Direction.SOUTH);
+			AbstractCell southWestCell = cell.getAdjacentCell(Direction.SOUTHWEST);
+			AbstractCell westCell = cell.getAdjacentCell(Direction.WEST);
+			AbstractCell northWestCell = cell.getAdjacentCell(Direction.NORTHWEST);
 			
 			if(northWestCell != null)
 				sb.append(northWestCell.toString());
@@ -316,7 +316,7 @@ class Floor {
 	 * @return true if floor construction is successful , false if not.
 	 */
 	boolean createFloorPlanFromFile(String filename){
-		ArrayList<ArrayList<ICell>> cellsFromLine = new ArrayList<ArrayList<ICell>>();
+		ArrayList<ArrayList<AbstractCell>> cellsFromLine = new ArrayList<ArrayList<AbstractCell>>();
 		Path path = FileSystems.getDefault().getPath("src/edu/cleansweep/tests",filename);
 		
 		//Reset list of charging stations
@@ -335,14 +335,14 @@ class Floor {
 			BufferedReader reader = Files.newBufferedReader(path, Charset.defaultCharset());
 			int value = 0;
 			
-			ArrayList<ICell> line = new ArrayList<ICell>();
+			ArrayList<AbstractCell> line = new ArrayList<AbstractCell>();
 			while((value = reader.read()) != -1){
 				char c = (char)value;
 				switch (c) {
 				
 				case '\n':
 					cellsFromLine.add(line);
-					line = new ArrayList<ICell>();
+					line = new ArrayList<AbstractCell>();
 					x++;
 					xMax = x;
 					y=0;
@@ -398,13 +398,13 @@ class Floor {
 		}
 		
 		//resize underlying structure 
-		_floor = new ICell[xMax][yMax];
+		_floor = new AbstractCell[xMax][yMax];
 		
 		for(int xi=0; xi<xMax; xi++)
 		{
 			if(cellsFromLine.get(xi).size() < yMax)
 			{
-				ICell [] tempArray = new ICell[yMax];
+				AbstractCell [] tempArray = new AbstractCell[yMax];
 				for(int t=0; t<yMax; t++)
 				{
 					if(t < cellsFromLine.get(xi).size())
@@ -415,7 +415,7 @@ class Floor {
 				_floor[xi] = tempArray;
 			}
 			else
-				_floor[xi] = cellsFromLine.get(xi).toArray(new ICell[yMax]);
+				_floor[xi] = cellsFromLine.get(xi).toArray(new AbstractCell[yMax]);
 		}
 	
 		populateAdjacentCells();
@@ -430,7 +430,7 @@ class Floor {
 	 * NEEDS TO BE REFACTORED
 	 */
 	void createDefaultFloorPlan() {
-		_floor = new ICell[17][18];
+		_floor = new AbstractCell[17][18];
 		//Left Most Column Of Floor Plan
 		placeWallCellAt(0,0);
 		placeWallCellAt(0,1);
@@ -785,7 +785,7 @@ class Floor {
 	/**
 	 * Helper method for constructing _floor structure
 	 * must be called in order to complete the construction of
-	 * floor, links each ICell to its adjacent neighbors
+	 * floor, links each AbstractCell to its adjacent neighbors
 	 */
 	private void populateAdjacentCells(){
 		for(int x=0; x<_floor.length; x++){

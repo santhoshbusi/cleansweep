@@ -2,18 +2,19 @@ package edu.cleansweep.floor;
 
 class NullCell extends ObstacleCell {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8539707092328881786L;
+
 	public NullCell(int x, int y){
 		super(x,y);
-	}
-	
-	@Override
-	public int getCellGrade() {
-		return -1;
+		_grade = -1000;
 	}
 
 	@Override
-	public String getType() {
-		return "Null Cell";
+	public FloorType getFloorType() {
+		return FloorType.OBSTACLE;
 	}
 	
 	@Override

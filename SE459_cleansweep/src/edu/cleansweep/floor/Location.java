@@ -18,9 +18,9 @@ public class Location implements Serializable{
 	private Direction _heading;
 	private int _latitude;
 	private int _longitude;
-	private ICell _currentCell;
+	private AbstractCell _currentCell;
 	
-	Location(ICell cell, Direction heading){
+	Location(AbstractCell cell, Direction heading){
 		_currentCell = cell;
 		_latitude = _currentCell.getY();
 		_longitude = _currentCell.getX();
@@ -108,7 +108,7 @@ public class Location implements Serializable{
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(_currentCell.getType()).append("\n");
+		sb.append(_currentCell.getFloorType()).append("\n");
 		sb.append("Longitude (X): ").append(_longitude).append("\n");
 		sb.append("Latitude (Y): ").append(_latitude).append("\n");
 		sb.append("Heading Direction: ").append(_heading.toString()).append("\n");

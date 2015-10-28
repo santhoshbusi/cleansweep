@@ -67,7 +67,7 @@ public enum FloorType {
 	OBSTACLE{
 		@Override
 		public String toString(){
-			return "UNKNOWN OBSTACLE";
+			return "Obstacle";
 		}
 	}
 }

@@ -2,18 +2,14 @@ package edu.cleansweep.floor;
 
 class WallCell extends ObstacleCell {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4972611435295777664L;
+
 	public WallCell(int x, int y){
 		super(x,y);
-	}
-	
-	@Override
-	public int getCellGrade() {
-		return 100;
-	}
-
-	@Override
-	public String getType() {
-		return "Wall";
+		_grade = 100;
 	}
 	
 	@Override

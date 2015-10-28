@@ -25,15 +25,15 @@ public class FloorJunitTest {
 		assertNotNull(f);		
 				
 		f.placeBareFloorCellAt(5, 9);
-		assertEquals("Bare Floor",f.getCellAt(5, 9).getType());
+		assertEquals("Bare Floor",f.getCellAt(5, 9).getFloorType().toString());
 		assertFalse(f.getCellAt(5, 9).isClean());
 		
 		f.placeDoorCellAt(9, 8);
-		assertEquals("Door",f.getCellAt(9, 8).getType());
+		assertEquals("Door",f.getCellAt(9, 8).getFloorType().toString());
 		assertFalse(f.getCellAt(9, 8).isObstructed());
 
 		assertFalse(f.queryCellAt(16, 17).isEmpty());
-		assertEquals("Wall",f.getCellAt(16, 17).getType());
+		assertEquals("Obstacle",f.getCellAt(16, 17).getFloorType().toString());
 
 		assertEquals("W",f.getCellAt(0, 7).getAdjacentCell(Direction.NORTH).toString());
 

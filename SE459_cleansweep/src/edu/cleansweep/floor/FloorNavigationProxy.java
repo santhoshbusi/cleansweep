@@ -10,7 +10,7 @@ public class FloorNavigationProxy {
 
 	private Floor _floor;
 	private Direction _headingDirection;
-	private ICell _startingCell;
+	private AbstractCell _startingCell;
 	
 	public FloorNavigationProxy(String floorPlanFilename){
 		_floor = new Floor();
@@ -27,7 +27,7 @@ public class FloorNavigationProxy {
 	 * @return
 	 */
 	public boolean canMove(Location location, Direction direction){
-		ICell peakCell = _floor.getCellAt(location.getLongitude(), location.getLatitude()).getAdjacentCell(direction);
+		AbstractCell peakCell = _floor.getCellAt(location.getLongitude(), location.getLatitude()).getAdjacentCell(direction);
 		
 		if(peakCell.isObstructed())
 			return false;
@@ -43,47 +43,10 @@ public class FloorNavigationProxy {
 	 */
 	public Location move(Location location, Direction direction){
 		
-		ICell newCell = _floor.getCellAt(location.getLongitude(), location.getLatitude()).getAdjacentCell(direction);
+		AbstractCell newCell = _floor.getCellAt(location.getLongitude(), location.getLatitude()).getAdjacentCell(direction);
 		_headingDirection = direction;
 		
 		return new Location(newCell, _headingDirection);
-		
-		/*
-		 * 
-		 * Removing checks for moves as this functionality belongs 
-		 * to control system 10/24
-		 * 
-		 */
-		
-		/*ICell sameCell = _floor.getCellAt(location.getLongitude(), location.getLatitude());
-		
-		if (canMove(location,direction)){
-			 _headingDirection = direction;
-			 return new Location(newCell, _headingDirection);
-		}
-		else{
-			_headingDirection = direction.getOpposite();
-			if(newCell.getClass() == WallCell.class){
-				System.out.println("Bump!");	
-			}
-			if(newCell.getClass() == DoorCell.class){
-				if(!newCell.isObstructed())
-					return new Location(newCell, direction);
-				else
-					System.out.println("Bump!");
-					
-			}
-			if(newCell.getClass() == ObstacleCell.class){
-				System.out.println("Bump!");
-			}
-			if(newCell.getClass() == StairsCell.class)
-			{
-				System.out.println("CRASH!!!");
-				System.out.println("You've fallen and can't get up!");
-				return null;
-			}
-			return new Location(sameCell, _headingDirection);
-		}*/
 			
 	}
 	
@@ -92,7 +55,7 @@ public class FloorNavigationProxy {
 	 * @param location the current location or Location objection in which you would like to clean
 	 */
 	public void clean(Location location){
-		ICell cell = _floor.getCellAt(location.getLongitude(), location.getLatitude());
+		AbstractCell cell = _floor.getCellAt(location.getLongitude(), location.getLatitude());
 		int x = cell.getDirt();
 		if(x == 0)
 			System.out.println("Clean");
@@ -106,32 +69,8 @@ public class FloorNavigationProxy {
 	 * @return
 	 */
 	public FloorType getFloorType(Location location){
-		ICell cell = _floor.getCellAt(location.getLongitude(), location.getLatitude());
-		
-		if(cell.getClass() == BareFloorCell.class){
-			return FloorType.BAREFLOOR;
-		}
-		else if(cell.getClass() == ChargingStationCell.class){
-			return FloorType.CHARGINGSTATION;
-		}
-		else if(cell.getClass() == DoorCell.class){
-			
-			//Check to see if Door is open or close
-			if(cell.isObstructed())
-				return FloorType.OBSTACLE;
-			else
-				return FloorType.DOOR;
-		}
-		else if(cell.getClass() == HighPileCarpetCell.class){
-			return FloorType.HIGHPILECARPET;
-		}
-		else if(cell.getClass() == LowPileCarpetCell.class){
-			return FloorType.LOWPILECARPET;
-		}
-		else{
-			return FloorType.OBSTACLE;
-		}
-		
+		AbstractCell cell = _floor.getCellAt(location.getLongitude(), location.getLatitude());
+			return cell.getFloorType();	
 	}
 	
 	/**
