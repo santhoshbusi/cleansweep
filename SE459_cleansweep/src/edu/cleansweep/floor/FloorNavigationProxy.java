@@ -64,6 +64,7 @@ public class FloorNavigationProxy {
 	}
 	
 	/**
+	 * -- DEPRECATED METHOD MOVING TO LOCATION CLASS
 	 * Returns the type of floor at location
 	 * @param location is the current location or Location object in which you would like to query
 	 * @return

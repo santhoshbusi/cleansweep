@@ -74,7 +74,7 @@ public class FloorTest {
 					// assert movingLocation is not null
 					assertNotNull(movingLocation);
 					// assert not an obstruction
-					assertNotEquals(FloorType.OBSTACLE, floorNavProxy.getFloorType(movingLocation));
+					assertNotEquals(FloorType.OBSTACLE, movingLocation.getFloorType());
 					
 					switch(d){
 					
@@ -257,7 +257,7 @@ public class FloorTest {
 					// Assert Cell isn't dirty
 					assertTrue(obstructedLocation.isClean());
 					// Assert Cell FloorType is FloorType.OBSTACLE
-					assertEquals(FloorType.OBSTACLE, floorNavProxy.getFloorType(obstructedLocation));
+					assertEquals(FloorType.OBSTACLE, obstructedLocation.getFloorType());
 					// Assert previousLocation and obstructed location are not the same object
 					assertNotEquals(previousLocation, obstructedLocation);
 				}
@@ -282,7 +282,7 @@ public class FloorTest {
 				// assert not null
 				assertNotNull(currentLocation);
 				// assert not obstacle
-				assertNotEquals(FloorType.OBSTACLE, floorNavProxy.getFloorType(currentLocation));
+				assertNotEquals(FloorType.OBSTACLE, currentLocation.getFloorType());
 				// assert not obstructed
 				assertFalse(currentLocation.isObstructed());
 				
@@ -298,7 +298,7 @@ public class FloorTest {
 				// assert not null
 				assertNotNull(currentLocation);
 				// assert not obstacle
-				assertNotEquals(FloorType.OBSTACLE, floorNavProxy.getFloorType(currentLocation));
+				assertNotEquals(FloorType.OBSTACLE, currentLocation.getFloorType());
 				// assert not obstructed
 				assertFalse(currentLocation.isObstructed());
 				
@@ -318,10 +318,10 @@ public class FloorTest {
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
 		// assert not null, not obstacle, not obstructed
 		assertNotNull(currentLocation);
-		assertNotEquals(FloorType.OBSTACLE, floorNavProxy.getFloorType(currentLocation));
+		assertNotEquals(FloorType.OBSTACLE, currentLocation.getFloorType());
 		assertFalse(currentLocation.isObstructed());
 		// assert high pile carpet
-		assertEquals(FloorType.HIGHPILECARPET, floorNavProxy.getFloorType(currentLocation));
+		assertEquals(FloorType.HIGHPILECARPET, currentLocation.getFloorType());
 	}
 		/*currentLocation = floorNavProxy.move(currentLocation, Direction.SOUTH);
 		System.out.println(currentLocation.toString());

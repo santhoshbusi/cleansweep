@@ -43,6 +43,9 @@ public class Location implements Serializable{
 		return _currentCell.isObstructed();
 	}
 	
+	public FloorType getFloorType(){
+		return _currentCell.getFloorType();
+	}
 	
 	/**
 	 * gets longitude for this location
