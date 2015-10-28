@@ -15,16 +15,17 @@ public class FloorTest {
 	@Test
 	public void testStartingLocation(){		 	
 		
-		String [] floorPlanFiles = {"TEST_A.cft", "TEST_B.cft", "TEST_C.cft", "TEST_D.cft"};
+		String [] floorPlanFiles = {"TEST_A.cft", "TEST_B.cft", "TEST_C.cft", "TEST_D.cft", "TEST_E.cft"};
 		
 		for(int i=0; i<floorPlanFiles.length; i++){
+			// should add exception handling in Floor for reading floor plan
 			floorNavProxy = new FloorNavigationProxy(floorPlanFiles[i]);
 			Location startingLocation = floorNavProxy.getStaringLocation();
 			floorNavProxy.displayLocationOnFloorInConsole(startingLocation);
 			
 			// Is Starting Location Not Null? Shouldn't be
 			assertNotNull(startingLocation);
-			// Is Starting Location Not Obstructed?  Shouldn't be
+			// Is Starting Location Obstructed?  Shouldn't be
 			assertFalse(startingLocation.isObstructed());
 			// Is Starting Location a Charging Station?  It Should Be
 			assertEquals(floorNavProxy.getFloorType(startingLocation), FloorType.CHARGINGSTATION);
@@ -37,13 +38,13 @@ public class FloorTest {
 	@Test
 	public void testMove(){
 		
-		String [] floorPlanFiles = {"TEST_A.cft", "TEST_B.cft", "TEST_C.cft", "TEST_D.cft"};
+		String [] floorPlanFiles = {"TEST_A.cft", "TEST_B.cft", "TEST_C.cft", "TEST_D.cft", "TEST_C.cft"};
 		
 		for(int i=0; i<floorPlanFiles.length; i++){
 			
 			floorNavProxy = new FloorNavigationProxy(floorPlanFiles[i]);
 			Location startingLocation = floorNavProxy.getStaringLocation();
-			floorNavProxy.displayLocationOnFloorInConsole(startingLocation);
+			//floorNavProxy.displayLocationOnFloorInConsole(startingLocation);
 			
 			Location movingLocation = startingLocation;
 			
