@@ -43,6 +43,10 @@ public class Location implements Serializable{
 		return _currentCell.isObstructed();
 	}
 	
+	/**
+	 * Returns the type of floor at location
+	 * @return location is the current location or Location object in which you would like to query
+	 */
 	public FloorType getFloorType(){
 		return _currentCell.getFloorType();
 	}

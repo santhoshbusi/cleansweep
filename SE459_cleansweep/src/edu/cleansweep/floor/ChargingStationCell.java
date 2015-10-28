@@ -10,7 +10,7 @@ class ChargingStationCell extends AbstractCell implements Serializable {
 	 */
 	private static final long serialVersionUID = 2398805126052156212L;
 	
-	public ChargingStationCell(int x, int y) {
+	ChargingStationCell(int x, int y) {
 		super(x, y);
 		// TODO Auto-generated constructor stub
 	}
@@ -18,7 +18,7 @@ class ChargingStationCell extends AbstractCell implements Serializable {
 	
 	
 	@Override
-	public FloorType getFloorType() {
+	FloorType getFloorType() {
 		return FloorType.CHARGINGSTATION;
 	}
 	

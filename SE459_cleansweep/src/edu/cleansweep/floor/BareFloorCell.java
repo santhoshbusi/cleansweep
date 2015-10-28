@@ -10,7 +10,7 @@ class BareFloorCell extends AbstractCell implements Serializable {
 	 */
 	private static final long serialVersionUID = -7566728965045014529L;
 	
-	public BareFloorCell(int x, int y){
+	BareFloorCell(int x, int y){
 		super(x,y);
 		_dirt = (int)(Math.random() * (10 - 0) + 1);
 	}
@@ -21,7 +21,7 @@ class BareFloorCell extends AbstractCell implements Serializable {
 	 * and negative percentage relative to 0 if declined
 	 */
 	@Override
-	public int getElevationGrade() {
+	int getElevationGrade() {
 		return _grade;
 	}
 
@@ -30,7 +30,7 @@ class BareFloorCell extends AbstractCell implements Serializable {
 	 * @return returns a String identifier for this object
 	 */
 	@Override
-	public FloorType getFloorType() {
+	FloorType getFloorType() {
 		return FloorType.BAREFLOOR;
 	}
 

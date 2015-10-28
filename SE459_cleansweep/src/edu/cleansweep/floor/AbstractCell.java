@@ -9,7 +9,7 @@ abstract class AbstractCell {
 	protected int _x;
 	protected int _y;
 	
-	public AbstractCell(int x, int y){
+	AbstractCell(int x, int y){
 		_adjacentCells = new AbstractCell[8];
 		_x = x;
 		_y = y;
@@ -22,7 +22,7 @@ abstract class AbstractCell {
 	 * @param direction the Direction relative to this cell
 	 * @return Adjacent AbstractCell Object in the direction relative to this AbstractCell
 	 */
-	public AbstractCell getAdjacentCell(Direction direction){
+	AbstractCell getAdjacentCell(Direction direction){
 		return _adjacentCells[direction.ordinal()];
 	}
 	
@@ -31,7 +31,7 @@ abstract class AbstractCell {
 	 * @param direction the Direction relative to this cell
 	 * @param cell The Adjacent Cell Object
 	 */
-	public void setAdjacentCell(Direction direction, AbstractCell cell){
+	void setAdjacentCell(Direction direction, AbstractCell cell){
 		//Set AdjacentCell for this to cell if there is nothing there
 		if(_adjacentCells[direction.ordinal()] == null)
 			_adjacentCells[direction.ordinal()] = cell;
@@ -43,7 +43,7 @@ abstract class AbstractCell {
 	 * subtract the amount of dirt removed from total then return the amount removed
 	 * @return amount of dirt units removed, should either be 1 if dirt was removed or 0 if no dirt was removed
 	 */
-	public int getDirt(){
+	int getDirt(){
 		if(!this.isClean()){
 			_dirt -= 1;
 			return 1;
@@ -57,7 +57,7 @@ abstract class AbstractCell {
 	 * @return 0 if cell is flat, a positive percentage relative to 0 if inclined 
 	 * and negative percentage relative to 0 if declined
 	 */
-	public int getElevationGrade(){
+	int getElevationGrade(){
 		return _grade;
 	}
 	
@@ -66,13 +66,13 @@ abstract class AbstractCell {
 	 * Implement to return the FloorType that your AbstractCell represents
 	 * @return Name of structure that your class represents
 	 */
-	public abstract FloorType getFloorType();
+	abstract FloorType getFloorType();
 	
 	/**
 	 * Return x-coordinate of cell
 	 * @return
 	 */
-	public int getX(){
+	int getX(){
 		return _x;
 	}
 	
@@ -80,7 +80,7 @@ abstract class AbstractCell {
 	 * Return y-coordinate of cell
 	 * @return
 	 */
-	public int getY(){
+	int getY(){
 		return _y;
 	}
 	
@@ -89,7 +89,7 @@ abstract class AbstractCell {
 	 * Indicates dirt status of your AbstractCell Type
 	 * @return true if clean, false if dirty
 	 */
-	public boolean isClean(){
+	boolean isClean(){
 		return _dirt == 0;
 	}
 	
@@ -97,7 +97,7 @@ abstract class AbstractCell {
 	 * Indicates that your AbstractCell Type is non-traversable 
 	 * @return true if AbstractCell cannot be traversed, false if can be
 	 */
-	public boolean isObstructed(){
+	boolean isObstructed(){
 		return false;
 	}
 }

@@ -1,6 +1,7 @@
 package edu.cleansweep.floor;
 
 import java.io.Serializable;
+import java.util.Random;
 import java.util.Arrays;
 
 class DoorCell extends AbstractCell implements Serializable {
@@ -11,29 +12,29 @@ class DoorCell extends AbstractCell implements Serializable {
 	private static final long serialVersionUID = 3650207702512000586L;
 	private boolean _open;
 	
-	public DoorCell(int x, int y){
+	DoorCell(int x, int y){
 		super(x,y);
-		_open = true;
+		_open = new Random().nextBoolean();
 	}
 	
 	@Override
-	public FloorType getFloorType() {
+	FloorType getFloorType() {
 		if(_open)
 			return FloorType.DOOR;
 		else
 			return FloorType.OBSTACLE;	
 	}
 
-	public void open(){
+	void open(){
 		_open = true;
 	}
 	
-	public void close(){
+	void close(){
 		_open = false;
 	}
 	
 	@Override
-	public boolean isObstructed() {
+	boolean isObstructed() {
 		return !_open;
 	}
 	

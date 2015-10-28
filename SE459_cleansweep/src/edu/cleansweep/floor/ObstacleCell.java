@@ -11,19 +11,19 @@ class ObstacleCell extends AbstractCell implements Serializable {
 	private static final long serialVersionUID = -6521485866250467349L;
 
 	
-	public ObstacleCell(int x, int y){
+	ObstacleCell(int x, int y){
 		super(x,y);
 		_grade = (int)(Math.random() * (100 - 0) + 1);
 	}
 	
 
 	@Override
-	public FloorType getFloorType() {
+	FloorType getFloorType() {
 		return FloorType.OBSTACLE;
 	}
 
 	@Override
-	public boolean isObstructed() {
+	boolean isObstructed() {
 		return true;
 	}
 	

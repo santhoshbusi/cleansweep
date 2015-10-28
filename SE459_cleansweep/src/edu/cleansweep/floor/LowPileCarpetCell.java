@@ -7,12 +7,12 @@ class LowPileCarpetCell extends BareFloorCell {
 	 */
 	private static final long serialVersionUID = 825513656970874362L;
 
-	public LowPileCarpetCell(int x, int y) {
+	LowPileCarpetCell(int x, int y) {
 		super(x, y);
 	}
 
 	@Override
-	public FloorType getFloorType(){
+	FloorType getFloorType(){
 		return FloorType.LOWPILECARPET;
 	}
 	
