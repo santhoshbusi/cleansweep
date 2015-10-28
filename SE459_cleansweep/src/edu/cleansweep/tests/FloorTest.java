@@ -45,7 +45,6 @@ public class FloorTest {
 			floorNavProxy = new FloorNavigationProxy(floorPlanFiles[i]);
 			Location startingLocation = floorNavProxy.getStaringLocation();
 			//floorNavProxy.displayLocationOnFloorInConsole(startingLocation);
-			
 			Location movingLocation = startingLocation;
 			
 			// Assert Moving Location and Starting Location have the same coordinates
