@@ -29,7 +29,7 @@ public class FloorNavigationProxy {
 	public boolean canMove(Location location, Direction direction){
 		AbstractCell peakCell = _floor.getCellAt(location.getLongitude(), location.getLatitude()).getAdjacentCell(direction);
 		
-		if(peakCell.isObstructed())
+		if(peakCell.isObstructed() && peakCell.getFloorType() == FloorType.OBSTACLE)
 			return false;
 		else
 			return true;
