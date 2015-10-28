@@ -1,5 +1,6 @@
 package edu.cleansweep.floor;
 
+import java.util.Arrays;
 
 abstract class AbstractCell {
 	
@@ -100,4 +101,40 @@ abstract class AbstractCell {
 	boolean isObstructed(){
 		return false;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(_adjacentCells);
+		result = prime * result + _dirt;
+		result = prime * result + _grade;
+		result = prime * result + _x;
+		result = prime * result + _y;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AbstractCell other = (AbstractCell) obj;
+		if (!Arrays.equals(_adjacentCells, other._adjacentCells))
+			return false;
+		if (_dirt != other._dirt)
+			return false;
+		if (_grade != other._grade)
+			return false;
+		if (_x != other._x)
+			return false;
+		if (_y != other._y)
+			return false;
+		return true;
+	}
+	
+	
 }
