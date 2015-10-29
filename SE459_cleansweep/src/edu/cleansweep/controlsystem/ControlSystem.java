@@ -4,10 +4,21 @@ import edu.cleansweep.floor.*;
 
 public class ControlSystem {
 
-	Location currentLocation;
-	FloorNavigationProxy floorNavProxy;
+	private int currentX;
+	private int currentY;
+	private DiscoveryMap discoveryMap;
+	
+	private Decision decision;
+	private Location currentLocation;
+	private FloorNavigationProxy floorNavProxy;
 
 	public ControlSystem(){
+		currentX = 0;
+		currentY = 0;
+		
+		discoveryMap = new DiscoveryMap();
+		discoveryMap.addToMap(new NavigationCell(currentX, currentY));
+		
 		floorNavProxy = new FloorNavigationProxy("TEST_C.cft");
 		currentLocation = floorNavProxy.getStaringLocation();
 	}
@@ -15,39 +26,17 @@ public class ControlSystem {
 	/**
 	 * This test implementation of move randomly moves the current location
 	 */
+	
 	public void move(){
+		
 		Move move = new Move(floorNavProxy);
-		int random = (int)(Math.random() * (4 - 0) + 1);
-		switch(random)
-		{
-			case 1:
-				if(floorNavProxy.canMove(currentLocation, Direction.NORTH)){
-					currentLocation = move.executeMove(currentLocation, Direction.NORTH);
-					floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
-				}
-			break;
-			
-			case 2:
-				if(floorNavProxy.canMove(currentLocation, Direction.SOUTH)){
-					currentLocation = move.executeMove(currentLocation, Direction.SOUTH);
-					floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
-				}
-			break;
-			
-			case 3:
-				if (floorNavProxy.canMove(currentLocation, Direction.WEST)){
-					currentLocation = move.executeMove(currentLocation, Direction.WEST);
-					floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
-				}
-			break;
-			
-			case 4:
-				 if (floorNavProxy.canMove(currentLocation, Direction.EAST)){
-					 currentLocation = move.executeMove(currentLocation, Direction.EAST);
-					 floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
-			}
-			break;
-		}
+		
+		decision = new Decision(currentLocation, floorNavProxy, discoveryMap, 
+				discoveryMap.get(currentX,  currentY));
+		
+		currentLocation = move.executeMove(currentLocation, decision.run());
+		
+		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
 	}
 	
 	public static void main(String [] args)
@@ -55,7 +44,7 @@ public class ControlSystem {
 		ControlSystem cs = new ControlSystem();
 		
 		int i = 0;
-		while(i < 10)
+		while(i < 15)
 		{
 			cs.move();
 			i++;
