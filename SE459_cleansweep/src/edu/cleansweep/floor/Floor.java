@@ -44,6 +44,13 @@ class Floor {
 		return _startingCell;
 	}
 	
+	ChargingStationCell getChargingStation(int x){
+		if(x < _setOfChargingStations.size())
+			return _setOfChargingStations.get(x);
+		else
+			return null;
+	}
+	
 	/**
 	 * Helper method used to return cell based on x and y location in collection
 	 * @param x x-coordinate location in collection

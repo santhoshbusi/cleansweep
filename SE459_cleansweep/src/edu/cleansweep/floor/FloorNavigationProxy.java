@@ -29,6 +29,8 @@ public class FloorNavigationProxy {
 	 */
 	public boolean canMove(Location location, Direction direction){
 		AbstractCell peakCell = _floor.getCellAt(location.getLongitude(), location.getLatitude()).getAdjacentCell(direction);
+		if(peakCell == null)
+			return false;
 		
 		if(peakCell.isObstructed() && peakCell.getFloorType() == FloorType.OBSTACLE)
 			return false;
@@ -46,8 +48,10 @@ public class FloorNavigationProxy {
 		
 		AbstractCell newCell = _floor.getCellAt(location.getLongitude(), location.getLatitude()).getAdjacentCell(direction);
 		_headingDirection = direction;
-		
-		return new Location(newCell, _headingDirection);
+		if(newCell != null)
+			return new Location(newCell, _headingDirection);
+		else
+			return null;
 			
 	}
 	
@@ -91,5 +95,11 @@ public class FloorNavigationProxy {
 		return new Location(_startingCell,_headingDirection);
 	}
  
+	/**
+	 * This method will not exist in final version, but being used for the time being
+	 */
+	public Location getChargingStation(int x){
+		return new Location(_floor.getChargingStation(x),Direction.NORTH);
+	}
 	
 }

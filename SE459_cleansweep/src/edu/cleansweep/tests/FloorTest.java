@@ -323,6 +323,64 @@ public class FloorTest {
 		// assert high pile carpet
 		assertEquals(FloorType.HIGHPILECARPET, currentLocation.getFloorType());
 	}
+	
+	@Test
+	public void testTraversePathFileE(){
+	
+		floorNavProxy = new FloorNavigationProxy("TEST_E.cft");
+		Location currentLocation = floorNavProxy.getStaringLocation();
+		
+		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+		
+		currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
+		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+		
+		currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
+		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+		
+		currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
+		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+		
+		currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
+		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+		
+		currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
+		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+		
+		currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
+		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+		
+		currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
+		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+		
+		currentLocation = floorNavProxy.move(currentLocation, Direction.EAST);
+		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+		
+		currentLocation = floorNavProxy.move(currentLocation, Direction.EAST);
+		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+		
+		currentLocation = floorNavProxy.move(currentLocation, Direction.EAST);
+		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+		
+		currentLocation = floorNavProxy.move(currentLocation, Direction.EAST);
+		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+		
+		currentLocation = floorNavProxy.move(currentLocation, Direction.EAST);
+		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+		
+		currentLocation = floorNavProxy.move(currentLocation, Direction.EAST);
+		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+		
+		if(currentLocation.isObstructed())
+			assertEquals(FloorType.OBSTACLE, currentLocation.getFloorType());
+		else
+			assertEquals(FloorType.DOOR, currentLocation.getFloorType());
+		
+		// Test can move East, should return false
+		assertFalse(floorNavProxy.canMove(currentLocation, Direction.EAST));
+		
+	}
+	
 		/*currentLocation = floorNavProxy.move(currentLocation, Direction.SOUTH);
 		System.out.println(currentLocation.toString());
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
