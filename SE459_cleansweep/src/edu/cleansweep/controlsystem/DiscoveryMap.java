@@ -39,6 +39,29 @@ public class DiscoveryMap {
 		return false;
 	}
 	
+	public int getMaxNavLayer(){
+		int maxNavLayer = 0;
+		for (NavigationCell nav: cellMap){
+			if(nav.getNavLayer() > maxNavLayer){
+				maxNavLayer = nav.getNavLayer();
+			}
+		}
+		return maxNavLayer;
+	}
+	
+	public ArrayList<NavigationCell> getTopLayerCells(){
+		
+		ArrayList<NavigationCell> topLayerList = new ArrayList<NavigationCell>();
+		int topLayer = getMaxNavLayer();
+		
+		for (NavigationCell nav: cellMap){
+			if(nav.getNavLayer() == topLayer){
+				topLayerList.add(nav);
+			}
+		}
+		return topLayerList;
+	}
+	
 	public NavigationCell get(int _x, int _y){
 		for (NavigationCell nav: cellMap){
 			if(nav.getX() == _x && nav.getY() == _y){

@@ -11,11 +11,8 @@ public class Decision {
 	
 	private Location currentLocation;
 	private FloorNavigationProxy floorNavProxy;
-	private DiscoveryMap discoveryMap;
-	private NavigationCell navCell;
 
-	public Decision(Location _currentLocation, FloorNavigationProxy _floorNavProx,
-			DiscoveryMap _map, NavigationCell _currentNavCell){
+	public Decision(Location _currentLocation, FloorNavigationProxy _floorNavProx){
 		
 		directions =  new ArrayList<Direction>();
 		directions.add(Direction.NORTH);
@@ -26,10 +23,8 @@ public class Decision {
 		currentLocation = _currentLocation;
 		
 		floorNavProxy = _floorNavProx;
-		discoveryMap = _map;
-		navCell = _currentNavCell;
-		
 	}
+	
 	
 	public void checkNorth(){
 		if(!floorNavProxy.canMove(currentLocation, Direction.NORTH)){
@@ -55,13 +50,33 @@ public class Decision {
 		}
 	}
 	
-	public Direction run(){
+	public ArrayList<Direction> checkNewAvailable(Direction _d)
+	{
+		if(_d.equals(Direction.NORTH)){
+			directions.remove(Direction.SOUTH);
+		} else if(_d.equals(Direction.SOUTH)){
+			directions.remove(Direction.NORTH);
+		} else if(_d.equals(Direction.EAST)){
+			directions.remove(Direction.WEST);
+		} else if(_d.equals(Direction.WEST)){
+			directions.remove(Direction.EAST);
+		}
+		checkNorth();
+		checkSouth();
+		checkEast();
+		checkWest();
+		
+		return directions;
+	}
+	
+	public ArrayList<Direction> checkAvailable(){
 
 		checkNorth();
 		checkSouth();
 		checkEast();
 		checkWest();
 		
+		/*
 		for(Enum e : directions){
 			if(e.equals(Direction.NORTH)){
 				if(!discoveryMap.checkMap(navCell.getX()+1, navCell.getY())){
@@ -84,6 +99,7 @@ public class Decision {
 				}
 			}
 		}
-		return directions.get(0);
+		*/
+		return directions;
 	}
 }

@@ -1,15 +1,47 @@
 package edu.cleansweep.controlsystem;
+import java.util.ArrayList;
+
+import edu.cleansweep.floor.Direction;
 import edu.cleansweep.floor.Location;
 
 public class NavigationCell {
 	private int x;
 	private int y;
-	private boolean cleanedLastVisit;
-	Location locationData;
+	private int navigationLayer;
 	
-	public NavigationCell(int _x, int _y){
+	private boolean cleanedLastVisit;
+	private Location locationData;
+	private ArrayList<Direction> adjacentDirections;
+	private ArrayList<Direction> stepsToChargeStation;
+	private ArrayList<Direction> stepsToNavCell;
+	
+	public NavigationCell(int _x, int _y, int _layer){
 		this.x = _x;
 		this.y = _y;
+		this.navigationLayer = _layer;
+		
+		adjacentDirections = new ArrayList<Direction>();
+		stepsToChargeStation = new ArrayList<Direction>();
+		stepsToNavCell = new ArrayList<Direction>();
+	}
+	
+	public ArrayList<Direction> getAdjacentList()
+	{
+		return adjacentDirections;
+	}
+	
+	public ArrayList<Direction> getStepsToChargeStation(){
+		return stepsToChargeStation;
+	}
+	
+	public void addToNavLists(Direction _dir){
+		stepsToNavCell.add(_dir);
+		stepsToChargeStation.add(0, _dir);
+		
+	}
+	
+	public ArrayList<Direction> getStepsToNavCell(){
+		return stepsToNavCell;
 	}
 	
 	public int getX() {
@@ -35,6 +67,9 @@ public class NavigationCell {
 	}
 	public void setLocationData(Location locationData) {
 		this.locationData = locationData;
+	}
+	public int getNavLayer(){
+		return this.navigationLayer;
 	}
 	
 	@Override
