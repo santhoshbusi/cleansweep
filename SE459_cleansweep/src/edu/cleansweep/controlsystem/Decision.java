@@ -25,7 +25,6 @@ public class Decision {
 		floorNavProxy = _floorNavProx;
 	}
 	
-	
 	public void checkNorth(){
 		if(!floorNavProxy.canMove(currentLocation, Direction.NORTH)){
 			directions.remove(Direction.NORTH);
@@ -76,30 +75,6 @@ public class Decision {
 		checkEast();
 		checkWest();
 		
-		/*
-		for(Enum e : directions){
-			if(e.equals(Direction.NORTH)){
-				if(!discoveryMap.checkMap(navCell.getX()+1, navCell.getY())){
-					return Direction.NORTH;
-				}
-			}
-			if(e.equals(Direction.SOUTH)){
-				if(!discoveryMap.checkMap(navCell.getX()-1, navCell.getY())){
-					return Direction.SOUTH;
-				}
-			}
-			if(e.equals(Direction.EAST)){
-				if(!discoveryMap.checkMap(navCell.getX(), navCell.getY()-1)){
-					return Direction.EAST;
-				}
-			}
-			if(e.equals(Direction.EAST)){
-				if(!discoveryMap.checkMap(navCell.getX(), navCell.getY()+1)){
-					return Direction.EAST;
-				}
-			}
-		}
-		*/
 		return directions;
 	}
 }

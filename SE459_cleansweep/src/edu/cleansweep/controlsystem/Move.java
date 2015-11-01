@@ -14,6 +14,13 @@ public class Move implements Movement {
 	@Override
 	public Location executeMove(Location _currentLoc, Direction _direction) {
 		// TODO Auto-generated method stub
-		return floorNavProxy.move(_currentLoc, _direction);
+		Location newLocation = floorNavProxy.move(_currentLoc, _direction);
+		
+		//Check if new location is clean
+		if(!newLocation.isClean()){
+			floorNavProxy.clean(newLocation);
+		}
+		
+		return newLocation;
 	}
 }

@@ -28,7 +28,5 @@ public class Vacuum
 			_floorCleaners.set_floorType(_floorType);
 			floorProxy.clean(location);
 		}
-		
-		
 	 }
 }
