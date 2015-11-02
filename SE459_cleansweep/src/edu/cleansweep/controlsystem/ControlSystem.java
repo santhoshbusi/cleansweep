@@ -173,6 +173,58 @@ public class ControlSystem {
 			currentY = 0;
 		}
 	}
+
+        //Kinda dirty I know, but it should work as an initial implementation
+        public void route_to_charger(){
+           Location charger_location = floorNavProxy.getStaringLocation();
+           int x = charger_location.getLongitude();
+           int y = charger_location.getLatitude();
+           
+           int cur_x = currentLocation.getLongitude();
+           int cur_y = currentLocation.getLatitude();
+         
+           while(x != cur_x && cur_y != y){
+              if(x != cur_x){
+                 _charger_route_x(x,y, cur_x, cur_y);
+              }else if(cur_y != y){
+                 _charger_route_y(x,y, cur_x, cur_y);
+              }
+              cur_x = currentLocation.getLongitude();
+              cur_y = currentLocation.getLatitude();
+           }
+        }
+        public void _charger_route_x(int x, int y, int cur_x, int cur_y){
+           Move move = new Move(floorNavProxy);
+           Direction direction = null;
+           if(x - cur_x < 0){
+              direction = Direction.EAST;
+           }else if(x - cur_x > 0){
+              direction = Direction.WEST;
+           }
+           Location curLocation = move.executeMove(currentLocation, direction);
+
+           if(!curLocation.isObstructed()){
+              currentLocation = curLocation;
+           }else{
+              _charger_route_y(x,y, cur_x, cur_y);
+           }
+        }
+        public void _charger_route_y(int x, int y, int cur_x, int cur_y){
+           Move move = new Move(floorNavProxy);
+           Direction direction = null;
+           if(y - cur_y < 0){
+              direction = Direction.SOUTH;
+           }else if(y - cur_y > 0){
+              direction = Direction.NORTH;
+           }
+
+           Location curLocation = move.executeMove(currentLocation, direction);
+           if(!curLocation.isObstructed()){
+              currentLocation = curLocation;
+           }else{
+              _charger_route_x(x,y, cur_x, cur_y);
+           }
+        }
 	
 	public static void main(String [] args)
 	{
