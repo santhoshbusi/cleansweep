@@ -122,10 +122,12 @@ public class ControlSystem {
 				//update required steps, add top map.
 				
 				if(!discoveryMap.checkMap(currentX, currentY)){
+					//For debugging purposes
+					/*
 					System.out.println("Creating new Navigation Cell " +
 							"X: " + currentX + " Y: " + currentY + " layer: " +
 							currentMaxNavLayer);
-					
+					*/
 					NavigationCell newNav = new NavigationCell(currentX, currentY, 
 							currentMaxNavLayer);
 					
