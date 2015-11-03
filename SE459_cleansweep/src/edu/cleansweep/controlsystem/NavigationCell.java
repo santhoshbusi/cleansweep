@@ -1,8 +1,15 @@
 package edu.cleansweep.controlsystem;
 import java.util.ArrayList;
-
 import edu.cleansweep.floor.Direction;
+import edu.cleansweep.floor.FloorNavigationProxy;
 import edu.cleansweep.floor.Location;
+
+/**
+ * Navigation cells represent locations discovered by the control system.
+ * They have their own [x,y] coordinates (relative to charging station) and
+ * can also store data about the cleanliness of the location.
+ * @author pmathieu
+ */
 
 public class NavigationCell {
 	private int x;
@@ -25,21 +32,64 @@ public class NavigationCell {
 		stepsToNavCell = new ArrayList<Direction>();
 	}
 	
+	/**
+	 * Returns the array list of available adjacent directions for the cell
+	 */
 	public ArrayList<Direction> getAdjacentList()
 	{
 		return adjacentDirections;
 	}
 	
+	/**
+	 * Returns an array list of steps to get back to the charging Station
+	 */
 	public ArrayList<Direction> getStepsToChargeStation(){
 		return stepsToChargeStation;
 	}
 	
-	public void addToNavLists(Direction _dir){
-		stepsToNavCell.add(_dir);
-		stepsToChargeStation.add(0, _dir);
-		
+	/**
+	 * Builds an Array list of Directions on how to get to the navigation cell
+	 * from the charging station.
+	 */
+	public void buildDirectionsToCell(NavigationCell _fromCell, Direction _lastDirection){
+		for(Direction _dir: _fromCell.getStepsToNavCell()){
+			this.getStepsToNavCell().add(_dir);
+		}
+		this.getStepsToNavCell().add(_lastDirection);
 	}
 	
+	/**
+	 * Builds an Array list of Directions on how to get to the charging station
+	 * from the navigation cell.
+	 */
+	public void buildDirectionsToChargingStation(NavigationCell _fromCell, Direction _lastDirection){
+		this.getStepsToChargeStation().add(0, _lastDirection.getOpposite());
+		for(Direction _dir: _fromCell.getStepsToChargeStation()){
+			this.getStepsToChargeStation().add(_dir);
+		}
+	}
+	/**
+	 * Calculates all of the available adjacent directions for a given Navigation Cell
+	 */
+	public void calculateAdjacentDirections(Location _location, FloorNavigationProxy _floorNavProxy){
+		
+		if(_floorNavProxy.canMove(_location, Direction.NORTH)){
+			this.adjacentDirections.add(Direction.NORTH);
+		}
+		if(_floorNavProxy.canMove(_location, Direction.SOUTH)){
+			this.adjacentDirections.add(Direction.SOUTH);
+		}
+		if(_floorNavProxy.canMove(_location, Direction.EAST)){
+			this.adjacentDirections.add(Direction.EAST);
+		}
+		if(_floorNavProxy.canMove(_location, Direction.WEST)){
+			this.adjacentDirections.add(Direction.WEST);
+		}
+	}
+	
+	/**
+	 * Returns an array list of steps to get to the navigation cell from the charging station
+	 */
 	public ArrayList<Direction> getStepsToNavCell(){
 		return stepsToNavCell;
 	}
@@ -84,5 +134,4 @@ public class NavigationCell {
 		}
 		return isEqual;
 	}
-
 }
