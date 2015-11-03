@@ -1,179 +1,123 @@
 package edu.cleansweep.controlsystem;
-
-import java.util.ArrayList;
-
 import edu.cleansweep.floor.*;
 
+/**
+ * Control System is responsible for controlling navigation,
+ * cleaning, repository tracking, & power management
+ * @author pmathieu
+ */
 public class ControlSystem {
 
 	private int currentX;
 	private int currentY;
 	private DiscoveryMap discoveryMap;
 	
-	private Decision decision;
 	private Location currentLocation;
 	private FloorNavigationProxy floorNavProxy;
 
-	public ControlSystem(){
+	public ControlSystem(String floorFile){
 		currentX = 0;
 		currentY = 0;
 		
 		discoveryMap = new DiscoveryMap();
 		
-		floorNavProxy = new FloorNavigationProxy("TEST_C.cft");
+		floorNavProxy = new FloorNavigationProxy(floorFile);
 		currentLocation = floorNavProxy.getStaringLocation();
 	}
 
 	/**
-	 * This test implementation of move randomly moves the current location
+	 * Used to move to a particular navigation cell
+	 * @param _navCell the destination Navigation Cell
+	 * @return current location after move
 	 */
-	
-	public void firstMove(){
-		
-		Move move = new Move(floorNavProxy);
-		
-		//Print Starting Location
-		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
-		
-		//Starting Cell
-		NavigationCell navCell = new NavigationCell(currentX, currentY, 0);
-		discoveryMap.addToMap(navCell);
-		
-		//Find What's available based on our current location
-		decision = new Decision(currentLocation, floorNavProxy);
-		
-		//run decision and store results in list
-		ArrayList<Direction> decisionList = decision.checkAvailable();
-		
-		//For each direction in ArrayList, store in navCells list
-		for(Direction _d: decisionList){
-			navCell.getAdjacentList().add(_d);
+	public Location moveToCell(NavigationCell _navCell){
+		for(Direction _dir: _navCell.getStepsToNavCell()){
+			currentLocation = executeMove(currentLocation, _dir);
 		}
-		
-		//for each possible direction, move and calculate adjacent Cells
-		for(Direction _d: navCell.getAdjacentList()){
-			
-			//move
-			currentLocation = move.executeMove(currentLocation, _d);
-			floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
-			//we need to know what integer value we're moving
-			updateCurrentXY(_d);
-			
-			//Create navigation Cell, update required steps, add top map.
-			NavigationCell newNav = new NavigationCell(currentX, currentY, 1);
-			newNav.getStepsToNavCell().add(_d);
-			newNav.getStepsToChargeStation().add(_d.getOpposite());
-			discoveryMap.addToMap(newNav);
-			
-			//Create a new decision object based on new current location
-			decision = new Decision(currentLocation, floorNavProxy);
-			decisionList = decision.checkNewAvailable(_d);
-			for(Direction _dir: decisionList){
-				newNav.getAdjacentList().add(_dir);
-			}
-			
-			//Move Back to original
-			Direction back = _d.getOpposite();
-			currentLocation = move.executeMove(currentLocation, back);
-			updateCurrentXY(back);
-			floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
-		}
+		return currentLocation;
 	}
 	
-	public void updateCurrentXY(Direction _dir){
-		if(_dir.equals(Direction.NORTH)){
+	/**
+	 * Executes a change in current location (a move)
+	 * @param _currentLocation of the control system
+	 * @param _direction intended direction of travel
+	 * @return current location after move
+	 */
+	private Location executeMove(Location _currentLocation, Direction _direction)
+	{
+		Location newLocation = floorNavProxy.move(_currentLocation, _direction);
+		
+		if(_direction.equals(Direction.NORTH)){
 			this.currentX++;
-		}else if(_dir.equals(Direction.SOUTH)){
+		}else if(_direction.equals(Direction.SOUTH)){
 			this.currentX--;
-		} else if(_dir.equals(Direction.EAST)){
+		} else if(_direction.equals(Direction.EAST)){
 			this.currentY--;
-		} else if(_dir.equals(Direction.WEST)){
+		} else if(_direction.equals(Direction.WEST)){
 			this.currentY++;
 		}
-	}
-	public void discoverFloor()
-	{
-		ArrayList<NavigationCell> topLayerList = discoveryMap.getTopLayerCells();
 		
-		Move move = new Move(floorNavProxy);
-		//floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
-		
-		int currentMaxNavLayer = discoveryMap.getMaxNavLayer() + 1;
-		
-		//For Every "Top Layer Cell" (The cells that are most recently discovered)
-		for(NavigationCell navCell: topLayerList){
-			
-			for(Direction dir: navCell.getStepsToNavCell()){
-				//Get us to the top layer cell
-				currentLocation = move.executeMove(currentLocation, dir);
-				floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
-				
-				updateCurrentXY(dir);
-			}
-			
-			//At Top Layer Cell - go through the adjacent cells
-			for(Direction _d: navCell.getAdjacentList()){
-				//Move
-				currentLocation = move.executeMove(currentLocation, _d);
-				floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
-
-				updateCurrentXY(_d);
-				//If we haven't been here - Create navigation Cell, 
-				//update required steps, add top map.
-				
-				if(!discoveryMap.checkMap(currentX, currentY)){
-					//For debugging purposes
-					/*
-					System.out.println("Creating new Navigation Cell " +
-							"X: " + currentX + " Y: " + currentY + " layer: " +
-							currentMaxNavLayer);
-					*/
-					NavigationCell newNav = new NavigationCell(currentX, currentY, 
-							currentMaxNavLayer);
-					
-					//Add back to Charge Station Directions.
-					newNav.getStepsToChargeStation().add(0, _d.getOpposite());
-					for(Direction _dirStep: navCell.getStepsToChargeStation()){
-						newNav.getStepsToChargeStation().add(_dirStep);
-					}
-					
-					//Add To Navigation Cell Directions
-					for(Direction _dirStep: navCell.getStepsToNavCell()){
-						newNav.getStepsToNavCell().add(_dirStep);
-					}
-					newNav.getStepsToNavCell().add(_d);
-					
-					//Add to our Discover Map
-					discoveryMap.addToMap(newNav);
-					
-					//Create a new decision object based on new current location
-					decision = new Decision(currentLocation, floorNavProxy);
-					ArrayList<Direction> decisionList = decision.checkNewAvailable(_d);
-					
-					for(Direction _dir: decisionList){
-						newNav.getAdjacentList().add(_dir);
-					}
-				}
-
-				//Go Back To original move
-				Direction _back = _d.getOpposite();
-				currentLocation = move.executeMove(currentLocation, _d.getOpposite());
-				floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
-
-				updateCurrentXY(_back);
-			}
-			
-			//Go Back to Charging Station
-			for(Direction dir: navCell.getStepsToChargeStation()){
-				currentLocation = move.executeMove(currentLocation, dir);
-				floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
-				
-				updateCurrentXY(dir);
-			}
-			//Just to be safe
-			currentX = 0;
-			currentY = 0;
+		//check if new location is clean
+		if(!newLocation.isClean()){
+			floorNavProxy.clean(newLocation);
 		}
+		return newLocation;
+	}
+	
+	/**
+	 * Discovers the floor plan by building an internal map of available cells.
+	 * The Power Station starts off with coordinates [0,0] - all cells adjacent
+	 * to it are labeled "1".  All Cells adjacent to those cells are labeled 
+	 * "2", and so on:
+	 * @param discoveryLayer The layer of discovery the control system should roam to.
+	 * @return void
+	 */
+	
+	/*
+	 * |3|
+	 * |2|3|
+	 * |1|2|3|
+	 * |C|1|2|3|
+	 */
+	public void discoverFloor(int _discoveryLayer)
+	{
+		//Store Starting Location Information
+		NavigationCell homeCell = discoveryMap.addNewNavigationCell(0, 0, 0);
+		homeCell.calculateAdjacentDirections(currentLocation, floorNavProxy);
+		
+		//Begin Discovery
+		for(int i = 0; i< _discoveryLayer; i++){
+			
+			//What's our current Top Layer
+			int currentMaxNavLayer = discoveryMap.getMaxNavLayer() + 1;
+			for(NavigationCell navCell: discoveryMap.getTopLayerCells()){
+				
+				currentLocation = moveToCell(navCell);
+				for(Direction _d: navCell.getAdjacentList()){
+					
+					currentLocation = executeMove(currentLocation, _d);
+					//If we haven't been here - Create navigation Cell, 
+					//update required steps, add top map.
+					if(!discoveryMap.checkMap(currentX, currentY)){
+						
+						NavigationCell newNavCell = discoveryMap.addNewNavigationCell(currentX, 
+													currentY, currentMaxNavLayer);
+						
+						//Build our lists of directions.
+						newNavCell.buildDirectionsToChargingStation(navCell, _d);
+						newNavCell.buildDirectionsToCell(navCell, _d);
+						newNavCell.calculateAdjacentDirections(currentLocation, floorNavProxy);
+					}
+					//Go Back To original layer
+					currentLocation = executeMove(currentLocation, _d.getOpposite());
+				}
+				//Go Back to Charging Station
+				for(Direction dir: navCell.getStepsToChargeStation()){
+					currentLocation = executeMove(currentLocation, dir);
+				}
+			}
+		}
+		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
 	}
 
         //Kinda dirty I know, but it should work as an initial implementation
@@ -196,14 +140,14 @@ public class ControlSystem {
            }
         }
         public void _charger_route_x(int x, int y, int cur_x, int cur_y){
-           Move move = new Move(floorNavProxy);
+           //Move move = new Move(floorNavProxy);
            Direction direction = null;
            if(x - cur_x < 0){
               direction = Direction.EAST;
            }else if(x - cur_x > 0){
               direction = Direction.WEST;
            }
-           Location curLocation = move.executeMove(currentLocation, direction);
+           Location curLocation = executeMove(currentLocation, direction);
 
            if(!curLocation.isObstructed()){
               currentLocation = curLocation;
@@ -212,7 +156,7 @@ public class ControlSystem {
            }
         }
         public void _charger_route_y(int x, int y, int cur_x, int cur_y){
-           Move move = new Move(floorNavProxy);
+           //Move move = new Move(floorNavProxy);
            Direction direction = null;
            if(y - cur_y < 0){
               direction = Direction.SOUTH;
@@ -220,7 +164,7 @@ public class ControlSystem {
               direction = Direction.NORTH;
            }
 
-           Location curLocation = move.executeMove(currentLocation, direction);
+           Location curLocation = executeMove(currentLocation, direction);
            if(!curLocation.isObstructed()){
               currentLocation = curLocation;
            }else{
@@ -230,14 +174,8 @@ public class ControlSystem {
 	
 	public static void main(String [] args)
 	{
-		ControlSystem cs = new ControlSystem();
-		cs.firstMove();
-		
-		int i = 0;
-		while(i < 20)
-		{
-			cs.discoverFloor();
-			i++;
-		}
+		ControlSystem cs = new ControlSystem("TEST_C.cft");
+		cs.discoverFloor(7);
+		cs.discoveryMap.printMap();
 	}
 }
