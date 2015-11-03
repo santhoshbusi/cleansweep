@@ -21,7 +21,6 @@ public class DiscoveryMap {
 	 * @return False if addition failed
 	 */
 	public boolean addToMap(NavigationCell _navCell){
-		
 		if(checkMap(_navCell.getX(), _navCell.getY())){
 			return false;
 		}

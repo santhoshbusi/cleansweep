@@ -20,7 +20,6 @@ public class ControlSystem {
 		currentY = 0;
 		
 		discoveryMap = new DiscoveryMap();
-		
 		floorNavProxy = new FloorNavigationProxy(floorFile);
 		currentLocation = floorNavProxy.getStaringLocation();
 	}
@@ -139,6 +138,7 @@ public class ControlSystem {
               cur_y = currentLocation.getLatitude();
            }
         }
+        
         public void _charger_route_x(int x, int y, int cur_x, int cur_y){
            //Move move = new Move(floorNavProxy);
            Direction direction = null;
