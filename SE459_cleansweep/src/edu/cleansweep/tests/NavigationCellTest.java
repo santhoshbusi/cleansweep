@@ -9,6 +9,8 @@ import org.junit.Test;
 
 import edu.cleansweep.controlsystem.*;
 import edu.cleansweep.floor.Direction;
+import edu.cleansweep.floor.FloorNavigationProxy;
+import edu.cleansweep.floor.Location;
 
 public class NavigationCellTest {
 	
@@ -116,5 +118,28 @@ public class NavigationCellTest {
 		NavigationCell testCell4 = new NavigationCell(1,1,1);
 		
 		assertTrue(testCell3.equals(testCell4));
+	}
+	
+	@Test
+	public void adjacentCellTest(){
+		
+		NavigationCell navCell = new NavigationCell(1,1,1);
+		FloorNavigationProxy floorNavProxy = new FloorNavigationProxy("TEST_C.cft");
+		Location currentLocation = floorNavProxy.getStaringLocation();
+		
+		if(floorNavProxy.canMove(currentLocation, Direction.SOUTH)){
+			navCell.getAdjacentList().add(Direction.SOUTH);
+		}
+		if(floorNavProxy.canMove(currentLocation, Direction.EAST)){
+			navCell.getAdjacentList().add(Direction.EAST);
+		}
+		if(floorNavProxy.canMove(currentLocation, Direction.NORTH)){
+			navCell.getAdjacentList().add(Direction.NORTH);
+		}
+		if(floorNavProxy.canMove(currentLocation, Direction.WEST)){
+			navCell.getAdjacentList().add(Direction.WEST);
+		}
+		assertEquals(navCell.getAdjacentList().get(0),Direction.NORTH);
+		assertEquals(navCell.getAdjacentList().get(1),Direction.WEST);
 	}
 }

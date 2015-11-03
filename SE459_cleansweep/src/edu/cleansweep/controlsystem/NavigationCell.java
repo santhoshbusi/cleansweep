@@ -48,6 +48,13 @@ public class NavigationCell {
 	}
 	
 	/**
+	 * Returns an array list of steps to get to the navigation cell from the charging station
+	 */
+	public ArrayList<Direction> getStepsToNavCell(){
+		return stepsToNavCell;
+	}
+	
+	/**
 	 * Builds an Array list of Directions on how to get to the navigation cell
 	 * from the charging station.
 	 */
@@ -85,13 +92,6 @@ public class NavigationCell {
 		if(_floorNavProxy.canMove(_location, Direction.WEST)){
 			this.adjacentDirections.add(Direction.WEST);
 		}
-	}
-	
-	/**
-	 * Returns an array list of steps to get to the navigation cell from the charging station
-	 */
-	public ArrayList<Direction> getStepsToNavCell(){
-		return stepsToNavCell;
 	}
 	
 	public int getX() {
