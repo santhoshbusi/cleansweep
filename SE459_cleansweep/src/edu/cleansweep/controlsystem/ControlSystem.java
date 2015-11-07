@@ -218,7 +218,7 @@ public class ControlSystem {
 	public static void main(String [] args)
 	{
 		ControlSystem cs = new ControlSystem("TEST_C.cft");
-		cs.discoverFloor(7);
+		cs.discoverFloor(11);
 		
 		while(cs.discoveryMap.dirtyCellsRemain()){
 			cs.goToDirt();
