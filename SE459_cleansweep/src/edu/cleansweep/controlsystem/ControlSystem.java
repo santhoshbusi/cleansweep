@@ -143,6 +143,15 @@ public class ControlSystem {
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
 	}
 	
+	/**
+	 * This Method runs after the floor plan has been discovered and brings 
+	 * the robot back to every location that required cleaning on the last visit
+	 * this method will run until the entire floor is clean.  It's relatively
+	 * in-efficient as the robot has to return to the control station before it can
+	 * navigate to the next dirty location.
+	 * @return void
+	 */
+	
 	public void goToDirt()
 	{
 		for(NavigationCell _navCell: discoveryMap.getNavigationCells()){
