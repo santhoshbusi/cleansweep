@@ -38,6 +38,13 @@ public class ControlSystem {
 		return currentLocation;
 	}
 	
+	public Location moveToChargeStation(NavigationCell _navCell){
+		for(Direction _dir: _navCell.getStepsToChargeStation()){
+			currentLocation = executeMove(currentLocation, _dir);
+		}
+		return currentLocation;
+	}
+	
 	/**
 	 * Executes a change in current location (a move)
 	 * @param _currentLocation of the control system
@@ -57,6 +64,12 @@ public class ControlSystem {
 		} else if(_direction.equals(Direction.WEST)){
 			this.currentY++;
 		}
+		
+		//If we have Navigation Data on this location
+		if(discoveryMap.checkMap(currentX, currentY)){
+			checkClean(discoveryMap.get(currentX, currentY), newLocation);
+		}
+		
 		return newLocation;
 	}
 	
@@ -115,7 +128,7 @@ public class ControlSystem {
 						newNavCell.calculateAdjacentDirections(currentLocation, floorNavProxy);
 					}
 					
-					//We Need Some sort of clean logic
+					//Check if the newly 
 					checkClean(discoveryMap.get(currentX, currentY), currentLocation);
 					
 					//Go Back To original layer
@@ -128,6 +141,16 @@ public class ControlSystem {
 			}
 		}
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+	}
+	
+	public void goToDirt()
+	{
+		for(NavigationCell _navCell: discoveryMap.getNavigationCells()){
+			if(_navCell.isCleanedLastVisit()){
+				moveToCell(_navCell);
+				moveToChargeStation(_navCell);
+			}
+		}
 	}
 
         //Kinda dirty I know, but it should work as an initial implementation
@@ -187,6 +210,13 @@ public class ControlSystem {
 	{
 		ControlSystem cs = new ControlSystem("TEST_C.cft");
 		cs.discoverFloor(7);
+		
+		while(cs.discoveryMap.dirtyCellsRemain()){
+			cs.goToDirt();
+			
+			System.out.println("Number of Potentially Dirty Cells: " + 
+					cs.discoveryMap.countDirtyCells());
+		}
 		cs.discoveryMap.printMap();
 	}
 }

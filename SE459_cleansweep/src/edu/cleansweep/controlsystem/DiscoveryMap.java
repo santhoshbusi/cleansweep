@@ -131,6 +131,43 @@ public class DiscoveryMap {
 	}
 	
 	/**
+	 * Retrieves the Array list of Navigation Cells
+	 * @return The Navigation Cell that matches input coordinates.
+	 */
+	public ArrayList<NavigationCell> getNavigationCells(){
+		return cellMap;
+	}
+	
+	/**
+	 * Retrieves the Number of dirty cells left on the floor plan
+	 * (based on whether or not we cleaned it on the last visit)
+	 * @return The Count of [potentially] dirty cells
+	 */
+	public int countDirtyCells(){
+		int cnt = 0;
+		for(NavigationCell nav: cellMap){
+			if(nav.isCleanedLastVisit()){
+				cnt++;
+			}
+		}
+		return cnt;
+	}
+	
+	/**
+	 * Iterates through internal list of navigation areas to see if there
+	 * are any remaining cells that might be dirty
+	 * (based on whether or not we cleaned it on the last visit)
+	 * @return boolen indicating if dirty cells remain
+	 */
+	public boolean dirtyCellsRemain(){
+		for(NavigationCell nav: cellMap){
+			if(nav.isCleanedLastVisit()){
+				return true;
+			}
+		}
+		return false;
+	}
+	/**
 	 * Prints the current map
 	 */
 	public void printMap(){
