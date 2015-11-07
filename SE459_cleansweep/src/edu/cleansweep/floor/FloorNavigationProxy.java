@@ -84,7 +84,16 @@ public class FloorNavigationProxy {
 	 * @param location the Location object representing a particular location on floor
 	 */
 	public void displayLocationOnFloorInConsole(Location location){
-		 System.out.println(_floor.markCellAt(location.getLongitude(), location.getLatitude()));
+		 System.out.println(_floor.markCellAt(location.getLongitude(), location.getLatitude(), false));
+	}
+	
+	/** 
+	 * Displays output of the location on the floor to console, with dirt counts
+	 * @param location the location object representing a particular location on floor
+	 * @param showDirtAmount boolean for whether to show cells dirt amount or type
+	 */
+	public void displayLocationOnFloorInConsole(Location location, boolean showDirtAmount){
+		 System.out.println(_floor.markCellAt(location.getLongitude(), location.getLatitude(), showDirtAmount));
 	}
 	
 	/**

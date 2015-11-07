@@ -104,6 +104,9 @@ public class ControlSystem {
 		NavigationCell homeCell = discoveryMap.addNewNavigationCell(0, 0, 0, currentLocation);
 		homeCell.calculateAdjacentDirections(currentLocation, floorNavProxy);
 		
+		//See initial dirt map
+		floorNavProxy.displayLocationOnFloorInConsole(currentLocation, true);
+		
 		//Begin Discovery
 		for(int i = 0; i< _discoveryLayer; i++){
 			
@@ -140,7 +143,7 @@ public class ControlSystem {
 				}
 			}
 		}
-		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+		floorNavProxy.displayLocationOnFloorInConsole(currentLocation, true);
 	}
 	
 	/**

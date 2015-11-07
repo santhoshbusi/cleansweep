@@ -41,7 +41,7 @@ class FloorJunitTest {
 	
 		System.out.println(f.toString());
 		System.out.println(f.queryCellAt(0,7));
-		System.out.println(f.markCellAt(0,7));
+		System.out.println(f.markCellAt(0,7, false));
 		System.out.println(f.visitAllCells());
 
 	

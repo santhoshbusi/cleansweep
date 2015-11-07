@@ -85,6 +85,13 @@ abstract class AbstractCell {
 		return _y;
 	}
 	
+	/**
+	 * Method for testing purposes, used to show the amount of dirt at this cell
+	 * @return
+	 */
+	int showDirtAmount(){
+		return _dirt;
+	}
 	
 	/**
 	 * Indicates dirt status of your AbstractCell Type

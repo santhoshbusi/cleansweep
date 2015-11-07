@@ -275,14 +275,17 @@ class Floor {
 	 * @param y y-coordinate of _floor 
 	 * @return
 	 */
-	String markCellAt(int x, int y){
+	String markCellAt(int x, int y, boolean showDirt){
 		StringBuilder sb = new StringBuilder();
 		for(int xi=0; xi<_floor.size(); xi++){
 			for(int yi=0; yi<_floor.get(xi).size(); yi++){
 				if(xi == x && yi == y)
 					sb.append("* ");
 				else
-					sb.append(_floor.get(xi).get(yi).toString()).append(" ");
+					if(!showDirt)
+						sb.append(_floor.get(xi).get(yi).toString()).append(" ");
+					else
+						sb.append(_floor.get(xi).get(yi).showDirtAmount()).append(" ");
 			}
 			sb.append("\n");
 		}
@@ -297,7 +300,7 @@ class Floor {
 		StringBuilder sb = new StringBuilder();
 		for(int x=0; x<_floor.size(); x++){
 			for(int y=0; y<_floor.get(x).size(); y++){
-				sb.append(queryCellAt(x, y)).append("\n").append(markCellAt(y,x)).append("\n");
+				sb.append(queryCellAt(x, y)).append("\n").append(markCellAt(y,x, false)).append("\n");
 			}
 		}
 		return sb.toString();
