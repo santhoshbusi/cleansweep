@@ -14,6 +14,7 @@ public class ControlSystem {
 	
 	private Location currentLocation;
 	private FloorNavigationProxy floorNavProxy;
+	private Vacuum vacuum;
 
 	public ControlSystem(String floorFile){
 		currentX = 0;
@@ -22,6 +23,7 @@ public class ControlSystem {
 		discoveryMap = new DiscoveryMap();
 		floorNavProxy = new FloorNavigationProxy(floorFile);
 		currentLocation = floorNavProxy.getStaringLocation();
+		vacuum = new Vacuum(floorNavProxy);
 	}
 
 	/**
@@ -48,19 +50,24 @@ public class ControlSystem {
 		
 		if(_direction.equals(Direction.NORTH)){
 			this.currentX++;
-		}else if(_direction.equals(Direction.SOUTH)){
+		} else if(_direction.equals(Direction.SOUTH)){
 			this.currentX--;
 		} else if(_direction.equals(Direction.EAST)){
 			this.currentY--;
 		} else if(_direction.equals(Direction.WEST)){
 			this.currentY++;
 		}
-		
-		//check if new location is clean
-		if(!newLocation.isClean()){
-			floorNavProxy.clean(newLocation);
-		}
 		return newLocation;
+	}
+	
+	private void checkClean(NavigationCell _navCell, Location _currentLocation){
+		if(!_currentLocation.isClean()){
+			vacuum.doClean(_currentLocation);
+			_navCell.setCleanedLastVisit(true);
+		}
+		else {
+			_navCell.setCleanedLastVisit(false);
+		}
 	}
 	
 	/**
@@ -81,7 +88,7 @@ public class ControlSystem {
 	public void discoverFloor(int _discoveryLayer)
 	{
 		//Store Starting Location Information
-		NavigationCell homeCell = discoveryMap.addNewNavigationCell(0, 0, 0);
+		NavigationCell homeCell = discoveryMap.addNewNavigationCell(0, 0, 0, currentLocation);
 		homeCell.calculateAdjacentDirections(currentLocation, floorNavProxy);
 		
 		//Begin Discovery
@@ -100,13 +107,17 @@ public class ControlSystem {
 					if(!discoveryMap.checkMap(currentX, currentY)){
 						
 						NavigationCell newNavCell = discoveryMap.addNewNavigationCell(currentX, 
-													currentY, currentMaxNavLayer);
+													currentY, currentMaxNavLayer, currentLocation);
 						
 						//Build our lists of directions.
 						newNavCell.buildDirectionsToChargingStation(navCell, _d);
 						newNavCell.buildDirectionsToCell(navCell, _d);
 						newNavCell.calculateAdjacentDirections(currentLocation, floorNavProxy);
 					}
+					
+					//We Need Some sort of clean logic
+					checkClean(discoveryMap.get(currentX, currentY), currentLocation);
+					
 					//Go Back To original layer
 					currentLocation = executeMove(currentLocation, _d.getOpposite());
 				}

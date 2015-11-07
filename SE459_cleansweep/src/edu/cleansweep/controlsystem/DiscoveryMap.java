@@ -1,6 +1,8 @@
 package edu.cleansweep.controlsystem;
 import java.util.ArrayList;
 
+import edu.cleansweep.floor.Location;
+
 /**
  * This map is esentially a collection of methods wrapped around an array list that
  * represents what the control system has discovered.
@@ -40,6 +42,16 @@ public class DiscoveryMap {
 		NavigationCell newNavCell = null;
 		if(!checkMap(_x, _y)){
 			newNavCell = new NavigationCell(_x, _y, _layer);
+			cellMap.add(newNavCell);
+		}
+		return newNavCell;
+	}
+	
+	public NavigationCell addNewNavigationCell(int _x, int _y, int _layer, Location _locationData){
+		
+		NavigationCell newNavCell = null;
+		if(!checkMap(_x, _y)){
+			newNavCell = new NavigationCell(_x, _y, _layer, _locationData);
 			cellMap.add(newNavCell);
 		}
 		return newNavCell;

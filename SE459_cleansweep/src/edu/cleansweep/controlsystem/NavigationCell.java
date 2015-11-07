@@ -32,11 +32,21 @@ public class NavigationCell {
 		stepsToNavCell = new ArrayList<Direction>();
 	}
 	
+	public NavigationCell(int _x, int _y, int _layer, Location _locationData){
+		this.x = _x;
+		this.y = _y;
+		this.navigationLayer = _layer;
+		this.locationData = _locationData;
+		
+		adjacentDirections = new ArrayList<Direction>();
+		stepsToChargeStation = new ArrayList<Direction>();
+		stepsToNavCell = new ArrayList<Direction>();
+	}
+	
 	/**
 	 * Returns the array list of available adjacent directions for the cell
 	 */
-	public ArrayList<Direction> getAdjacentList()
-	{
+	public ArrayList<Direction> getAdjacentList(){
 		return adjacentDirections;
 	}
 	
@@ -128,7 +138,6 @@ public class NavigationCell {
 		boolean isEqual = false;
 		
 		if(_object != null && _object instanceof NavigationCell){
-			
 			isEqual = ((this.x == ((NavigationCell)_object).x) &&
 						this.y == ((NavigationCell)_object).y);
 		}
