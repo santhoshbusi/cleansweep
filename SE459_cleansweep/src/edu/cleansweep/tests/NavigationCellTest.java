@@ -1,10 +1,7 @@
 package edu.cleansweep.tests;
 
 import static org.junit.Assert.*;
-
 import java.util.ArrayList;
-
-import org.junit.AfterClass;
 import org.junit.Test;
 
 import edu.cleansweep.controlsystem.*;
