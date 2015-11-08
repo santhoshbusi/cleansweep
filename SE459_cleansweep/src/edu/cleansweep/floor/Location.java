@@ -52,6 +52,15 @@ public class Location implements Serializable{
 	}
 	
 	/**
+	 * The cost in power units it takes to traverse this location
+	 * @return the cost in power units (integers) it takes to traverse this location 
+	 */
+	public int getPowerCost(){
+		return _currentCell.getPowerCost();
+	}
+	
+	
+	/**
 	 * gets longitude for this location
 	 * @return longitude represented by x coordinate
 	 */

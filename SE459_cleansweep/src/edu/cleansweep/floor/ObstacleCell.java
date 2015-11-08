@@ -21,6 +21,14 @@ class ObstacleCell extends AbstractCell implements Serializable {
 	FloorType getFloorType() {
 		return FloorType.OBSTACLE;
 	}
+	
+	/**
+	 * Obstacle Cells cannot be traversed so they are ignored.
+	 */
+	@Override
+	int getPowerCost() {
+		return 0;
+	}
 
 	@Override
 	boolean isObstructed() {

@@ -69,6 +69,14 @@ abstract class AbstractCell {
 	 */
 	abstract FloorType getFloorType();
 	
+	
+	/**
+	 * Implement to return the cost in power units (integer) traversing 
+	 * this cell will cost
+	 * @return
+	 */
+	abstract int getPowerCost();
+	
 	/**
 	 * Return x-coordinate of cell
 	 * @return

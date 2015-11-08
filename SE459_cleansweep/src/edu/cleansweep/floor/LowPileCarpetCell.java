@@ -16,6 +16,14 @@ class LowPileCarpetCell extends BareFloorCell {
 		return FloorType.LOWPILECARPET;
 	}
 	
+	/** 
+	 * It Costs 2 Power Units to traverse LowPileCarpetCells
+	 */
+	@Override
+	int getPowerCost() {
+		return 2;
+	}
+	
 	@Override
 	public String toString() {
 		return "L";
