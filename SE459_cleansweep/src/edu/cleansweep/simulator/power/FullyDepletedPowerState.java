@@ -5,7 +5,7 @@ import edu.cleansweep.floor.Location;
 class FullyDepletedPowerState extends PowerState {
 
 	FullyDepletedPowerState(){
-		System.out.println("Entering FullyDepletedPowerState");
+		System.out.println("[PowerState] Entering FullyDepletedPowerState");
 		_currentCharge = 0;
 	}
 	

@@ -1,7 +1,11 @@
 package edu.cleansweep.simulator.power;
 
 import edu.cleansweep.floor.Location;
-
+/**
+ * Used to keep track of Current Power State and Power Units Remaining 
+ * @author ajscilingo
+ *
+ */
 public class PowerManager {
 
 	private PowerState _currentState;
@@ -10,18 +14,33 @@ public class PowerManager {
 		_currentState = new FullyChargedPowerState();
 	}
 	
+	/**
+	 * Set Power State
+	 * @param powerState new instance of PowerState representing current PowerState
+	 */
 	void setCurrentState(PowerState powerState){
 		_currentState = powerState;
 	}
 	
+	/**
+	 * Current Power State
+	 * @returns Current Power State
+	 */
 	PowerState getCurrentState(){
 		return _currentState;
 	}
 	
+	/**
+	 * Current Charge Level (Power units remaining)
+	 * @return integer value of current charge level 
+	 */
 	public int getCurrentCharge(){
 		return _currentState.getCurrentCharge();
 	}
 	
+	/**
+	 * Call this when at a PowerStation to Change State from Discharging to Charging
+	 */
 	public void charge(){
 		_currentState = new ChargingPowerState(_currentState.getCurrentCharge());
 	}
