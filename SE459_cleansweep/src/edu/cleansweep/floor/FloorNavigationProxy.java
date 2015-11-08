@@ -63,9 +63,9 @@ public class FloorNavigationProxy {
 		AbstractCell cell = _floor.getCellAt(location.getLongitude(), location.getLatitude());
 		int x = cell.getDirt();
 		if(x == 0)
-			System.out.println("Clean");
+			System.out.println("[FloorNavigationProxy] No Dirt Present to Be Removed");
 		else
-			System.out.println("Removing Dirt");
+			System.out.println("[FloorNavigationProxy] Dirt Being Removed From Floor");
 	}
 	
 	/**
