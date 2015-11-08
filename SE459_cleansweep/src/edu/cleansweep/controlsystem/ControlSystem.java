@@ -243,9 +243,10 @@ public class ControlSystem {
 	
 	public static void main(String [] args)
 	{
-		ControlSystem cs = new ControlSystem("TEST_C.cft");
-		cs.discoverFloor(11);
-		
+		ControlSystem cs = new ControlSystem("TEST_B.cft");
+		//cs.floorNavProxy.displayLocationOnFloorInConsole(cs.currentLocation, true);
+		cs.discoverFloor(20);
+		cs.floorNavProxy.displayLocationOnFloorInConsole(cs.currentLocation, true);
 		while(cs.discoveryMap.dirtyCellsRemain()){
 			cs.goToDirt();
 			
@@ -253,5 +254,6 @@ public class ControlSystem {
 					cs.discoveryMap.countDirtyCells());
 		}
 		cs.discoveryMap.printMap();
+		cs.floorNavProxy.displayLocationOnFloorInConsole(cs.currentLocation, true);
 	}
 }
