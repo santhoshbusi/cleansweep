@@ -34,6 +34,13 @@ class BareFloorCell extends AbstractCell implements Serializable {
 		return FloorType.BAREFLOOR;
 	}
 
+	/**
+	 * It costs 1 power unit (integer) to traverse BareFloorCells
+	 */
+	@Override
+	int getPowerCost() {
+		return 1;
+	}
 	
 	@Override
 	public int hashCode() {

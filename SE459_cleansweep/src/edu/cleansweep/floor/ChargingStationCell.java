@@ -22,6 +22,14 @@ class ChargingStationCell extends AbstractCell implements Serializable {
 		return FloorType.CHARGINGSTATION;
 	}
 	
+	/**
+	 * Charging Station Cells do not cost power units.
+	 */
+	@Override
+	int getPowerCost() {
+		return 0;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -54,4 +62,5 @@ class ChargingStationCell extends AbstractCell implements Serializable {
 	public String toString() {
 		return "C";
 	}
+
 }

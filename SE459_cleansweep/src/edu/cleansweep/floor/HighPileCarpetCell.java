@@ -12,6 +12,14 @@ class HighPileCarpetCell extends BareFloorCell {
 		super(x, y);
 	}
 
+	/**
+	 * It Costs 3 Power Units to traverse LowPileCarpetCells
+	 */
+	@Override
+	int getPowerCost() {
+		return 3;
+	}
+	
 	@Override
 	FloorType getFloorType(){
 		return FloorType.HIGHPILECARPET;

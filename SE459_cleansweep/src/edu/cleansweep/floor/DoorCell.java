@@ -25,6 +25,14 @@ class DoorCell extends AbstractCell implements Serializable {
 			return FloorType.OBSTACLE;	
 	}
 
+	/**
+	 * Door Cells are ignored
+	 */
+	@Override
+	int getPowerCost() {
+		return 0;
+	}
+	
 	void open(){
 		_open = true;
 	}

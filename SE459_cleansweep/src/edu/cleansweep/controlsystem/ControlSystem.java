@@ -1,5 +1,6 @@
 package edu.cleansweep.controlsystem;
 import edu.cleansweep.floor.*;
+import edu.cleansweep.simulator.power.PowerManager;
 
 /**
  * Control System is responsible for controlling navigation,
@@ -15,6 +16,7 @@ public class ControlSystem {
 	private Location currentLocation;
 	private FloorNavigationProxy floorNavProxy;
 	private Vacuum vacuum;
+	private PowerManager powerManager;
 
 	public ControlSystem(String floorFile){
 		currentX = 0;
@@ -24,8 +26,9 @@ public class ControlSystem {
 		floorNavProxy = new FloorNavigationProxy(floorFile);
 		currentLocation = floorNavProxy.getStaringLocation();
 		vacuum = new Vacuum(floorNavProxy);
+		powerManager = new PowerManager();
+		System.out.println(powerManager.toString());
 	}
-
 	/**
 	 * Used to move to a particular navigation cell
 	 * @param _navCell the destination Navigation Cell
@@ -53,7 +56,12 @@ public class ControlSystem {
 	 */
 	private Location executeMove(Location _currentLocation, Direction _direction)
 	{
+		
 		Location newLocation = floorNavProxy.move(_currentLocation, _direction);
+		
+		// Update Power Consumption
+		powerManager.update(_currentLocation, newLocation);
+		System.out.println(powerManager.toString());
 		
 		if(_direction.equals(Direction.NORTH)){
 			this.currentX++;
