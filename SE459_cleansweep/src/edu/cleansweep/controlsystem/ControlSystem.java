@@ -1,4 +1,8 @@
 package edu.cleansweep.controlsystem;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Stack;
+
 import edu.cleansweep.floor.*;
 
 /**
@@ -165,57 +169,76 @@ public class ControlSystem {
 		}
 	}
 
-        //Kinda dirty I know, but it should work as an initial implementation
-        public void route_to_charger(){
-           Location charger_location = floorNavProxy.getStaringLocation();
-           int x = charger_location.getLongitude();
-           int y = charger_location.getLatitude();
-           
-           int cur_x = currentLocation.getLongitude();
-           int cur_y = currentLocation.getLatitude();
-         
-           while(x != cur_x && cur_y != y){
-              if(x != cur_x){
-                 _charger_route_x(x,y, cur_x, cur_y);
-              }else if(cur_y != y){
-                 _charger_route_y(x,y, cur_x, cur_y);
+        public Stack<Direction> shortest_route_to_charger(Location charger_location){
+           if(charger_location == null){
+              //If the charger supplied is null, use starting location as a default
+              charger_location = floorNavProxy.getStaringLocation();
+           }
+           //I use a hashmap since the DiscoverMap cells won't always be in linear order making checking of ArrayList and Vector values expensive
+           HashMap<Integer, HashMap<Integer, Integer>> dist    = new HashMap<Integer, HashMap<Integer, Integer>>();
+           HashMap<NavigationCell, Direction> prev    = new HashMap<NavigationCell, Direction>();
+
+           ArrayList<NavigationCell> map = discoveryMap.getNavigationCells();
+           //Initialize hashmap
+           for(NavigationCell nav: map){
+              HashMap<Integer, Integer> curDistMap = dist.get(nav.getX());
+              if(curDistMap == null){
+                 curDistMap = new HashMap<Integer, Integer>();
               }
-              cur_x = currentLocation.getLongitude();
-              cur_y = currentLocation.getLatitude();
+              curDistMap.put(nav.getY(), Integer.MAX_VALUE);
+              dist.put(nav.getX(), curDistMap);
            }
-        }
-        
-        public void _charger_route_x(int x, int y, int cur_x, int cur_y){
-           //Move move = new Move(floorNavProxy);
-           Direction direction = null;
-           if(x - cur_x < 0){
-              direction = Direction.EAST;
-           }else if(x - cur_x > 0){
-              direction = Direction.WEST;
-           }
-           Location curLocation = executeMove(currentLocation, direction);
+           dist.get(currentX).put(currentY, 0);
+           while(!map.isEmpty()){
+              int x = Integer.MAX_VALUE;
+              NavigationCell curCell = null;
+              //Get unvisited cell with the shortest tentative distance
+              for(NavigationCell nav: map){
+                 int cur_x = dist.get(nav.getX()).get(nav.getY());
+                 if( cur_x < x){
+                    x = cur_x;
+                    curCell = nav;
+                 }
+              }
+              int cur_x = curCell.getX();
+              int cur_y = curCell.getY();
+              if(cur_x == charger_location.getLongitude() && cur_y == charger_location.getLatitude()){
+                 break;
+              }
 
-           if(!curLocation.isObstructed()){
-              currentLocation = curLocation;
-           }else{
-              _charger_route_y(x,y, cur_x, cur_y);
-           }
-        }
-        public void _charger_route_y(int x, int y, int cur_x, int cur_y){
-           //Move move = new Move(floorNavProxy);
-           Direction direction = null;
-           if(y - cur_y < 0){
-              direction = Direction.SOUTH;
-           }else if(y - cur_y > 0){
-              direction = Direction.NORTH;
-           }
+              //Cell has been visited, remove it from the list
+              map.remove(curCell);
 
-           Location curLocation = executeMove(currentLocation, direction);
-           if(!curLocation.isObstructed()){
-              currentLocation = curLocation;
-           }else{
-              _charger_route_x(x,y, cur_x, cur_y);
+              ArrayList<Direction> neighbors = curCell.getAdjacentList();
+              //Check neighboring cells
+              for(Direction d:neighbors){
+                 //Initialize neighbor coordinates to the current cells
+                 int n_x = cur_x;
+                 int n_y = cur_y;
+                 if(d == Direction.EAST){
+                    n_x -= 1;
+                 }else if(d == Direction.WEST){
+                    n_x += 1;
+                 }else if(d == Direction.SOUTH){
+                    n_y -= 1;
+                 }else{
+                    n_y += 1;
+                 }
+                 int alt = x + 1;
+                 if(alt < dist.get(n_x).get(n_y)){
+                    dist.get(n_x).put(n_y, alt);
+                    NavigationCell neighbor = discoveryMap.get(n_x, n_y);
+                    prev.put(neighbor, d);
+                 }
+              }
            }
+           NavigationCell curCell = null;
+           Stack<Direction> path = new Stack<Direction>();
+           while(prev.get(curCell) != null){ 
+              Direction d = prev.get(curCell);
+              path.add(d); 
+           }
+           return path;
         }
 	
 	public static void main(String [] args)
