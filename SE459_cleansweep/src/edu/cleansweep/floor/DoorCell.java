@@ -79,6 +79,9 @@ class DoorCell extends AbstractCell implements Serializable {
 
 	@Override
 	public String toString() {
-		return "D";
+		if(_open)
+			return "D";
+		else
+			return "Đ";
 	}
 }

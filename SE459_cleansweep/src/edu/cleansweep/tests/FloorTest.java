@@ -332,133 +332,179 @@ public class FloorTest {
 		
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
 		
+		assertTrue(floorNavProxy.canMove(currentLocation, Direction.NORTH));
 		currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
 		
+		assertTrue(floorNavProxy.canMove(currentLocation, Direction.NORTH));
 		currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
 		
+		assertTrue(floorNavProxy.canMove(currentLocation, Direction.NORTH));
 		currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
 		
+		assertTrue(floorNavProxy.canMove(currentLocation, Direction.NORTH));
 		currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
 		
+		assertTrue(floorNavProxy.canMove(currentLocation, Direction.NORTH));
 		currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
 		
+		assertTrue(floorNavProxy.canMove(currentLocation, Direction.NORTH));
 		currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
 		
+		assertTrue(floorNavProxy.canMove(currentLocation, Direction.NORTH));
 		currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
 		
+		assertTrue(floorNavProxy.canMove(currentLocation, Direction.EAST));
 		currentLocation = floorNavProxy.move(currentLocation, Direction.EAST);
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
 		
+		// Special Case as there's a door
+		
+		if(floorNavProxy.canMove(currentLocation, Direction.EAST)){	
+			currentLocation = floorNavProxy.move(currentLocation, Direction.EAST);
+			floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+		}
+		else{
+			
+			System.out.println("[FloorTest] Maneuvering around obstacle");
+			
+			assertTrue(floorNavProxy.canMove(currentLocation, Direction.NORTH));
+			currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
+			floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+			
+			assertTrue(floorNavProxy.canMove(currentLocation, Direction.EAST));
+			currentLocation = floorNavProxy.move(currentLocation, Direction.EAST);
+			floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+			
+			assertTrue(floorNavProxy.canMove(currentLocation, Direction.EAST));
+			currentLocation = floorNavProxy.move(currentLocation, Direction.EAST);
+			floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+			
+			assertTrue(floorNavProxy.canMove(currentLocation, Direction.SOUTH));
+			currentLocation = floorNavProxy.move(currentLocation, Direction.SOUTH);
+			floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+		}
+		
+		assertTrue(floorNavProxy.canMove(currentLocation, Direction.EAST));
 		currentLocation = floorNavProxy.move(currentLocation, Direction.EAST);
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
 		
+		assertTrue(floorNavProxy.canMove(currentLocation, Direction.EAST));
 		currentLocation = floorNavProxy.move(currentLocation, Direction.EAST);
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
-		
-		currentLocation = floorNavProxy.move(currentLocation, Direction.EAST);
-		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
-		
-		currentLocation = floorNavProxy.move(currentLocation, Direction.EAST);
-		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
-		
-		currentLocation = floorNavProxy.move(currentLocation, Direction.EAST);
-		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
-		
-		if(currentLocation.isObstructed())
-			assertEquals(FloorType.OBSTACLE, currentLocation.getFloorType());
-		else
-			assertEquals(FloorType.DOOR, currentLocation.getFloorType());
 		
 		// Test can move East, should return false
-		assertFalse(floorNavProxy.canMove(currentLocation, Direction.EAST));
-		
+		assertFalse(floorNavProxy.canMove(currentLocation, Direction.EAST));	
 	}
 	
-		/*currentLocation = floorNavProxy.move(currentLocation, Direction.SOUTH);
-		System.out.println(currentLocation.toString());
-		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
-		
-		currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
-		System.out.println(currentLocation.toString());
-		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
-		
-		currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
-		System.out.println(currentLocation.toString());
-		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
-		
-		currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
-		System.out.println(currentLocation.toString());
-		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
-		
-		currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
-		System.out.println(currentLocation.toString());
-		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
-		
-		currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
-		System.out.println(currentLocation.toString());
-		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
-		
-		currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
-		System.out.println(currentLocation.toString());
-		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
-		
-		currentLocation = floorNavProxy.move(currentLocation, Direction.WEST);
-		System.out.println(currentLocation.toString());
-		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
-		
+	@Test
+	public void testTraversePathFileB(){
+		System.out.println("testTraversePathFileB");
 		floorNavProxy = new FloorNavigationProxy("TEST_B.cft");
-		//System.out.println(floorNavProxy.toString());
+		Location currentLocation = floorNavProxy.getStaringLocation();
 		
-		floorNavProxy = new FloorNavigationProxy("TEST_B.cft");
-		Location startingLocation = floorNavProxy.getStaringLocation();
-		
-		currentLocation = startingLocation;
-		//are these two locations really equal?
-		System.out.println(currentLocation.equals(startingLocation));
-		
-		System.out.println(currentLocation.toString());
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
 		
+		assertTrue(floorNavProxy.canMove(currentLocation, Direction.NORTH));
 		currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
-		System.out.println(currentLocation.toString());
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+		System.out.println(currentLocation);
 		
+		assertTrue(floorNavProxy.canMove(currentLocation, Direction.NORTH));
 		currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
-		System.out.println(currentLocation.toString());
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+		System.out.println(currentLocation);
 		
+		assertTrue(floorNavProxy.canMove(currentLocation, Direction.NORTH));
 		currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
-		System.out.println(currentLocation.toString());
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+		System.out.println(currentLocation);
 		
+		assertTrue(floorNavProxy.canMove(currentLocation, Direction.NORTH));
 		currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
-		System.out.println(currentLocation.toString());
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+		System.out.println(currentLocation);
 		
+		assertTrue(floorNavProxy.canMove(currentLocation, Direction.NORTH));
 		currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
-		System.out.println(currentLocation.toString());
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+		System.out.println(currentLocation);
 		
-		currentLocation = floorNavProxy.move(currentLocation, Direction.WEST);
-		System.out.println(currentLocation.toString());
+		assertTrue(floorNavProxy.canMove(currentLocation, Direction.NORTH));
+		currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+		System.out.println(currentLocation);
 		
-		FloorType ft = floorNavProxy.getFloorType(currentLocation);
-		System.out.println(ft);
-		System.out.println(currentLocation.toString());
+		assertTrue(floorNavProxy.canMove(currentLocation, Direction.EAST));
+		currentLocation = floorNavProxy.move(currentLocation, Direction.EAST);
+		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+		System.out.println(currentLocation);
 		
-		while(!currentLocation.isClean())
-			floorNavProxy.clean(currentLocation); //removes dirt and prints Removing Dirt Message
-		floorNavProxy.clean(currentLocation); //Prints clean message
-		*/
-		
+		// There should be a door cell here, let's test if it's obstructed or not
+		if(floorNavProxy.canMove(currentLocation, Direction.EAST)){
+			currentLocation = floorNavProxy.move(currentLocation, Direction.EAST);
+			floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+			System.out.println(currentLocation);
+			
+			assertTrue(floorNavProxy.canMove(currentLocation, Direction.NORTH));
+			currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
+			floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+			System.out.println(currentLocation);
+			
+			assertTrue(floorNavProxy.canMove(currentLocation, Direction.NORTH));
+			currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
+			floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+			System.out.println(currentLocation);
+			
+			assertTrue(floorNavProxy.canMove(currentLocation, Direction.NORTH));
+			currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
+			floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+			System.out.println(currentLocation);
+			
+			assertTrue(floorNavProxy.canMove(currentLocation, Direction.NORTH));
+			currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
+			floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+			System.out.println(currentLocation);
+			
+			assertTrue(floorNavProxy.canMove(currentLocation, Direction.NORTH));
+			currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
+			floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+			System.out.println(currentLocation);
+			
+			// Assume there's stairs here
+			assertFalse(floorNavProxy.canMove(currentLocation, Direction.NORTH));
+			System.out.println("[FloorTest] avoiding stairs");
+			
+			assertTrue(floorNavProxy.canMove(currentLocation, Direction.EAST));
+			currentLocation = floorNavProxy.move(currentLocation, Direction.EAST);
+			floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+			System.out.println(currentLocation);
+			
+			assertTrue(floorNavProxy.canMove(currentLocation, Direction.SOUTH));
+			currentLocation = floorNavProxy.move(currentLocation, Direction.SOUTH);
+			floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+			System.out.println(currentLocation);
+			
+			assertTrue(floorNavProxy.canMove(currentLocation, Direction.SOUTH));
+			currentLocation = floorNavProxy.move(currentLocation, Direction.SOUTH);
+			floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+			System.out.println(currentLocation);
+			
+			assertTrue(floorNavProxy.canMove(currentLocation, Direction.SOUTH));
+			currentLocation = floorNavProxy.move(currentLocation, Direction.SOUTH);
+			floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+			System.out.println(currentLocation);
+		}
+		else{
+			System.out.println("[FloorTest] Door is closed"); 
+		}
+	}
 
 	
 }

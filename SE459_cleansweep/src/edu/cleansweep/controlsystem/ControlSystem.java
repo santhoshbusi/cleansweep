@@ -63,6 +63,12 @@ public class ControlSystem {
 		
 		Location newLocation = floorNavProxy.move(_currentLocation, _direction);
 		
+		if(newLocation == null){
+			floorNavProxy.displayLocationOnFloorInConsole(_currentLocation);
+			System.out.println("Attempting to move in " + _direction);
+			System.out.println("[ControlSystem] Warning: Location is null!");
+		}
+		
 		// Update Power Consumption
 		powerManager.update(_currentLocation, newLocation);
 		System.out.println(powerManager.toString());
