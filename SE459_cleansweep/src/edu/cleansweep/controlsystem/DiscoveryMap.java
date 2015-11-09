@@ -2,6 +2,8 @@ package edu.cleansweep.controlsystem;
 import java.util.ArrayList;
 
 import edu.cleansweep.floor.Location;
+import org.apache.log4j.Logger;
+
 
 /**
  * This map is esentially a collection of methods wrapped around an array list that
@@ -10,7 +12,8 @@ import edu.cleansweep.floor.Location;
  */
 
 public class DiscoveryMap {
-	
+
+	private static Logger logger=Logger.getLogger("DiscoveryMap");
 	private ArrayList<NavigationCell> cellMap;
 	
 	public DiscoveryMap(){
@@ -23,6 +26,8 @@ public class DiscoveryMap {
 	 * @return False if addition failed
 	 */
 	public boolean addToMap(NavigationCell _navCell){
+		
+		logger.info("addToMap() was called");
 		if(checkMap(_navCell.getX(), _navCell.getY())){
 			return false;
 		}
@@ -44,6 +49,7 @@ public class DiscoveryMap {
 			newNavCell = new NavigationCell(_x, _y, _layer);
 			cellMap.add(newNavCell);
 		}
+		logger.info("addNewNavigationCell() was called: return newNavCell-" + newNavCell);
 		return newNavCell;
 	}
 	
@@ -54,6 +60,7 @@ public class DiscoveryMap {
 			newNavCell = new NavigationCell(_x, _y, _layer, _locationData);
 			cellMap.add(newNavCell);
 		}
+		logger.info("addNewNavigationCell() was called: return newNavCell-" + newNavCell);
 		return newNavCell;
 	}
 	
@@ -63,6 +70,7 @@ public class DiscoveryMap {
 	 * @return True if navigation cell was found.
 	 */
 	public boolean checkMap(NavigationCell _navCell){
+		logger.info("checkMap() was called");
 		if(cellMap.contains(_navCell)){
 			return true;
 		}
@@ -78,6 +86,7 @@ public class DiscoveryMap {
 	 * @return True if navigation cell was found.
 	 */
 	public boolean checkMap(int _x, int _y){
+		logger.info("checkMap() was called");
 		for (NavigationCell nav: cellMap){
 			if(nav.getX() == _x && nav.getY() == _y){
 				return true;
@@ -97,6 +106,7 @@ public class DiscoveryMap {
 				maxNavLayer = nav.getNavLayer();
 			}
 		}
+		logger.info("getMaxNavLayer() was called: return maxNavLayer" + maxNavLayer);
 		return maxNavLayer;
 	}
 	
@@ -114,6 +124,7 @@ public class DiscoveryMap {
 				topLayerList.add(nav);
 			}
 		}
+		logger.info("getTopLayerCells() was called: return topLayerList" + topLayerList);
 		return topLayerList;
 	}
 	
@@ -122,6 +133,7 @@ public class DiscoveryMap {
 	 * @return The Navigation Cell that matches input coordinates.
 	 */
 	public NavigationCell get(int _x, int _y){
+		logger.info("get() was called");
 		for (NavigationCell nav: cellMap){
 			if(nav.getX() == _x && nav.getY() == _y){
 				return nav;
@@ -135,6 +147,7 @@ public class DiscoveryMap {
 	 * @return The Navigation Cell that matches input coordinates.
 	 */
 	public ArrayList<NavigationCell> getNavigationCells(){
+		logger.info("getNavigationCells() was called: return cellMap-" + cellMap);
 		return cellMap;
 	}
 	
@@ -160,6 +173,7 @@ public class DiscoveryMap {
 	 * @return boolen indicating if dirty cells remain
 	 */
 	public boolean dirtyCellsRemain(){
+		logger.info("dirtyCellsRemain() was called");
 		for(NavigationCell nav: cellMap){
 			if(nav.isCleanedLastVisit()){
 				return true;
@@ -171,6 +185,7 @@ public class DiscoveryMap {
 	 * Prints the current map
 	 */
 	public void printMap(){
+		logger.info("printMap() was called");
 		for(NavigationCell _navCell: cellMap){
 			System.out.println("Nav Cell- X: " + _navCell.getX() +
 					" Y: " + _navCell.getY() + " Layer: " +  _navCell.getNavLayer());
