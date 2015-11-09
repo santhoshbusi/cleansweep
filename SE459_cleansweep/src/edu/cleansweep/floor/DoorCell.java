@@ -82,6 +82,6 @@ class DoorCell extends AbstractCell implements Serializable {
 		if(_open)
 			return "D";
 		else
-			return "Ä";
+			return "Ğ";
 	}
 }
