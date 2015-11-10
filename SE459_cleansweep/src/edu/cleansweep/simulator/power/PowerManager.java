@@ -34,7 +34,7 @@ public class PowerManager {
 	 * Current Charge Level (Power units remaining)
 	 * @return integer value of current charge level 
 	 */
-	public int getCurrentCharge(){
+	public double getCurrentCharge(){
 		return _currentState.getCurrentCharge();
 	}
 	
@@ -53,6 +53,21 @@ public class PowerManager {
 	public void update(Location starting, Location ending){
 		_currentState.update(starting, ending);
 		_currentState.nextPowerState(this);
+	}
+	
+	/**
+	 * Reports the cost of traversing the path.
+	 * @param starting location of path.
+	 * @param ending location of path.
+	 * @return cost of traversing path.
+	 */
+	public double getPowerCost(Location starting, Location ending){
+		if(starting != null && ending != null )
+			return (double)(starting.getPowerCost() + ending.getPowerCost()) / 2;
+		else if(starting != null)
+			return starting.getPowerCost();
+		else
+			return 0;
 	}
 	
 	@Override

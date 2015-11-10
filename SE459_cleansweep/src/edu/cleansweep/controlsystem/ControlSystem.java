@@ -5,7 +5,9 @@ import org.apache.logging.log4j.*;
 import java.util.HashMap;
 import java.util.Stack;
 
+import edu.cleansweep.floor.Direction;
 import edu.cleansweep.floor.FloorNavigationProxy;
+import edu.cleansweep.floor.Location;
 import edu.cleansweep.simulator.power.PowerManager;
 
 /**
@@ -18,7 +20,7 @@ public class ControlSystem {
 	private int currentX;
 	private int currentY;
 	private DiscoveryMap discoveryMap;
-	private static Logger logger=Logger.getLogger("ControlSystem");
+	private static Logger logger=LogManager.getLogger("ControlSystem");
 
 	
 	private Location currentLocation;

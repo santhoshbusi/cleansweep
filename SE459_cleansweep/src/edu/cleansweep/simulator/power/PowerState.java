@@ -11,14 +11,14 @@ import edu.cleansweep.floor.Location;
 
 abstract class PowerState {
 
-	protected int _currentCharge = 100;
+	protected double _currentCharge = 100;
 	private static int _fullCharge = 100;
 	
-	int getPercentCharge(){
-		return (int)(( (double)_currentCharge / (double)_fullCharge) * 100);
+	double getPercentCharge(){
+		return (_currentCharge / (double)_fullCharge) * 100;
 	}
 	
-	int getCurrentCharge(){
+	double getCurrentCharge(){
 		return _currentCharge;
 	}
 	
@@ -35,7 +35,7 @@ abstract class PowerState {
 	 */
 	public void update(Location start, Location end){
 		if(start != null && end != null )
-			_currentCharge -= (start.getPowerCost() + end.getPowerCost()) / 2;
+			_currentCharge -= (double)(start.getPowerCost() + end.getPowerCost()) / 2;
 		else if(start != null)
 			_currentCharge -= start.getPowerCost();
 		else

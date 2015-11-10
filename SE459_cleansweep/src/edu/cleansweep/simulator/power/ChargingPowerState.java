@@ -2,7 +2,7 @@ package edu.cleansweep.simulator.power;
 
 class ChargingPowerState extends PowerState {
 	
-	ChargingPowerState(int chargeValue){
+	ChargingPowerState(double chargeValue){
 		System.out.println("[PowerState] Entering ChargingPowerState");
 		_currentCharge = chargeValue;
 	}
