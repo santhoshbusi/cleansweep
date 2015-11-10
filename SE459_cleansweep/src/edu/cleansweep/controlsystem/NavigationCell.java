@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import edu.cleansweep.floor.Direction;
 import edu.cleansweep.floor.FloorNavigationProxy;
 import edu.cleansweep.floor.Location;
+import org.apache.log4j.Logger;
 
 /**
  * Navigation cells represent locations discovered by the control system.
@@ -15,6 +16,8 @@ public class NavigationCell {
 	private int x;
 	private int y;
 	private int navigationLayer;
+	private static Logger logger=Logger.getLogger("NavigationCell");
+
 	
 	private boolean cleanedLastVisit;
 	private Location locationData;
@@ -30,6 +33,8 @@ public class NavigationCell {
 		adjacentDirections = new ArrayList<Direction>();
 		stepsToChargeStation = new ArrayList<Direction>();
 		stepsToNavCell = new ArrayList<Direction>();
+		logger.info("NavigationCell() was called");
+
 	}
 	
 	public NavigationCell(int _x, int _y, int _layer, Location _locationData){
@@ -41,12 +46,15 @@ public class NavigationCell {
 		adjacentDirections = new ArrayList<Direction>();
 		stepsToChargeStation = new ArrayList<Direction>();
 		stepsToNavCell = new ArrayList<Direction>();
+		logger.info("NavigationCell() was called");
+
 	}
 	
 	/**
 	 * Returns the array list of available adjacent directions for the cell
 	 */
 	public ArrayList<Direction> getAdjacentList(){
+		logger.info("getAdjacentList() was called: return adjacentDirections-" + adjacentDirections);		
 		return adjacentDirections;
 	}
 	
@@ -54,6 +62,7 @@ public class NavigationCell {
 	 * Returns an array list of steps to get back to the charging Station
 	 */
 	public ArrayList<Direction> getStepsToChargeStation(){
+		logger.info("getStepsToChargeStation() was called: return stepsToChargeStation-" + stepsToChargeStation);		
 		return stepsToChargeStation;
 	}
 	
@@ -61,6 +70,7 @@ public class NavigationCell {
 	 * Returns an array list of steps to get to the navigation cell from the charging station
 	 */
 	public ArrayList<Direction> getStepsToNavCell(){
+		logger.info("getStepsToNavCell() was called: return stepsToNavCell-" + stepsToNavCell);		
 		return stepsToNavCell;
 	}
 	

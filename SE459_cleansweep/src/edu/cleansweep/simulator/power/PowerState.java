@@ -34,7 +34,13 @@ abstract class PowerState {
 	 * @param end ending location of path
 	 */
 	public void update(Location start, Location end){
-		_currentCharge -= (start.getPowerCost() + end.getPowerCost()) / 2;
+		if(start != null && end != null )
+			_currentCharge -= (start.getPowerCost() + end.getPowerCost()) / 2;
+		else if(start != null)
+			_currentCharge -= start.getPowerCost();
+		else
+			_currentCharge += 0;
+			
 	}
 	
 }

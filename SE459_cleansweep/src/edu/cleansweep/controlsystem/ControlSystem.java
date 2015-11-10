@@ -1,5 +1,7 @@
 package edu.cleansweep.controlsystem;
 import java.util.ArrayList;
+import org.apache.log4j.Logger;
+
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -16,6 +18,8 @@ public class ControlSystem {
 	private int currentX;
 	private int currentY;
 	private DiscoveryMap discoveryMap;
+	private static Logger logger=Logger.getLogger("ControlSystem");
+
 	
 	private Location currentLocation;
 	private FloorNavigationProxy floorNavProxy;
@@ -32,6 +36,7 @@ public class ControlSystem {
 		vacuum = new Vacuum(floorNavProxy);
 		powerManager = new PowerManager();
 		System.out.println(powerManager.toString());
+		logger.info("ControlSystem() was called");
 	}
 	/**
 	 * Used to move to a particular navigation cell
@@ -42,6 +47,7 @@ public class ControlSystem {
 		for(Direction _dir: _navCell.getStepsToNavCell()){
 			currentLocation = executeMove(currentLocation, _dir);
 		}
+		logger.info("moveToCell() was called: return" + currentLocation);
 		return currentLocation;
 	}
 	
@@ -49,6 +55,7 @@ public class ControlSystem {
 		for(Direction _dir: _navCell.getStepsToChargeStation()){
 			currentLocation = executeMove(currentLocation, _dir);
 		}
+		logger.info("moveToChargeStation() was called: return" + currentLocation);
 		return currentLocation;
 	}
 	
@@ -63,9 +70,16 @@ public class ControlSystem {
 		
 		Location newLocation = floorNavProxy.move(_currentLocation, _direction);
 		
+		if(newLocation == null){
+			floorNavProxy.displayLocationOnFloorInConsole(_currentLocation);
+			System.out.println("Attempting to move in " + _direction);
+			System.out.println("[ControlSystem] Warning: Location is null!");
+		}
+		
 		// Update Power Consumption
 		powerManager.update(_currentLocation, newLocation);
 		System.out.println(powerManager.toString());
+		logger.info("executeMove() was called: println" + powerManager.toString());
 		
 		if(_direction.equals(Direction.NORTH)){
 			this.currentX++;
@@ -81,7 +95,7 @@ public class ControlSystem {
 		if(discoveryMap.checkMap(currentX, currentY)){
 			checkClean(discoveryMap.get(currentX, currentY), newLocation);
 		}
-		
+		logger.info("executeMove() was called: return newloc" + newLocation);		
 		return newLocation;
 	}
 	
@@ -93,6 +107,8 @@ public class ControlSystem {
 		else {
 			_navCell.setCleanedLastVisit(false);
 		}
+		logger.info("checkClean() was called");		
+
 	}
 	
 	/**
@@ -175,6 +191,8 @@ public class ControlSystem {
 				moveToChargeStation(_navCell);
 			}
 		}
+		logger.info("goToDirt was called");		
+
 	}
 
         public Stack<Direction> shortest_route_to_charger(Location charger_location){
@@ -246,6 +264,8 @@ public class ControlSystem {
               Direction d = prev.get(curCell);
               path.add(d); 
            }
+   		logger.info("shortest_route_to_charger was called: return path" + path);		
+
            return path;
         }
 	
@@ -261,6 +281,7 @@ public class ControlSystem {
 			System.out.println("Number of Potentially Dirty Cells: " + 
 					cs.discoveryMap.countDirtyCells());
 		}
+   		logger.info("main() was called");		
 		cs.discoveryMap.printMap();
 		cs.floorNavProxy.displayLocationOnFloorInConsole(cs.currentLocation, true);
 	}

@@ -32,6 +32,24 @@ public class FloorNavigationProxy {
 		if(peakCell == null)
 			return false;
 		
+		// If peakCell is a door cell it needs to get the cell immediately after it instead
+		if(peakCell.getClass() == DoorCell.class){
+			DoorCell d = (DoorCell) peakCell;
+			
+			System.out.println(new StringBuilder().append("[DoorCell] is Closed? : ").append(d.isObstructed()));
+			// If Door is closed we need to return false else we need to get the cell directly after it
+			if(d.isObstructed())
+				return false;
+			else{
+				// Temporarily get location of Door Cell
+				Location tempLocation = new Location(peakCell, direction);
+				// get the cell directly after it in the same direction
+				peakCell = _floor.getCellAt(tempLocation.getLongitude(), tempLocation.getLatitude()).getAdjacentCell(direction);
+				if(peakCell == null)
+					return false;
+			}
+		}
+		
 		if(peakCell.isObstructed() && peakCell.getFloorType() == FloorType.OBSTACLE)
 			return false;
 		else
@@ -48,6 +66,17 @@ public class FloorNavigationProxy {
 		
 		AbstractCell newCell = _floor.getCellAt(location.getLongitude(), location.getLatitude()).getAdjacentCell(direction);
 		_headingDirection = direction;
+		
+		// Special Case, this assumes door is open and not closed 
+		
+		if(newCell.getClass() == DoorCell.class){
+			// Temporarily get location of Door Cell 
+			Location tempLocation = new Location(newCell, _headingDirection);
+			// get the cell directly after it in the same direction 
+			newCell = _floor.getCellAt(tempLocation.getLongitude(), tempLocation.getLatitude()).getAdjacentCell(direction);
+		}
+		
+		// If cell is still on the floorplan return it, else return null
 		if(newCell != null)
 			return new Location(newCell, _headingDirection);
 		else
