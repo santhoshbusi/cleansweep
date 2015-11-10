@@ -14,7 +14,7 @@ import org.apache.logging.log4j.LogManager;
 
 public class DiscoveryMap {
 
-	private static Logger logger = LogManager.getLogger("DiscoveryMap");
+	private static final Logger logger = LogManager.getLogger(DiscoveryMap.class.getName());
 	private ArrayList<NavigationCell> cellMap;
 	
 	public DiscoveryMap(){
@@ -28,7 +28,7 @@ public class DiscoveryMap {
 	 */
 	public boolean addToMap(NavigationCell _navCell){
 		
-		logger.info("addToMap() was called");
+		logger.info("addToMap() was called.");
 		if(checkMap(_navCell.getX(), _navCell.getY())){
 			return false;
 		}
@@ -71,7 +71,7 @@ public class DiscoveryMap {
 	 * @return True if navigation cell was found.
 	 */
 	public boolean checkMap(NavigationCell _navCell){
-		logger.info("checkMap() was called");
+		logger.info("checkMap() was called.");
 		if(cellMap.contains(_navCell)){
 			return true;
 		}
@@ -174,7 +174,7 @@ public class DiscoveryMap {
 	 * @return boolen indicating if dirty cells remain
 	 */
 	public boolean dirtyCellsRemain(){
-		logger.info("dirtyCellsRemain() was called");
+		logger.info("dirtyCellsRemain() was called.");
 		for(NavigationCell nav: cellMap){
 			if(nav.isCleanedLastVisit()){
 				return true;

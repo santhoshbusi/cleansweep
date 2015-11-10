@@ -1,6 +1,7 @@
 package edu.cleansweep.controlsystem;
 import java.util.ArrayList;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.Logger; 
+import org.apache.logging.log4j.LogManager;
 
 import java.util.HashMap;
 import java.util.Stack;
@@ -20,7 +21,7 @@ public class ControlSystem {
 	private int currentX;
 	private int currentY;
 	private DiscoveryMap discoveryMap;
-	private static Logger logger=LogManager.getLogger("ControlSystem");
+	private static final Logger logger = LogManager.getLogger(ControlSystem.class.getName());
 
 	
 	private Location currentLocation;
@@ -38,7 +39,7 @@ public class ControlSystem {
 		vacuum = new Vacuum(floorNavProxy);
 		powerManager = new PowerManager();
 		System.out.println(powerManager.toString());
-		logger.info("ControlSystem() was called");
+		logger.info("ControlSystem() was called.");
 	}
 	/**
 	 * Used to move to a particular navigation cell
@@ -109,7 +110,7 @@ public class ControlSystem {
 		else {
 			_navCell.setCleanedLastVisit(false);
 		}
-		logger.info("checkClean() was called");		
+		logger.info("checkClean() was called.");		
 
 	}
 	
@@ -173,6 +174,7 @@ public class ControlSystem {
 				}
 			}
 		}
+		logger.info("discoverFloor() was called.");
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation, true);
 	}
 	
@@ -193,7 +195,7 @@ public class ControlSystem {
 				moveToChargeStation(_navCell);
 			}
 		}
-		logger.info("goToDirt was called");		
+		logger.info("goToDirt was called.");		
 
 	}
 
