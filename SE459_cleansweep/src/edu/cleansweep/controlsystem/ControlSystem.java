@@ -1,11 +1,11 @@
 package edu.cleansweep.controlsystem;
 import java.util.ArrayList;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.*;
 
 import java.util.HashMap;
 import java.util.Stack;
 
-import edu.cleansweep.floor.*;
+import edu.cleansweep.floor.FloorNavigationProxy;
 import edu.cleansweep.simulator.power.PowerManager;
 
 /**

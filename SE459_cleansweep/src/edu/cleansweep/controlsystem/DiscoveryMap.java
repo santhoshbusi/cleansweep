@@ -2,7 +2,8 @@ package edu.cleansweep.controlsystem;
 import java.util.ArrayList;
 
 import edu.cleansweep.floor.Location;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 
 /**
@@ -13,7 +14,7 @@ import org.apache.log4j.Logger;
 
 public class DiscoveryMap {
 
-	private static Logger logger=Logger.getLogger("DiscoveryMap");
+	private static Logger logger = LogManager.getLogger("DiscoveryMap");
 	private ArrayList<NavigationCell> cellMap;
 	
 	public DiscoveryMap(){
