@@ -39,7 +39,6 @@ public class ControlSystem {
 		vacuum = new Vacuum(floorNavProxy);
 		powerManager = new PowerManager();
 		System.out.println(powerManager.toString());
-		logger.info("ControlSystem() was called.");
 	}
 	/**
 	 * Used to move to a particular navigation cell
@@ -50,7 +49,6 @@ public class ControlSystem {
 		for(Direction _dir: _navCell.getStepsToNavCell()){
 			currentLocation = executeMove(currentLocation, _dir);
 		}
-		logger.info("moveToCell() was called: return" + currentLocation);
 		return currentLocation;
 	}
 	
@@ -58,7 +56,6 @@ public class ControlSystem {
 		for(Direction _dir: _navCell.getStepsToChargeStation()){
 			currentLocation = executeMove(currentLocation, _dir);
 		}
-		logger.info("moveToChargeStation() was called: return" + currentLocation);
 		return currentLocation;
 	}
 	
@@ -82,7 +79,6 @@ public class ControlSystem {
 		// Update Power Consumption
 		powerManager.update(_currentLocation, newLocation);
 		System.out.println(powerManager.toString());
-		logger.info("executeMove() was called: println" + powerManager.toString());
 		
 		if(_direction.equals(Direction.NORTH)){
 			this.currentX++;
@@ -98,7 +94,6 @@ public class ControlSystem {
 		if(discoveryMap.checkMap(currentX, currentY)){
 			checkClean(discoveryMap.get(currentX, currentY), newLocation);
 		}
-		logger.info("executeMove() was called: return newloc" + newLocation);		
 		return newLocation;
 	}
 	
@@ -110,8 +105,6 @@ public class ControlSystem {
 		else {
 			_navCell.setCleanedLastVisit(false);
 		}
-		logger.info("checkClean() was called.");		
-
 	}
 	
 	/**
@@ -183,7 +176,6 @@ public class ControlSystem {
 				break;
 			}
 		}
-		logger.info("discoverFloor() was called.");
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation, true);
 	}
 	
@@ -203,9 +195,7 @@ public class ControlSystem {
 				moveToCell(_navCell);
 				moveToChargeStation(_navCell);
 			}
-		}
-		logger.info("goToDirt was called.");		
-
+		}	
 	}
 
         public Stack<Direction> shortest_route_to_charger(Location charger_location){
@@ -277,8 +267,6 @@ public class ControlSystem {
               Direction d = prev.get(curCell);
               path.add(d); 
            }
-   		logger.info("shortest_route_to_charger was called: return path" + path);		
-
            return path;
         }
 	
