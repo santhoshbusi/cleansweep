@@ -16,6 +16,7 @@ public class NavigationCell {
 	private int x;
 	private int y;
 	private int navigationLayer;
+	private double powerCostToCharger;
 	private static Logger logger=Logger.getLogger("NavigationCell");
 
 	
@@ -94,6 +95,9 @@ public class NavigationCell {
 		for(Direction _dir: _fromCell.getStepsToChargeStation()){
 			this.getStepsToChargeStation().add(_dir);
 		}
+		
+		//this.powerCostToCharger = _fromCell.getPowerCostToCharger() + this.locationData.getFloorType();
+		//this.powerCostToCharger = _fromCell.getPowerCostToCharger() + powerManager.calculate(this.locationData.getFloorType, _fromCell.getLocationData().FloorType());
 	}
 	/**
 	 * Calculates all of the available adjacent directions for a given Navigation Cell
@@ -117,29 +121,45 @@ public class NavigationCell {
 	public int getX() {
 		return x;
 	}
+	
 	public void setX(int x) {
 		this.x = x;
 	}
+	
 	public int getY() {
 		return y;
 	}
+	
 	public void setY(int y) {
 		this.y = y;
 	}
+	
 	public boolean isCleanedLastVisit() {
 		return cleanedLastVisit;
 	}
+	
 	public void setCleanedLastVisit(boolean cleanedLastVisit) {
 		this.cleanedLastVisit = cleanedLastVisit;
 	}
+	
 	public Location getLocationData() {
 		return locationData;
 	}
+	
 	public void setLocationData(Location locationData) {
 		this.locationData = locationData;
 	}
+	
 	public int getNavLayer(){
 		return this.navigationLayer;
+	}
+	
+	public double getPowerCostToCharger(){
+		return this.powerCostToCharger;
+	}
+	
+	public void setPowerCostToCharger(double _cost){
+		this.powerCostToCharger = _cost;
 	}
 	
 	@Override
