@@ -8,6 +8,8 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.apache.logging.log4j.Logger; 
+import org.apache.logging.log4j.LogManager;
 
 /**
  * A collection of AbstractCell objects that represent a floor
@@ -19,6 +21,7 @@ import java.util.List;
 class Floor {
 
 	//private AbstractCell[][] _floor;
+	private static final Logger logger = LogManager.getLogger(Floor.class.getName());
 	private List<List<AbstractCell>> _floor;
 	private AbstractCell _startingCell;
 	private List<ChargingStationCell> _setOfChargingStations;
@@ -41,6 +44,9 @@ class Floor {
 	 * @return the AbstractCell that is the starting cell for this floor.
 	 */
 	AbstractCell getStartingCell(){
+		if (logger.isDebugEnabled()) {
+			logger.debug("getStartingCell() was called. return - " + _startingCell);
+			}
 		return _startingCell;
 	}
 	

@@ -3,12 +3,15 @@ package edu.cleansweep.floor;
 import java.io.Serializable;
 import java.util.Random;
 import java.util.Arrays;
+import org.apache.logging.log4j.Logger; 
+import org.apache.logging.log4j.LogManager;
 
 class DoorCell extends AbstractCell implements Serializable {
 
 	/**
 	 * 
 	 */
+	private static final Logger logger = LogManager.getLogger(DoorCell.class.getName());
 	private static final long serialVersionUID = 3650207702512000586L;
 	private boolean _open;
 	
@@ -54,6 +57,10 @@ class DoorCell extends AbstractCell implements Serializable {
 		result = prime * result + (_open ? 1231 : 1237);
 		result = prime * result + _x;
 		result = prime * result + _y;
+		if (logger.isDebugEnabled()) {
+			logger.debug("hashCode() was called. return - " + result);
+			}
+
 		return result;
 	}
 

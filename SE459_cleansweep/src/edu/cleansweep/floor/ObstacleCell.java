@@ -2,6 +2,8 @@ package edu.cleansweep.floor;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import org.apache.logging.log4j.Logger; 
+import org.apache.logging.log4j.LogManager;
 
 class ObstacleCell extends AbstractCell implements Serializable {
 
@@ -9,6 +11,7 @@ class ObstacleCell extends AbstractCell implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -6521485866250467349L;
+	private static final Logger logger = LogManager.getLogger(ObstacleCell.class.getName());
 
 	
 	ObstacleCell(int x, int y){
@@ -19,6 +22,9 @@ class ObstacleCell extends AbstractCell implements Serializable {
 
 	@Override
 	FloorType getFloorType() {
+		if (logger.isDebugEnabled()) {
+			logger.debug("getFloorType() was called. return" + FloorType.OBSTACLE);
+			}
 		return FloorType.OBSTACLE;
 	}
 	

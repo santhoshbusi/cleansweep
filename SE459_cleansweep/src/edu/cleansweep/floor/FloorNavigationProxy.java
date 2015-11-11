@@ -1,5 +1,8 @@
 package edu.cleansweep.floor;
 
+import org.apache.logging.log4j.Logger; 
+import org.apache.logging.log4j.LogManager;
+
 /**
  * FloorNavigationProxy is used to manipulate a Floor object
  * it is responsible for creating instances of Location, 
@@ -9,6 +12,7 @@ package edu.cleansweep.floor;
  */
 public class FloorNavigationProxy {
 
+	private static final Logger logger = LogManager.getLogger(FloorNavigationProxy.class.getName());
 	private Floor _floor;
 	private Direction _headingDirection;
 	private AbstractCell _startingCell;
@@ -28,6 +32,9 @@ public class FloorNavigationProxy {
 	 * @return
 	 */
 	public boolean canMove(Location location, Direction direction){
+		if (logger.isDebugEnabled()) {
+			logger.debug("canMove() was called.");
+			}
 		AbstractCell peakCell = _floor.getCellAt(location.getLongitude(), location.getLatitude()).getAdjacentCell(direction);
 		if(peakCell == null)
 			return false;
