@@ -9,24 +9,32 @@ public class HasNoDirtState implements DirtState {
 	private static final Logger logger = LogManager.getLogger(HasNoDirtState.class.getName());
 
 	public HasNoDirtState(DirtSimulator _dirtSimulator){
-		logger.info("HasNoDirtState() was called.");
+		if (logger.isDebugEnabled()) {
+			logger.debug("HasNoDirtState() was called.");
+			}
 		dirtSimulator = _dirtSimulator;
 	}
 	
 	public void switchClean(){
 		dirtSimulator.setCurrentState(dirtSimulator.getCleanState());
 		System.out.println("Switching To Clean");
-		logger.info("switchClean() was called.");
+		if (logger.isDebugEnabled()) {
+			logger.debug("switchClean() was called.");
+			}
 	}
 	
 	public void switchDirty(){
 		dirtSimulator.setCurrentState(dirtSimulator.getDirtyState());
 		System.out.println("Switching To Dirty");
-		logger.info("switchDirty() was called.");
+		if (logger.isDebugEnabled()) {
+			logger.debug("switchDirty() was called.");
+			}
 	}
 	
 	public void printState(){
 		System.out.println("Clean");
-		logger.info("printState() was called.");
+		if (logger.isDebugEnabled()) {
+			logger.debug("printState() was called.");
+			}
 	}
 }

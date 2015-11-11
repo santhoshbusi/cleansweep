@@ -10,20 +10,33 @@ public class DirtSimulatorDriver {
 	public static void main(String[] args){
 		
 		DirtSimulator dirtSimulator = new DirtSimulator();
-		
-		logger.info("calling printCurrentState()");
+		if (logger.isDebugEnabled()) {
+			logger.debug("calling printCurrentState()");
+			}
 		dirtSimulator.printCurrentState();
-		logger.info("calling switchToClean()");
+		if (logger.isDebugEnabled()) {
+			logger.debug("calling switchToClean()");
+			}
 		dirtSimulator.switchToClean();
-		logger.info("calling printCurrentState()");
+		if (logger.isDebugEnabled()) {
+			logger.debug("calling printCurrentState()");
+			}
 		dirtSimulator.printCurrentState();
-		logger.info("calling printCurrentState()");
+		if (logger.isDebugEnabled()) {
+			logger.debug("calling printCurrentState()");
+			}
 		dirtSimulator.printCurrentState();
-		logger.info("calling printCurrentState()");
+		if (logger.isDebugEnabled()) {
+			logger.debug("calling printCurrentState()");
+			}
 		dirtSimulator.printCurrentState();
-		logger.info("calling switchToDirty()");
+		if (logger.isDebugEnabled()) {
+			logger.debug("calling switchToDirty()");
+			}
 		dirtSimulator.switchToDirty();
-		logger.info("calling printCurrentState()");
+		if (logger.isDebugEnabled()) {
+			logger.debug("calling printCurrentState()");
+			}
 		dirtSimulator.printCurrentState();
 	}
 }

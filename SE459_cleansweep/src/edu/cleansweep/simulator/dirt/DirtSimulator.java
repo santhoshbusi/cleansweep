@@ -16,52 +16,72 @@ public class DirtSimulator {
 		cleanState = new HasNoDirtState(this);
 		//Arbitrary
 		currentState = dirtyState;
-		logger.info("DirtSimulator() was called.");
-
+		if (logger.isDebugEnabled()) {
+			logger.debug("DirtSimulator() was called.");
+			}
 	}
 
 	public DirtState getDirtyState() {
-		logger.info("getDirtyState() was called: return dirtyState - " + dirtyState);
+		if (logger.isDebugEnabled()) {
+			logger.debug("getDirtyState() was called: return dirtyState - " + dirtyState);
+			}
 		return dirtyState;
 	}
 
 	public void setDirtyState(DirtState dirtyState) {
-		logger.info("setDirtyState() was called.");
+		if (logger.isDebugEnabled()) {
+			logger.debug("setDirtyState() was called.");
+			}
 		this.dirtyState = dirtyState;
 	}
 
 	public DirtState getCleanState() {
-		logger.info("getCleanState() was called: return cleanState - " + cleanState);
+		if (logger.isDebugEnabled()) {
+			logger.debug("getCleanState() was called: return cleanState - " + cleanState);
+			}
 		return cleanState;
 	}
 
 	public void setCleanState(DirtState cleanState) {
-		logger.info("setCleanState() was called.");
+		if (logger.isDebugEnabled()) {
+			logger.debug("setCleanState() was called.");
+			}
 		this.cleanState = cleanState;
 	}
 
 	public DirtState getCurrentState() {
-		logger.info("getCurrentState() was called: return currentState - " + currentState);
+		if (logger.isDebugEnabled()) {
+			logger.debug("getCurrentState() was called: return currentState - " + currentState);
+			}
 		return currentState;
 	}
 
 	public void setCurrentState(DirtState currentState) {
-		logger.info("setCurrentState() was called.");
+		if (logger.isDebugEnabled()) {
+			logger.debug("setCurrentState() was called.");
+			}
+
 		this.currentState = currentState;
 	}
 	
 	public void switchToClean(){
-		logger.info("switchToClean() was called.");
+		if (logger.isDebugEnabled()) {
+			logger.debug("switchToClean() was called.");
+			}
 		currentState.switchClean();
 	}
 	
 	public void switchToDirty(){
-		logger.info("switchToDirty() was called.");
+		if (logger.isDebugEnabled()) {
+			logger.debug("switchToDirty() was called.");
+			}
 		currentState.switchDirty();
 	}
 	
 	public void printCurrentState(){
-		logger.info("printCurrentState() was called.");
+		if (logger.isDebugEnabled()) {
+			logger.debug("printCurrentState() was called.");
+			}
 		currentState.printState();
 	}
 }
