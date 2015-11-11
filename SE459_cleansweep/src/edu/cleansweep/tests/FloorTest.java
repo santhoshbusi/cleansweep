@@ -4,6 +4,7 @@ import edu.cleansweep.floor.Direction;
 import edu.cleansweep.floor.FloorNavigationProxy;
 import edu.cleansweep.floor.FloorType;
 import edu.cleansweep.floor.Location;
+import edu.cleansweep.simulator.power.PowerManager;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
@@ -408,11 +409,18 @@ public class FloorTest {
 		System.out.println("testTraversePathFileB");
 		floorNavProxy = new FloorNavigationProxy("TEST_B.cft");
 		Location currentLocation = floorNavProxy.getStaringLocation();
+		PowerManager powerManager = new PowerManager();
+		Location start; // used for PowerManager Calculation
+		Location end;   // used for PowerManager Calculation
 		
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
-		
+		start = currentLocation;
 		assertTrue(floorNavProxy.canMove(currentLocation, Direction.NORTH));
 		currentLocation = floorNavProxy.move(currentLocation, Direction.NORTH);
+		end = currentLocation;
+		powerManager.update(start, end);
+		System.out.println(powerManager.getPowerCost(start, end));
+		System.out.println(powerManager.getCurrentCharge());
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
 		System.out.println(currentLocation);
 		

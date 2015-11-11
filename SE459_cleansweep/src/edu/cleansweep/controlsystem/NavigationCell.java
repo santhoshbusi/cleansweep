@@ -3,7 +3,8 @@ import java.util.ArrayList;
 import edu.cleansweep.floor.Direction;
 import edu.cleansweep.floor.FloorNavigationProxy;
 import edu.cleansweep.floor.Location;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger; 
+import org.apache.logging.log4j.LogManager;
 
 /**
  * Navigation cells represent locations discovered by the control system.
@@ -16,7 +17,7 @@ public class NavigationCell {
 	private int x;
 	private int y;
 	private int navigationLayer;
-	private static Logger logger=Logger.getLogger("NavigationCell");
+	private static final Logger logger = LogManager.getLogger(NavigationCell.class.getName());
 
 	
 	private boolean cleanedLastVisit;
@@ -33,7 +34,7 @@ public class NavigationCell {
 		adjacentDirections = new ArrayList<Direction>();
 		stepsToChargeStation = new ArrayList<Direction>();
 		stepsToNavCell = new ArrayList<Direction>();
-		logger.info("NavigationCell() was called");
+		logger.info("NavigationCell() was called.");
 
 	}
 	
@@ -46,7 +47,7 @@ public class NavigationCell {
 		adjacentDirections = new ArrayList<Direction>();
 		stepsToChargeStation = new ArrayList<Direction>();
 		stepsToNavCell = new ArrayList<Direction>();
-		logger.info("NavigationCell() was called");
+		logger.info("NavigationCell() was called.");
 
 	}
 	

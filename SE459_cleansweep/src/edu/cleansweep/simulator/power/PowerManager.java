@@ -1,6 +1,9 @@
 package edu.cleansweep.simulator.power;
 
 import edu.cleansweep.floor.Location;
+import org.apache.logging.log4j.Logger; 
+import org.apache.logging.log4j.LogManager;
+
 /**
  * Used to keep track of Current Power State and Power Units Remaining 
  * @author ajscilingo
@@ -9,9 +12,11 @@ import edu.cleansweep.floor.Location;
 public class PowerManager {
 
 	private PowerState _currentState;
+	private static final Logger logger = LogManager.getLogger(PowerManager.class.getName());
 
 	public PowerManager(){
 		_currentState = new FullyChargedPowerState();
+		logger.info("PowerManager() was called.");
 	}
 	
 	/**
@@ -20,6 +25,7 @@ public class PowerManager {
 	 */
 	void setCurrentState(PowerState powerState){
 		_currentState = powerState;
+		logger.info("setCurrentState() was called.");
 	}
 	
 	/**
@@ -27,6 +33,7 @@ public class PowerManager {
 	 * @returns Current Power State
 	 */
 	PowerState getCurrentState(){
+		logger.info("getCurrentState() was called. return" + _currentState);
 		return _currentState;
 	}
 	
@@ -34,7 +41,8 @@ public class PowerManager {
 	 * Current Charge Level (Power units remaining)
 	 * @return integer value of current charge level 
 	 */
-	public int getCurrentCharge(){
+	public double getCurrentCharge(){
+		logger.info("getCurrentCharge() was called. return " + _currentState.getCurrentCharge());
 		return _currentState.getCurrentCharge();
 	}
 	
@@ -43,6 +51,7 @@ public class PowerManager {
 	 */
 	public void charge(){
 		_currentState = new ChargingPowerState(_currentState.getCurrentCharge());
+		logger.info("charge() was called.");
 	}
 	
 	/**
@@ -53,10 +62,28 @@ public class PowerManager {
 	public void update(Location starting, Location ending){
 		_currentState.update(starting, ending);
 		_currentState.nextPowerState(this);
+		logger.info("update() was called.");
+	}
+	
+	/**
+	 * Reports the cost of traversing the path.
+	 * @param starting location of path.
+	 * @param ending location of path.
+	 * @return cost of traversing path.
+	 */
+	public double getPowerCost(Location starting, Location ending){
+		logger.info("getPowerCost() was called.");
+		if(starting != null && ending != null )
+			return (double)(starting.getPowerCost() + ending.getPowerCost()) / 2;
+		else if(starting != null)
+			return starting.getPowerCost();
+		else
+			return 0;
 	}
 	
 	@Override
 	public String toString() {
+		logger.info("toString() was called.");
 		return new StringBuilder().append("[PowerManager] Current Charge : ").append(_currentState.getCurrentCharge()).toString();
 	}
 }

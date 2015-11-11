@@ -4,14 +4,16 @@ package edu.cleansweep.controlsystem;
 import edu.cleansweep.floor.FloorNavigationProxy;
 import edu.cleansweep.floor.FloorType;
 import edu.cleansweep.floor.Location;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger; 
+import org.apache.logging.log4j.LogManager;
 
 public class Vacuum 
 {
 	private FloorNavigationProxy floorNavProxy;
 	private FloorType _floorType;
 	private FloorCleaners _floorCleaners;
-	private static Logger logger=Logger.getLogger("Vacuum");
+	private static final Logger logger = LogManager.getLogger(Vacuum.class.getName());
+
 	
 	public Vacuum(FloorNavigationProxy _floorNavProxy)
 	{
@@ -22,7 +24,7 @@ public class Vacuum
 	public void doClean(Location location)
 	{
 		 //clean the location and move to new location
-		logger.info("doClean() was called");
+		logger.info("doClean() was called.");
 		_floorType = floorNavProxy.getFloorType(location);
 		if(_floorType.equals(FloorType.BAREFLOOR))
 		{

@@ -1,10 +1,16 @@
 package edu.cleansweep.simulator.power;
 
+import org.apache.logging.log4j.Logger; 
+import org.apache.logging.log4j.LogManager;
+
 class ChargingPowerState extends PowerState {
-	
-	ChargingPowerState(int chargeValue){
+
+	private static final Logger logger = LogManager.getLogger(ChargingPowerState.class.getName());
+
+	ChargingPowerState(double chargeValue){
 		System.out.println("[PowerState] Entering ChargingPowerState");
 		_currentCharge = chargeValue;
+		logger.info("ChargingPowerState() was called.");
 	}
 
 	
@@ -18,7 +24,7 @@ class ChargingPowerState extends PowerState {
 		else{
 			powerManager.setCurrentState(new FullyDepletedPowerState());
 		}
-			
+		logger.info("nextPowerState() was called.");	
 	}
 
 
