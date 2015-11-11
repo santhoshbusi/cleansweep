@@ -127,9 +127,10 @@ public class ControlSystem {
 		//Store Starting Location Information
 		NavigationCell homeCell = discoveryMap.addNewNavigationCell(0, 0, 0, currentLocation);
 		homeCell.calculateAdjacentDirections(currentLocation, floorNavProxy);
+		homeCell.setPowerCostToChargeStation(0);
 		
 		//See initial dirt map
-		floorNavProxy.displayLocationOnFloorInConsole(currentLocation, true);
+		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
 		
 		int currentMaxNavLayer = discoveryMap.getMaxNavLayer();
 		int newMaxNavLayer = currentMaxNavLayer + 1;
@@ -144,9 +145,12 @@ public class ControlSystem {
 			for(NavigationCell navCell: discoveryMap.getTopLayerCells()){
 				
 				currentLocation = moveToCell(navCell);
+				
 				for(Direction _d: navCell.getAdjacentList()){
 					
 					currentLocation = executeMove(currentLocation, _d);
+					
+					
 					//If we haven't been here - Create navigation Cell, 
 					//update required steps, add top map.
 					if(!discoveryMap.checkMap(currentX, currentY)){
@@ -157,7 +161,9 @@ public class ControlSystem {
 						//Build our lists of directions.
 						newNavCell.buildDirectionsToChargingStation(navCell, _d);
 						newNavCell.buildDirectionsToCell(navCell, _d);
+						newNavCell.calcPowerConsumption(navCell);
 						newNavCell.calculateAdjacentDirections(currentLocation, floorNavProxy);
+						
 					}
 					
 					//Check if the newly 

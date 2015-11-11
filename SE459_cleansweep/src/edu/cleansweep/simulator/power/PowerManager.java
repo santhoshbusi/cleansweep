@@ -71,7 +71,7 @@ public class PowerManager {
 	 * @param ending location of path.
 	 * @return cost of traversing path.
 	 */
-	public double getPowerCost(Location starting, Location ending){
+	public static double getPowerCost(Location starting, Location ending){
 		logger.info("getPowerCost() was called.");
 		if(starting != null && ending != null )
 			return (double)(starting.getPowerCost() + ending.getPowerCost()) / 2;

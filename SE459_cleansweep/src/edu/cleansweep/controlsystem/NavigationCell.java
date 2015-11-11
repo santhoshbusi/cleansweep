@@ -1,8 +1,11 @@
 package edu.cleansweep.controlsystem;
 import java.util.ArrayList;
+
 import edu.cleansweep.floor.Direction;
 import edu.cleansweep.floor.FloorNavigationProxy;
 import edu.cleansweep.floor.Location;
+import edu.cleansweep.simulator.power.PowerManager;
+
 import org.apache.logging.log4j.Logger; 
 import org.apache.logging.log4j.LogManager;
 
@@ -22,6 +25,8 @@ public class NavigationCell {
 	
 	private boolean cleanedLastVisit;
 	private Location locationData;
+	private double powerCostToChargeStation;
+	
 	private ArrayList<Direction> adjacentDirections;
 	private ArrayList<Direction> stepsToChargeStation;
 	private ArrayList<Direction> stepsToNavCell;
@@ -34,8 +39,6 @@ public class NavigationCell {
 		adjacentDirections = new ArrayList<Direction>();
 		stepsToChargeStation = new ArrayList<Direction>();
 		stepsToNavCell = new ArrayList<Direction>();
-		logger.info("NavigationCell() was called.");
-
 	}
 	
 	public NavigationCell(int _x, int _y, int _layer, Location _locationData){
@@ -47,23 +50,19 @@ public class NavigationCell {
 		adjacentDirections = new ArrayList<Direction>();
 		stepsToChargeStation = new ArrayList<Direction>();
 		stepsToNavCell = new ArrayList<Direction>();
-		logger.info("NavigationCell() was called.");
-
 	}
 	
 	/**
 	 * Returns the array list of available adjacent directions for the cell
 	 */
-	public ArrayList<Direction> getAdjacentList(){
-		logger.info("getAdjacentList() was called: return adjacentDirections-" + adjacentDirections);		
+	public ArrayList<Direction> getAdjacentList(){	
 		return adjacentDirections;
 	}
 	
 	/**
 	 * Returns an array list of steps to get back to the charging Station
 	 */
-	public ArrayList<Direction> getStepsToChargeStation(){
-		logger.info("getStepsToChargeStation() was called: return stepsToChargeStation-" + stepsToChargeStation);		
+	public ArrayList<Direction> getStepsToChargeStation(){	
 		return stepsToChargeStation;
 	}
 	
@@ -71,7 +70,6 @@ public class NavigationCell {
 	 * Returns an array list of steps to get to the navigation cell from the charging station
 	 */
 	public ArrayList<Direction> getStepsToNavCell(){
-		logger.info("getStepsToNavCell() was called: return stepsToNavCell-" + stepsToNavCell);		
 		return stepsToNavCell;
 	}
 	
@@ -91,10 +89,18 @@ public class NavigationCell {
 	 * from the navigation cell.
 	 */
 	public void buildDirectionsToChargingStation(NavigationCell _fromCell, Direction _lastDirection){
-		this.getStepsToChargeStation().add(0, _lastDirection.getOpposite());
+		this.getStepsToChargeStation().add(0, _lastDirection.getOpposite());	
 		for(Direction _dir: _fromCell.getStepsToChargeStation()){
 			this.getStepsToChargeStation().add(_dir);
 		}
+	}
+	
+	public void calcPowerConsumption(NavigationCell _fromCell){
+		
+		double test = PowerManager.getPowerCost(_fromCell.locationData,this.locationData);
+		
+		this.powerCostToChargeStation = _fromCell.getPowerCostToChargeStation() + 
+				PowerManager.getPowerCost(_fromCell.locationData,this.locationData);
 	}
 	/**
 	 * Calculates all of the available adjacent directions for a given Navigation Cell
@@ -113,6 +119,14 @@ public class NavigationCell {
 		if(_floorNavProxy.canMove(_location, Direction.WEST)){
 			this.adjacentDirections.add(Direction.WEST);
 		}
+	}
+	
+	public double getPowerCostToChargeStation(){
+		return powerCostToChargeStation;
+	}
+	
+	public void setPowerCostToChargeStation(double _value){
+		powerCostToChargeStation = _value;
 	}
 	
 	public int getX() {
