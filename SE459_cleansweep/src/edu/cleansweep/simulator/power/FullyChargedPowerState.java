@@ -11,14 +11,18 @@ class FullyChargedPowerState extends PowerState {
 	FullyChargedPowerState(){
 		System.out.println("[PowerState] Entering FullyChargedPowerState");
 		_currentCharge = 100;
-		logger.info("FullyChargedPowerState() was called.");
+		if (logger.isDebugEnabled()) {
+			logger.debug("FullyChargedPowerState() was called.");
+			}
 	}
 	
 
 	@Override
 	void nextPowerState(PowerManager powerManager) {
 		powerManager.setCurrentState(new DischargingPowerState(_currentCharge));	
-		logger.info("nextPowerState() was called.");
+		if (logger.isDebugEnabled()) {
+			logger.debug("nextPowerState() was called.");
+			}
 	}
 
 

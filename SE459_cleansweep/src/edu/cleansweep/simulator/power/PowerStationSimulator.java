@@ -16,51 +16,76 @@ public class PowerStationSimulator {
 		dontSimulateSignal = new DontSimulateSignal(this);
 		
 		currentOutput = dontSimulateSignal;
-		logger.info("PowerStationSimulator() was called.");
+		if (logger.isDebugEnabled()) {
+			logger.debug("PowerStationSimulator() was called.");
+			}
 	}
 
 	public StationSimulator getSimulateSignal() {
-		logger.info("getSimulateSignal() was called. return - " + simulateSignal);
+		if (logger.isDebugEnabled()) {
+			logger.debug("getSimulateSignal() was called. return - " + simulateSignal);
+			}
 		return simulateSignal;
 	}
 
 	public void setSimulateSignal(StationSimulator simulateSignal) {
 		this.simulateSignal = simulateSignal;
-		logger.info("setSimulateSignal() was called.");
+		if (logger.isDebugEnabled()) {
+			logger.debug("setSimulateSignal() was called.");
+			}
 	}
 
 	public StationSimulator getDontSimulateSignal() {
-		logger.info("getDontSimulateSignal() was called. return =" + dontSimulateSignal);
+		if (logger.isDebugEnabled()) {
+			logger.debug("getDontSimulateSignal() was called. return =" + dontSimulateSignal);
+			}
 		return dontSimulateSignal;
 	}
 
 	public void setDontSimulateSignal(StationSimulator dontSimulateSignal) {
 		this.dontSimulateSignal = dontSimulateSignal;
-		logger.info("setDontSimulateSignal() was called.");
+		if (logger.isDebugEnabled()) {
+			logger.debug("setDontSimulateSignal() was called.");
+			}
+
 	}
 
 	public StationSimulator getCurrentOutput() {
-		logger.info("getCurrentOutput() was called. return " + currentOutput);
+		if (logger.isDebugEnabled()) {
+			logger.debug("getCurrentOutput() was called. return " + currentOutput);
+			}
+
 		return currentOutput;
 	}
 
 	public void setCurrentOutput(StationSimulator currentOutput) {
 		this.currentOutput = currentOutput;
-		logger.info("setCurrentOutput() was called.");
+		if (logger.isDebugEnabled()) {
+			logger.debug("setCurrentOutput() was called.");
+			}
+
 	}
 	
 	public void emitSignal(){
 		currentOutput.simulateSignal();
-		logger.info("emitSignal() was called.");
+		if (logger.isDebugEnabled()) {
+			logger.debug("emitSignal() was called.");
+			}
+
 	}
 	
 	public void dontEmitSignal(){
 		currentOutput.dontsimulateSignal();
-		logger.info("dontEmitSignal() was called.");
+		if (logger.isDebugEnabled()) {
+			logger.debug("dontEmitSignal() was called.");
+			}
+
 	}
 	
 	public void printCurrentState(){
 		currentOutput.printCurrentSignal();
-		logger.info("printCurrentState() was called.");
+		if (logger.isDebugEnabled()) {
+			logger.debug("printCurrentState() was called.");
+			}
 	}
 }
