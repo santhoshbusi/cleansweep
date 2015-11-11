@@ -10,7 +10,9 @@ public class FloorCleaners
 	private FloorType _floorType = FloorType.BAREFLOOR;
 
 	public FloorType get_floorType() {
-		logger.info("get_floorType() was called: return floorType-" + _floorType);
+		if (logger.isDebugEnabled()) {
+			logger.debug("get_floorType() was called: return floorType-" + _floorType);
+			}
 		return _floorType;
 	}
 

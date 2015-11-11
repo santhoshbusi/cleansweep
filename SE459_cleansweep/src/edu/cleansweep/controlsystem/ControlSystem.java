@@ -172,7 +172,9 @@ public class ControlSystem {
 				}
 			}
 			if(currentMaxNavLayer == discoveryMap.getMaxNavLayer()){
-				logger.info("Discovery Ending at: " + discoveryMap.getMaxNavLayer());
+				if (logger.isDebugEnabled()) {
+					logger.info("Discovery Ending at: " + discoveryMap.getMaxNavLayer());
+					}
 				break;
 			}
 		}
