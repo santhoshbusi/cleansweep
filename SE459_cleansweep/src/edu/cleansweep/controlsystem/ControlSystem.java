@@ -138,11 +138,16 @@ public class ControlSystem {
 		//See initial dirt map
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation, true);
 		
+		int currentMaxNavLayer = discoveryMap.getMaxNavLayer();
+		int newMaxNavLayer = currentMaxNavLayer + 1;
+		
 		//Begin Discovery
-		for(int i = 0; i< _discoveryLayer; i++){
+		while(true){
 			
 			//What's our current Top Layer
-			int currentMaxNavLayer = discoveryMap.getMaxNavLayer() + 1;
+			currentMaxNavLayer = discoveryMap.getMaxNavLayer();
+			newMaxNavLayer = discoveryMap.getMaxNavLayer() + 1;
+			
 			for(NavigationCell navCell: discoveryMap.getTopLayerCells()){
 				
 				currentLocation = moveToCell(navCell);
@@ -154,7 +159,7 @@ public class ControlSystem {
 					if(!discoveryMap.checkMap(currentX, currentY)){
 						
 						NavigationCell newNavCell = discoveryMap.addNewNavigationCell(currentX, 
-													currentY, currentMaxNavLayer, currentLocation);
+													currentY, newMaxNavLayer, currentLocation);
 						
 						//Build our lists of directions.
 						newNavCell.buildDirectionsToChargingStation(navCell, _d);
@@ -172,6 +177,10 @@ public class ControlSystem {
 				for(Direction dir: navCell.getStepsToChargeStation()){
 					currentLocation = executeMove(currentLocation, dir);
 				}
+			}
+			if(currentMaxNavLayer == discoveryMap.getMaxNavLayer()){
+				logger.info("Discovery Ending at: " + discoveryMap.getMaxNavLayer());
+				break;
 			}
 		}
 		logger.info("discoverFloor() was called.");
@@ -275,7 +284,7 @@ public class ControlSystem {
 	
 	public static void main(String [] args)
 	{
-		ControlSystem cs = new ControlSystem("TEST_B.cft");
+		ControlSystem cs = new ControlSystem("TEST_A.cft");
 		//cs.floorNavProxy.displayLocationOnFloorInConsole(cs.currentLocation, true);
 		cs.discoverFloor(20);
 		cs.floorNavProxy.displayLocationOnFloorInConsole(cs.currentLocation, true);
@@ -285,7 +294,6 @@ public class ControlSystem {
 			System.out.println("Number of Potentially Dirty Cells: " + 
 					cs.discoveryMap.countDirtyCells());
 		}
-   		logger.info("main() was called");		
 		cs.discoveryMap.printMap();
 		cs.floorNavProxy.displayLocationOnFloorInConsole(cs.currentLocation, true);
 	}
