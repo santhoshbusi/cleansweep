@@ -36,6 +36,7 @@ public class ControlSystem {
 		vacuum = new Vacuum(floorNavProxy);
 		powerManager = new PowerManager();
 		System.out.println(powerManager.toString());
+		logger.info("ControlSystem() was called");
 	}
 	/**
 	 * Used to move to a particular navigation cell
@@ -66,7 +67,14 @@ public class ControlSystem {
 	 */
 	private Location executeMove(Location _currentLocation, Direction _direction)
 	{
+		
 		Location newLocation = floorNavProxy.move(_currentLocation, _direction);
+		
+		if(newLocation == null){
+			floorNavProxy.displayLocationOnFloorInConsole(_currentLocation);
+			System.out.println("Attempting to move in " + _direction);
+			System.out.println("[ControlSystem] Warning: Location is null!");
+		}
 		
 		// Update Power Consumption
 		powerManager.update(_currentLocation, newLocation);
@@ -85,20 +93,22 @@ public class ControlSystem {
 		
 		//If we have Navigation Data on this location
 		if(discoveryMap.checkMap(currentX, currentY)){
-			checkClean(discoveryMap.get(currentX, currentY));
+			checkClean(discoveryMap.get(currentX, currentY), newLocation);
 		}
 		logger.info("executeMove() was called: return newloc" + newLocation);		
 		return newLocation;
 	}
 	
-	private void checkClean(NavigationCell _navCell){
-		if(!_navCell.getLocationData().isClean()){
-			vacuum.doClean(_navCell.getLocationData());
+	private void checkClean(NavigationCell _navCell, Location _currentLocation){
+		if(!_currentLocation.isClean()){
+			vacuum.doClean(_currentLocation);
 			_navCell.setCleanedLastVisit(true);
 		}
 		else {
 			_navCell.setCleanedLastVisit(false);
 		}
+		logger.info("checkClean() was called");		
+
 	}
 	
 	/**
@@ -125,31 +135,23 @@ public class ControlSystem {
 		//See initial dirt map
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation, true);
 		
-		//The max navigation layer at the start of a discovery pass
-		int startMaxLayer = discoveryMap.getMaxNavLayer();
-		
-		//The new navigation value that will be used for newly discovered areas
-		int nextMaxNavLayer = discoveryMap.getMaxNavLayer() + 1;
-		
 		//Begin Discovery
-		while(true){
+		for(int i = 0; i< _discoveryLayer; i++){
 			
 			//What's our current Top Layer
-			startMaxLayer = discoveryMap.getMaxNavLayer();
-			nextMaxNavLayer = discoveryMap.getMaxNavLayer() + 1;
-			
+			int currentMaxNavLayer = discoveryMap.getMaxNavLayer() + 1;
 			for(NavigationCell navCell: discoveryMap.getTopLayerCells()){
 				
 				currentLocation = moveToCell(navCell);
 				for(Direction _d: navCell.getAdjacentList()){
 					
 					currentLocation = executeMove(currentLocation, _d);
-					
 					//If we haven't been here - Create navigation Cell, 
+					//update required steps, add top map.
 					if(!discoveryMap.checkMap(currentX, currentY)){
 						
 						NavigationCell newNavCell = discoveryMap.addNewNavigationCell(currentX, 
-													currentY, nextMaxNavLayer, currentLocation);
+													currentY, currentMaxNavLayer, currentLocation);
 						
 						//Build our lists of directions.
 						newNavCell.buildDirectionsToChargingStation(navCell, _d);
@@ -157,8 +159,8 @@ public class ControlSystem {
 						newNavCell.calculateAdjacentDirections(currentLocation, floorNavProxy);
 					}
 					
-					//Check if the cell needs cleaning
-					checkClean(discoveryMap.get(currentX, currentY));
+					//Check if the newly 
+					checkClean(discoveryMap.get(currentX, currentY), currentLocation);
 					
 					//Go Back To original layer
 					currentLocation = executeMove(currentLocation, _d.getOpposite());
@@ -167,11 +169,6 @@ public class ControlSystem {
 				for(Direction dir: navCell.getStepsToChargeStation()){
 					currentLocation = executeMove(currentLocation, dir);
 				}
-			}
-			//No Layers Added - done navigating
-			if(startMaxLayer == discoveryMap.getMaxNavLayer()){
-				System.out.println("Floor Plan Fully Discovered");
-				break;
 			}
 		}
 		floorNavProxy.displayLocationOnFloorInConsole(currentLocation, true);
@@ -195,6 +192,7 @@ public class ControlSystem {
 			}
 		}
 		logger.info("goToDirt was called");		
+
 	}
 
         public Stack<Direction> shortest_route_to_charger(Location charger_location){
@@ -273,19 +271,16 @@ public class ControlSystem {
 	
 	public static void main(String [] args)
 	{
-		ControlSystem cs = new ControlSystem("TEST_A.cft");
+		ControlSystem cs = new ControlSystem("TEST_B.cft");
 		//cs.floorNavProxy.displayLocationOnFloorInConsole(cs.currentLocation, true);
 		cs.discoverFloor(20);
 		cs.floorNavProxy.displayLocationOnFloorInConsole(cs.currentLocation, true);
-		cs.floorNavProxy.displayLocationOnFloorInConsole(cs.currentLocation);
-		
 		while(cs.discoveryMap.dirtyCellsRemain()){
 			cs.goToDirt();
 			
 			System.out.println("Number of Potentially Dirty Cells: " + 
 					cs.discoveryMap.countDirtyCells());
 		}
-		
    		logger.info("main() was called");		
 		cs.discoveryMap.printMap();
 		cs.floorNavProxy.displayLocationOnFloorInConsole(cs.currentLocation, true);
