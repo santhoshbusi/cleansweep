@@ -19,32 +19,20 @@ public class LowPileState implements FloorState {
 	
 	public void SwitchLowPile() {
 		System.out.println("Already on Low Pile Carpet");
-		if (logger.isDebugEnabled()) {
-			logger.debug("SwitchLowPile() was called.");
-			}
 	}
 
 	public void SwitchHighPile() {
 		floorSimulator.setCurrentState(floorSimulator.getHighPileState());
 		System.out.println("Switched To High Pile");
-		if (logger.isDebugEnabled()) {
-			logger.debug("setCurrentState() was called.");
-			}
 	}
 
 	public void SwitchBareFloor() {
 		floorSimulator.setCurrentState(floorSimulator.getBareFloorState());
 		System.out.println("Switched To Bare Floor");
-		if (logger.isDebugEnabled()) {
-			logger.debug("SwitchBareFloor() was called.");
-			}
 	}
 	
 	public void printState(){
 		System.out.println("Low Pile Carpet");
-		if (logger.isDebugEnabled()) {
-			logger.debug("printState() was called.");
-			}
 	}
 
 }

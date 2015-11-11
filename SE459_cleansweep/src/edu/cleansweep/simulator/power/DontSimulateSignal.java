@@ -19,25 +19,16 @@ public class DontSimulateSignal implements StationSimulator {
 	public void simulateSignal() {
 		powerStationSimulator.setCurrentOutput(powerStationSimulator.getSimulateSignal());
 		System.out.println("Emitting Signal...");
-		if (logger.isDebugEnabled()) {
-			logger.debug("simulateSignal() was called.");
-			}
 	}
 
 	@Override
 	public void dontsimulateSignal() {
 		powerStationSimulator.setCurrentOutput(powerStationSimulator.getDontSimulateSignal());
 		System.out.println("Not Emitting Signal...");
-		if (logger.isDebugEnabled()) {
-			logger.debug("dontsimulateSignal() was called.");
-			}
 	}
 	
 	@Override
 	public void printCurrentSignal(){
 		System.out.println("Not Simulating Power Signal");
-		if (logger.isDebugEnabled()) {
-			logger.debug("printCurrentSignal() was called.");
-			}
 	}
 }

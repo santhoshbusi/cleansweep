@@ -20,9 +20,5 @@ class DischargingPowerState extends PowerState {
 	void nextPowerState(PowerManager powerManager) {
 		if(powerManager.getCurrentState().getPercentCharge() <= 0)
 			powerManager.setCurrentState(new FullyDepletedPowerState());
-		if (logger.isDebugEnabled()) {
-			logger.debug("nextPowerState() was called.");
-			}
-
 	}
 }

@@ -27,9 +27,6 @@ public class PowerManager {
 	 */
 	void setCurrentState(PowerState powerState){
 		_currentState = powerState;
-		if (logger.isDebugEnabled()) {
-			logger.debug("setCurrentState() was called.");
-			}
 	}
 	
 	/**
@@ -37,9 +34,6 @@ public class PowerManager {
 	 * @returns Current Power State
 	 */
 	PowerState getCurrentState(){
-		if (logger.isDebugEnabled()) {
-			logger.debug("getCurrentState() was called. return" + _currentState);
-			}
 		return _currentState;
 	}
 	
@@ -48,10 +42,6 @@ public class PowerManager {
 	 * @return integer value of current charge level 
 	 */
 	public double getCurrentCharge(){
-		if (logger.isDebugEnabled()) {
-			logger.debug("getCurrentCharge() was called. return " + _currentState.getCurrentCharge());
-			}
-
 		return _currentState.getCurrentCharge();
 	}
 	
@@ -60,10 +50,6 @@ public class PowerManager {
 	 */
 	public void charge(){
 		_currentState = new ChargingPowerState(_currentState.getCurrentCharge());
-		if (logger.isDebugEnabled()) {
-			logger.debug("charge() was called.");
-			}
-
 	}
 	
 	/**
@@ -74,10 +60,6 @@ public class PowerManager {
 	public void update(Location starting, Location ending){
 		_currentState.update(starting, ending);
 		_currentState.nextPowerState(this);
-		if (logger.isDebugEnabled()) {
-			logger.debug("update() was called.");
-			}
-
 	}
 	
 	/**
@@ -87,10 +69,6 @@ public class PowerManager {
 	 * @return cost of traversing path.
 	 */
 	public double getPowerCost(Location starting, Location ending){
-		if (logger.isDebugEnabled()) {
-			logger.debug("getPowerCost() was called.");
-			}
-
 		if(starting != null && ending != null )
 			return (double)(starting.getPowerCost() + ending.getPowerCost()) / 2;
 		else if(starting != null)
@@ -101,10 +79,6 @@ public class PowerManager {
 	
 	@Override
 	public String toString() {
-		if (logger.isDebugEnabled()) {
-			logger.debug("toString() was called.");
-			}
-
 		return new StringBuilder().append("[PowerManager] Current Charge : ").append(_currentState.getCurrentCharge()).toString();
 	}
 }

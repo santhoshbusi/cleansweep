@@ -12,9 +12,6 @@ public class HighPileState implements FloorState {
 	public HighPileState(FloorSimulator _floorSimulator)
 	{
 		floorSimulator = _floorSimulator;
-		if (logger.isDebugEnabled()) {
-			logger.debug("HighPileState() was called.");
-			}
 	}
 	
 	@Override
@@ -29,24 +26,15 @@ public class HighPileState implements FloorState {
 	@Override
 	public void SwitchHighPile() {
 		System.out.println("Already on High Pile Carpet");
-		if (logger.isDebugEnabled()) {
-			logger.debug("SwitchHighPile() was called.");
-			}
 	}
 
 	@Override
 	public void SwitchBareFloor() {
 		floorSimulator.setCurrentState(floorSimulator.getBareFloorState());
 		System.out.println("Switch to Bare Floor");
-		if (logger.isDebugEnabled()) {
-			logger.debug("SwitchBareFloor() was called.");
-			}
 	}
 	
 	public void printState(){
 		System.out.println("High Pile Carpet");
-		if (logger.isDebugEnabled()) {
-			logger.debug("printState() was called.");
-			}
 	}
 }

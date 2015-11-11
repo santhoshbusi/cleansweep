@@ -17,24 +17,9 @@ public class PowerSignalDriver {
 			}
 		
 		powerStationSimulator.emitSignal();
-		if (logger.isDebugEnabled()) {
-			logger.debug("powerStationSimulator.emitSignal() was called.");
-			}
-		
 		powerStationSimulator.printCurrentState();
-		if (logger.isDebugEnabled()) {
-			logger.debug("powerStationSimulator.printCurrentState() was called.");
-			}
-		
 		powerStationSimulator.dontEmitSignal();
-		if (logger.isDebugEnabled()) {
-			logger.debug("powerStationSimulator.dontEmitSignal() was called.");
-			}
-		
 		powerStationSimulator.printCurrentState();
-		if (logger.isDebugEnabled()) {
-			logger.debug("powerStationSimulator.printCurrentState() was called.");
-			}		
 	}
 
 }

@@ -20,9 +20,6 @@ class FullyChargedPowerState extends PowerState {
 	@Override
 	void nextPowerState(PowerManager powerManager) {
 		powerManager.setCurrentState(new DischargingPowerState(_currentCharge));	
-		if (logger.isDebugEnabled()) {
-			logger.debug("nextPowerState() was called.");
-			}
 	}
 
 

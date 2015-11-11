@@ -27,10 +27,6 @@ class ChargingPowerState extends PowerState {
 		else{
 			powerManager.setCurrentState(new FullyDepletedPowerState());
 		}
-		if (logger.isDebugEnabled()) {
-			logger.debug("nextPowerState() was called.");	
-			}
-
 	}
 
 

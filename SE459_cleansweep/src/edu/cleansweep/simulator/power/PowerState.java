@@ -25,9 +25,6 @@ abstract class PowerState {
 	}
 	
 	double getCurrentCharge(){
-		if (logger.isDebugEnabled()) {
-			logger.debug("getCurrentCharge() was called. return - " + _currentCharge);
-			}
 		return _currentCharge;
 	}
 	
@@ -50,9 +47,6 @@ abstract class PowerState {
 		else
 			_currentCharge += 0;
 			
-		if (logger.isDebugEnabled()) {
-			logger.debug("update() was called.");
-			}
 	}
 	
 }

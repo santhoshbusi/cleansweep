@@ -20,33 +20,18 @@ public class FloorSimulatorDriver {
 		
 		//Switch To High Pile
 		simulator.switchToHighPile();
-		if (logger.isDebugEnabled()) {
-			logger.debug("switchToHighPile() was called.");
-			}
 		
 		//try to switch to High Pile
 		simulator.switchToHighPile();
-		if (logger.isDebugEnabled()) {
-			logger.debug("switchToHighPile() was called.");
-			}
 		
 		//Switch To Low Pile
 		simulator.switchToLowPile();
-		if (logger.isDebugEnabled()) {
-			logger.debug("switchToLowPile() was called.");
-			}
 		
 		//Check Current State
 		simulator.getCurrentState().printState();
-		if (logger.isDebugEnabled()) {
-			logger.debug("getCurrentState() was called.");
-			}
 		
 		//Back To Bare Floor
 		simulator.switchToBareFloor();
-		if (logger.isDebugEnabled()) {
-			logger.debug("switchToBareFloor() was called.");
-			}
 		
 	}
 }
