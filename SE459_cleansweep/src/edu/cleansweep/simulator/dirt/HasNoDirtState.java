@@ -18,23 +18,14 @@ public class HasNoDirtState implements DirtState {
 	public void switchClean(){
 		dirtSimulator.setCurrentState(dirtSimulator.getCleanState());
 		System.out.println("Switching To Clean");
-		if (logger.isDebugEnabled()) {
-			logger.debug("switchClean() was called.");
-			}
 	}
 	
 	public void switchDirty(){
 		dirtSimulator.setCurrentState(dirtSimulator.getDirtyState());
 		System.out.println("Switching To Dirty");
-		if (logger.isDebugEnabled()) {
-			logger.debug("switchDirty() was called.");
-			}
 	}
 	
 	public void printState(){
 		System.out.println("Clean");
-		if (logger.isDebugEnabled()) {
-			logger.debug("printState() was called.");
-			}
 	}
 }

@@ -14,29 +14,11 @@ public class DirtSimulatorDriver {
 			logger.debug("calling printCurrentState()");
 			}
 		dirtSimulator.printCurrentState();
-		if (logger.isDebugEnabled()) {
-			logger.debug("calling switchToClean()");
-			}
 		dirtSimulator.switchToClean();
-		if (logger.isDebugEnabled()) {
-			logger.debug("calling printCurrentState()");
-			}
 		dirtSimulator.printCurrentState();
-		if (logger.isDebugEnabled()) {
-			logger.debug("calling printCurrentState()");
-			}
 		dirtSimulator.printCurrentState();
-		if (logger.isDebugEnabled()) {
-			logger.debug("calling printCurrentState()");
-			}
 		dirtSimulator.printCurrentState();
-		if (logger.isDebugEnabled()) {
-			logger.debug("calling switchToDirty()");
-			}
 		dirtSimulator.switchToDirty();
-		if (logger.isDebugEnabled()) {
-			logger.debug("calling printCurrentState()");
-			}
 		dirtSimulator.printCurrentState();
 	}
 }
