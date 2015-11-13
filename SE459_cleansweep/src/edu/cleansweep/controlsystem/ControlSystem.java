@@ -92,14 +92,14 @@ public class ControlSystem {
 		
 		//If we have Navigation Data on this location
 		if(discoveryMap.checkMap(currentX, currentY)){
-			checkClean(discoveryMap.get(currentX, currentY), newLocation);
+			checkClean(discoveryMap.get(currentX, currentY));
 		}
 		return newLocation;
 	}
 	
-	private void checkClean(NavigationCell _navCell, Location _currentLocation){
-		if(!_currentLocation.isClean()){
-			vacuum.doClean(_currentLocation);
+	private void checkClean(NavigationCell _navCell){
+		if(!_navCell.getLocationData().isClean()){
+			vacuum.doClean(_navCell.getLocationData());
 			_navCell.setCleanedLastVisit(true);
 		}
 		else {
@@ -122,7 +122,7 @@ public class ControlSystem {
 	 * |1|2|3|
 	 * |C|1|2|3|
 	 */
-	public void discoverFloor(int _discoveryLayer)
+	public void discoverFloor()
 	{
 		//Store Starting Location Information
 		NavigationCell homeCell = discoveryMap.addNewNavigationCell(0, 0, 0, currentLocation);
@@ -149,8 +149,7 @@ public class ControlSystem {
 				for(Direction _d: navCell.getAdjacentList()){
 					
 					currentLocation = executeMove(currentLocation, _d);
-					
-					
+
 					//If we haven't been here - Create navigation Cell, 
 					//update required steps, add top map.
 					if(!discoveryMap.checkMap(currentX, currentY)){
@@ -163,11 +162,10 @@ public class ControlSystem {
 						newNavCell.buildDirectionsToCell(navCell, _d);
 						newNavCell.calcPowerConsumption(navCell);
 						newNavCell.calculateAdjacentDirections(currentLocation, floorNavProxy);
-						
 					}
 					
-					//Check if the newly 
-					checkClean(discoveryMap.get(currentX, currentY), currentLocation);
+					//Check if the newly created cell needs cleaning
+					checkClean(discoveryMap.get(currentX, currentY));
 					
 					//Go Back To original layer
 					currentLocation = executeMove(currentLocation, _d.getOpposite());
@@ -175,6 +173,9 @@ public class ControlSystem {
 				//Go Back to Charging Station
 				for(Direction dir: navCell.getStepsToChargeStation()){
 					currentLocation = executeMove(currentLocation, dir);
+				}
+				if(powerManager.getCurrentCharge()<30){
+					powerManager.charge();
 				}
 			}
 			if(currentMaxNavLayer == discoveryMap.getMaxNavLayer()){
@@ -280,7 +281,7 @@ public class ControlSystem {
 	{
 		ControlSystem cs = new ControlSystem("TEST_A.cft");
 		//cs.floorNavProxy.displayLocationOnFloorInConsole(cs.currentLocation, true);
-		cs.discoverFloor(20);
+		cs.discoverFloor();
 		cs.floorNavProxy.displayLocationOnFloorInConsole(cs.currentLocation, true);
 		while(cs.discoveryMap.dirtyCellsRemain()){
 			cs.goToDirt();
