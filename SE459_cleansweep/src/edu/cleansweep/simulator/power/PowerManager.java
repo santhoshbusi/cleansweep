@@ -49,7 +49,10 @@ public class PowerManager {
 	 * Call this when at a PowerStation to Change State from Discharging to Charging
 	 */
 	public void charge(){
-		_currentState = new ChargingPowerState(_currentState.getCurrentCharge());
+		// TODO Simulate Time Delay to Charge Battery
+		//_currentState = new ChargingPowerState(_currentState.getCurrentCharge());
+		_currentState = new FullyChargedPowerState();
+		
 	}
 	
 	/**
