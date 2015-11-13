@@ -105,9 +105,6 @@ public class NavigationCell {
 	}
 	
 	public void calcPowerConsumption(NavigationCell _fromCell){
-		
-		double test = PowerManager.getPowerCost(_fromCell.locationData,this.locationData);
-		
 		this.powerCostToChargeStation = _fromCell.getPowerCostToChargeStation() + 
 				PowerManager.getPowerCost(_fromCell.locationData,this.locationData);
 	}
