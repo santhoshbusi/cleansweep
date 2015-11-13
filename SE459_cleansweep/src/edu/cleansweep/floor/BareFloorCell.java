@@ -15,7 +15,8 @@ class BareFloorCell extends AbstractCell implements Serializable {
 	
 	BareFloorCell(int x, int y){
 		super(x,y);
-		_dirt = (int)(Math.random() * (5 - 0) + 1);
+		_dirt = (int)(Math.random() * (3 - 0));
+		logger.debug("creating " + this.getClass().getSimpleName() + " with " + _dirt + " units of dirt");
 	}
 
 	/**
