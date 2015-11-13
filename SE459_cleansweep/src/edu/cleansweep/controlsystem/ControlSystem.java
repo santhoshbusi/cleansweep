@@ -28,6 +28,7 @@ public class ControlSystem {
 	private FloorNavigationProxy floorNavProxy;
 	private Vacuum vacuum;
 	private PowerManager powerManager;
+	private boolean emptyMeLight;
 
 	public ControlSystem(String floorFile){
 		currentX = 0;
@@ -38,7 +39,7 @@ public class ControlSystem {
 		currentLocation = floorNavProxy.getStaringLocation();
 		vacuum = new Vacuum(floorNavProxy);
 		powerManager = new PowerManager();
-		System.out.println(powerManager.toString());
+		emptyMeLight = false;
 	}
 	/**
 	 * Used to move to a particular navigation cell
@@ -99,8 +100,13 @@ public class ControlSystem {
 	
 	private void checkClean(NavigationCell _navCell){
 		if(!_navCell.getLocationData().isClean()){
-			vacuum.doClean(_navCell.getLocationData());
-			_navCell.setCleanedLastVisit(true);
+			 boolean cleaned = vacuum.doClean(_navCell.getLocationData());
+			 if(cleaned){
+				 _navCell.setCleanedLastVisit(true);
+			 }
+			 else {
+				 emptyMeLight = true;
+			 }
 		}
 		else {
 			_navCell.setCleanedLastVisit(false);
@@ -136,7 +142,7 @@ public class ControlSystem {
 		int newMaxNavLayer = currentMaxNavLayer + 1;
 		
 		//Begin Discovery
-		while(true){
+		while(this.emptyMeLight == false){
 			
 			//What's our current top discovery layer
 			currentMaxNavLayer = discoveryMap.getMaxNavLayer();
@@ -220,7 +226,7 @@ public class ControlSystem {
 				moveToChargeStation(_navCell);
 				powerManager.charge();
 			}
-		}	
+		}
 	}
 
     public Stack<Direction> shortest_route_to_charger(Location charger_location){
@@ -297,18 +303,13 @@ public class ControlSystem {
 	
 	public static void main(String [] args)
 	{
-		ControlSystem cs = new ControlSystem("TEST_E.cft");
+		ControlSystem cs = new ControlSystem("TEST_A.cft");
 		cs.discoverFloor();
 		
-		cs.floorNavProxy.displayLocationOnFloorInConsole(cs.currentLocation, true);
-		cs.floorNavProxy.displayLocationOnFloorInConsole(cs.currentLocation);
-		
-		while(cs.discoveryMap.dirtyCellsRemain()){
+		while(cs.discoveryMap.dirtyCellsRemain() && cs.emptyMeLight == false){
 			cs.goToDirt();
-			
-			System.out.println("Number of Potentially Dirty Cells: " + 
-					cs.discoveryMap.countDirtyCells());
 		}
+		
 		cs.discoveryMap.printMap();
 		cs.floorNavProxy.displayLocationOnFloorInConsole(cs.currentLocation, true);
 	}

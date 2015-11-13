@@ -12,6 +12,7 @@ public class Vacuum
 	private FloorNavigationProxy floorNavProxy;
 	private FloorType _floorType;
 	private FloorCleaners _floorCleaners;
+	private DirtRepository _dirtRepository;
 	private static final Logger logger = LogManager.getLogger(Vacuum.class.getName());
 
 	
@@ -19,30 +20,29 @@ public class Vacuum
 	{
 		this. floorNavProxy = _floorNavProxy;
 		this._floorCleaners = new FloorCleaners();
+		this._dirtRepository = new DirtRepository();
 	}
 	
-	public void doClean(Location location)
+	public boolean doClean(Location location)
 	{
-		 //clean the location and move to new location
-		if (logger.isDebugEnabled()) {
-			logger.debug("doClean() was called.");
-			}
-		
+		if(_dirtRepository.getCurrentDirt() >= DirtRepository.MAXIMUM){
+			_dirtRepository.setIsFullStatus(true);
+			logger.debug("Repository is Full - No More Cleaning");
+			return false;
+		}
+		 //clean the location
 		_floorType = floorNavProxy.getFloorType(location);
-		if(_floorType.equals(FloorType.BAREFLOOR))
-		{
+		if(_floorType.equals(FloorType.BAREFLOOR)){
 			_floorCleaners.set_floorType(_floorType);
-			floorNavProxy.clean(location);
 		}
-		if(_floorType.equals(FloorType.LOWPILECARPET))
-		{
+		if(_floorType.equals(FloorType.LOWPILECARPET)){
 			_floorCleaners.set_floorType(_floorType);
-			floorNavProxy.clean(location);
 		}
-		if(_floorType.equals(FloorType.HIGHPILECARPET))
-		{
+		if(_floorType.equals(FloorType.HIGHPILECARPET)){
 			_floorCleaners.set_floorType(_floorType);
-			floorNavProxy.clean(location);
 		}
+		floorNavProxy.clean(location);
+		_dirtRepository.addDirt();
+		return true;
 	 }
 }
