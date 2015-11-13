@@ -67,15 +67,15 @@ public class ControlSystem {
 	 */
 	private Location executeMove(Location _currentLocation, Direction _direction)
 	{
-		
 		Location newLocation = floorNavProxy.move(_currentLocation, _direction);
 		
-		if(newLocation == null){
-			floorNavProxy.displayLocationOnFloorInConsole(_currentLocation);
-			System.out.println("Attempting to move in " + _direction);
-			System.out.println("[ControlSystem] Warning: Location is null!");
+		//Hard Stop on no power
+		if(powerManager.getCurrentCharge() <= 0){
+			logger.fatal("No Power Remaining");
+			System.out.println("No Power");
+			System.exit(0);
 		}
-		
+
 		// Update Power Consumption
 		powerManager.update(_currentLocation, newLocation);
 		System.out.println(powerManager.toString());
@@ -115,13 +115,13 @@ public class ControlSystem {
 	 * @param discoveryLayer The layer of discovery the control system should roam to.
 	 * @return void
 	 */
-	
 	/*
 	 * |3|
 	 * |2|3|
 	 * |1|2|3|
 	 * |C|1|2|3|
 	 */
+	
 	public void discoverFloor()
 	{
 		//Store Starting Location Information
@@ -130,7 +130,7 @@ public class ControlSystem {
 		homeCell.setPowerCostToChargeStation(0);
 		
 		//See initial dirt map
-		floorNavProxy.displayLocationOnFloorInConsole(currentLocation);
+		floorNavProxy.displayLocationOnFloorInConsole(currentLocation, true);
 		
 		int currentMaxNavLayer = discoveryMap.getMaxNavLayer();
 		int newMaxNavLayer = currentMaxNavLayer + 1;
@@ -138,16 +138,25 @@ public class ControlSystem {
 		//Begin Discovery
 		while(true){
 			
-			//What's our current Top Layer
+			//What's our current top discovery layer
 			currentMaxNavLayer = discoveryMap.getMaxNavLayer();
 			newMaxNavLayer = discoveryMap.getMaxNavLayer() + 1;
 			
+			boolean needCharge = false;
+			
 			for(NavigationCell navCell: discoveryMap.getTopLayerCells()){
 				
+				//Move to our cell
 				currentLocation = moveToCell(navCell);
 				
 				for(Direction _d: navCell.getAdjacentList()){
 					
+					/*perform a check if we can get back to CS from potential destination cell
+					 * 6 represents the maximum possible cost of a 1 cell round trip */
+					if(navCell.getPowerCostToChargeStation() + 6 >= powerManager.getCurrentCharge()){
+						needCharge = true;
+						break;
+					}
 					currentLocation = executeMove(currentLocation, _d);
 
 					//If we haven't been here - Create navigation Cell, 
@@ -164,20 +173,27 @@ public class ControlSystem {
 						newNavCell.calculateAdjacentDirections(currentLocation, floorNavProxy);
 					}
 					
-					//Check if the newly created cell needs cleaning
-					checkClean(discoveryMap.get(currentX, currentY));
-					
-					//Go Back To original layer
-					currentLocation = executeMove(currentLocation, _d.getOpposite());
+					if(needCharge == false){
+						//Check if the newly created cell needs cleaning
+						checkClean(discoveryMap.get(currentX, currentY));
+						
+						//Go Back To original layer
+						currentLocation = executeMove(currentLocation, _d.getOpposite());
+					}
 				}
+				
 				//Go Back to Charging Station
 				for(Direction dir: navCell.getStepsToChargeStation()){
 					currentLocation = executeMove(currentLocation, dir);
 				}
-				if(powerManager.getCurrentCharge()<30){
+				
+				//This should always be true
+				if(currentX == 0 & currentY == 0){
 					powerManager.charge();
+					needCharge = false;
 				}
 			}
+			
 			if(currentMaxNavLayer == discoveryMap.getMaxNavLayer()){
 				if (logger.isDebugEnabled()) {
 					logger.info("Discovery Ending at: " + discoveryMap.getMaxNavLayer());
@@ -185,7 +201,6 @@ public class ControlSystem {
 				break;
 			}
 		}
-		floorNavProxy.displayLocationOnFloorInConsole(currentLocation, true);
 	}
 	
 	/**
@@ -203,11 +218,12 @@ public class ControlSystem {
 			if(_navCell.isCleanedLastVisit()){
 				moveToCell(_navCell);
 				moveToChargeStation(_navCell);
+				powerManager.charge();
 			}
 		}	
 	}
 
-        public Stack<Direction> shortest_route_to_charger(Location charger_location){
+    public Stack<Direction> shortest_route_to_charger(Location charger_location){
            if(charger_location == null){
               //If the charger supplied is null, use starting location as a default
               charger_location = floorNavProxy.getStaringLocation();
@@ -281,10 +297,12 @@ public class ControlSystem {
 	
 	public static void main(String [] args)
 	{
-		ControlSystem cs = new ControlSystem("TEST_A.cft");
-		//cs.floorNavProxy.displayLocationOnFloorInConsole(cs.currentLocation, true);
+		ControlSystem cs = new ControlSystem("TEST_E.cft");
 		cs.discoverFloor();
+		
 		cs.floorNavProxy.displayLocationOnFloorInConsole(cs.currentLocation, true);
+		cs.floorNavProxy.displayLocationOnFloorInConsole(cs.currentLocation);
+		
 		while(cs.discoveryMap.dirtyCellsRemain()){
 			cs.goToDirt();
 			

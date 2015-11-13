@@ -75,7 +75,6 @@ public class FloorNavigationProxy {
 		_headingDirection = direction;
 		
 		// Special Case, this assumes door is open and not closed 
-		
 		if(newCell.getClass() == DoorCell.class){
 			// Temporarily get location of Door Cell 
 			Location tempLocation = new Location(newCell, _headingDirection);
