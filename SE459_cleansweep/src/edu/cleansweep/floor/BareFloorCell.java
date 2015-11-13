@@ -2,12 +2,15 @@ package edu.cleansweep.floor;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import org.apache.logging.log4j.Logger; 
+import org.apache.logging.log4j.LogManager;
 
 class BareFloorCell extends AbstractCell implements Serializable {
 
 	/**
 	 * 
 	 */
+	private static final Logger logger = LogManager.getLogger(BareFloorCell.class.getName());
 	private static final long serialVersionUID = -7566728965045014529L;
 	
 	BareFloorCell(int x, int y){
@@ -22,6 +25,9 @@ class BareFloorCell extends AbstractCell implements Serializable {
 	 */
 	@Override
 	int getElevationGrade() {
+		if (logger.isDebugEnabled()) {
+			logger.debug("getElevationGrade() was called. return -" + _grade);
+			}
 		return _grade;
 	}
 

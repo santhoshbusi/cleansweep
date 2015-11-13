@@ -24,7 +24,10 @@ public class Vacuum
 	public void doClean(Location location)
 	{
 		 //clean the location and move to new location
-		logger.info("doClean() was called.");
+		if (logger.isDebugEnabled()) {
+			logger.debug("doClean() was called.");
+			}
+		
 		_floorType = floorNavProxy.getFloorType(location);
 		if(_floorType.equals(FloorType.BAREFLOOR))
 		{

@@ -18,12 +18,13 @@ abstract class PowerState {
 	private static final Logger logger = LogManager.getLogger(PowerState.class.getName());
 	
 	double getPercentCharge(){
-		logger.info("getPercentCharge() was called. return - " + (_currentCharge / (double)_fullCharge) * 100);
+		if (logger.isDebugEnabled()) {
+			logger.debug("getPercentCharge() was called. return - " + (_currentCharge / (double)_fullCharge) * 100);
+			}
 		return (_currentCharge / (double)_fullCharge) * 100;
 	}
 	
 	double getCurrentCharge(){
-		logger.info("getCurrentCharge() was called. return - " + _currentCharge);
 		return _currentCharge;
 	}
 	
@@ -46,7 +47,6 @@ abstract class PowerState {
 		else
 			_currentCharge += 0;
 			
-		logger.info("update() was called.");
 	}
 	
 }

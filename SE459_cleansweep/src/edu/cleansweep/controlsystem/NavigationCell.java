@@ -55,14 +55,20 @@ public class NavigationCell {
 	/**
 	 * Returns the array list of available adjacent directions for the cell
 	 */
-	public ArrayList<Direction> getAdjacentList(){	
+	public ArrayList<Direction> getAdjacentList(){
+		if (logger.isDebugEnabled()) {
+			logger.debug("getAdjacentList() was called: return adjacentDirections-" + adjacentDirections);		
+			}
 		return adjacentDirections;
 	}
 	
 	/**
 	 * Returns an array list of steps to get back to the charging Station
 	 */
-	public ArrayList<Direction> getStepsToChargeStation(){	
+	public ArrayList<Direction> getStepsToChargeStation(){
+		if (logger.isDebugEnabled()) {
+			logger.debug("getStepsToChargeStation() was called: return stepsToChargeStation-" + stepsToChargeStation);		
+			}
 		return stepsToChargeStation;
 	}
 	
@@ -70,6 +76,9 @@ public class NavigationCell {
 	 * Returns an array list of steps to get to the navigation cell from the charging station
 	 */
 	public ArrayList<Direction> getStepsToNavCell(){
+		if (logger.isDebugEnabled()) {
+			logger.debug("getStepsToNavCell() was called: return stepsToNavCell-" + stepsToNavCell);		
+			}
 		return stepsToNavCell;
 	}
 	

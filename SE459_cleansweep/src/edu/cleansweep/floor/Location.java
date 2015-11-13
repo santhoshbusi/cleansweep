@@ -1,6 +1,8 @@
 package edu.cleansweep.floor;
 
 import java.io.Serializable;
+import org.apache.logging.log4j.Logger; 
+import org.apache.logging.log4j.LogManager;
 
 /**
  * Used to represent a location on the floor
@@ -14,6 +16,7 @@ public class Location implements Serializable{
 	/**
 	 * Generated servialVersionUID
 	 */
+	private static final Logger logger = LogManager.getLogger(Location.class.getName());
 	private static final long serialVersionUID = 8781241666543820240L;
 	private Direction _heading;
 	private int _latitude;
@@ -32,6 +35,9 @@ public class Location implements Serializable{
 	 * @return true if location is clean, false if location has dirt
 	 */
 	public boolean isClean(){
+		if (logger.isDebugEnabled()) {
+			logger.debug("isClean() was called. return - " + _currentCell.isClean());
+			}
 		return _currentCell.isClean();
 	}
 	

@@ -1,10 +1,14 @@
 package edu.cleansweep.floor;
 
+import org.apache.logging.log4j.Logger; 
+import org.apache.logging.log4j.LogManager;
+
 class LowPileCarpetCell extends BareFloorCell {
 
 	/**
 	 * 
 	 */
+	private static final Logger logger = LogManager.getLogger(LowPileCarpetCell.class.getName());
 	private static final long serialVersionUID = 825513656970874362L;
 
 	LowPileCarpetCell(int x, int y) {
@@ -13,6 +17,10 @@ class LowPileCarpetCell extends BareFloorCell {
 
 	@Override
 	FloorType getFloorType(){
+		if (logger.isDebugEnabled()) {
+			logger.debug("getFloorType() was called. return - " + FloorType.LOWPILECARPET);
+			}
+
 		return FloorType.LOWPILECARPET;
 	}
 	

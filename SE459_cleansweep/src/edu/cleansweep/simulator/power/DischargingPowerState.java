@@ -10,7 +10,9 @@ class DischargingPowerState extends PowerState {
 	DischargingPowerState(double chargeValue){
 		System.out.println("[PowerState] Entering DischargingPowerState");
 		_currentCharge = chargeValue;
-		logger.info("DischargingPowerState() was called.");
+		if (logger.isDebugEnabled()) {
+			logger.debug("DischargingPowerState() was called.");
+			}
 	}
 	
 
@@ -18,7 +20,5 @@ class DischargingPowerState extends PowerState {
 	void nextPowerState(PowerManager powerManager) {
 		if(powerManager.getCurrentState().getPercentCharge() <= 0)
 			powerManager.setCurrentState(new FullyDepletedPowerState());
-		logger.info("nextPowerState() was called.");
-
 	}
 }
