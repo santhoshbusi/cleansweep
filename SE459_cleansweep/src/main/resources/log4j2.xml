@@ -28,7 +28,7 @@
 			<AppenderRef ref="console" />
 			<AppenderRef ref="rollingfile" />
 		</Logger>
-		<Logger name="edu.cleansweep.floor.DoorCell" level="info" additivity="false">
+		<Logger name="edu.cleansweep.floor.DoorCell" level="debug" additivity="false">
 			<AppenderRef ref="console" />
 			<AppenderRef ref="rollingfile" />
 		</Logger>
