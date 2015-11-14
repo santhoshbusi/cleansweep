@@ -1,4 +1,4 @@
-package edu.cleansweep.tests;
+package edu.cleansweep.controlsystem;
 
 import static org.junit.Assert.*;
 import java.util.ArrayList;

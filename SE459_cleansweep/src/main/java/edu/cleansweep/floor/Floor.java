@@ -319,7 +319,7 @@ class Floor {
 	 */
 	boolean createFloorPlanFromFile(String filename){
 		//ArrayList<ArrayList<AbstractCell>> cellsFromLine = new ArrayList<ArrayList<AbstractCell>>();
-		Path path = FileSystems.getDefault().getPath("src/edu/cleansweep/tests",filename);
+		Path path = FileSystems.getDefault().getPath("src/main/resources",filename);
 		
 		//Reset list of charging stations
 		_setOfChargingStations = new ArrayList<ChargingStationCell>();

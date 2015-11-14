@@ -1,4 +1,4 @@
-package edu.cleansweep.tests;
+package edu.cleansweep.floor;
 
 import edu.cleansweep.floor.Direction;
 import edu.cleansweep.floor.FloorNavigationProxy;

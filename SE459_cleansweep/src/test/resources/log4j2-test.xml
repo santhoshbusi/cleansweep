@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="warn">
+	<Appenders>
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="[%-5level] %d{yyyyMMdd-HHmmss} [%t] %M- %msg%n" />
+		</Console>
+		
+		<RollingFile name="rollingfile" fileName="./logs/cleansweep.log"
+			filePattern="./logs/cleansweep-%d{yyyyMMddHHmmss}.log">
+			<PatternLayout>
+				<pattern>
+					[%-5level] %d{yyyyMMdd-HHmmss} [%t] %M- %msg%n
+				</pattern>
+			</PatternLayout>
+			<Policies>
+				<OnStartupTriggerPolicy />
+			</Policies>
+		</RollingFile>
+	</Appenders>
+	
+	<Loggers>
+		<Root level="off">
+			<AppenderRef ref="console" level="all" />
+			<AppenderRef ref="rollingfile" level="all" />
+		</Root>
+	</Loggers>
+</Configuration>
