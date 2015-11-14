@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Configuration status="warn">
+<Configuration status="WARN">
 	<Appenders>
 		<Console name="console" target="SYSTEM_OUT">
 			<PatternLayout
@@ -15,13 +15,12 @@
 				</pattern>
 			</PatternLayout>
 			<Policies>
-				<OnStartupTriggerPolicy />
 			</Policies>
 		</RollingFile>
 	</Appenders>
 	
 	<Loggers>
-		<Root level="off">
+		<Root level="all">
 			<AppenderRef ref="console" level="all" />
 			<AppenderRef ref="rollingfile" level="all" />
 		</Root>

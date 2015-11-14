@@ -15,7 +15,6 @@
 				</pattern>
 			</PatternLayout>
 			<Policies>
-				<OnStartupTriggerPolicy />
 			</Policies>
 		</RollingFile>
 	</Appenders>
