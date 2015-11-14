@@ -23,6 +23,10 @@ public class Vacuum
 		this._dirtRepository = new DirtRepository();
 	}
 	
+	public int getDirtCount(){
+		return _dirtRepository.getCurrentDirt();
+	}
+	
 	public boolean doClean(Location location)
 	{
 		if(_dirtRepository.getCurrentDirt() >= DirtRepository.MAXIMUM){
