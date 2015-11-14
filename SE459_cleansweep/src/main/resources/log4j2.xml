@@ -20,7 +20,7 @@
 	</Appenders>
 	
 	<Loggers>
-		<Logger name="edu.cleansweep.floor.BareFloorCell" level="debug" additivity="false">
+		<Logger name="edu.cleansweep.floor.BareFloorCell" level="info" additivity="false">
 			<AppenderRef ref="console" />
 			<AppenderRef ref="rollingfile" />
 		</Logger>
@@ -33,6 +33,22 @@
 			<AppenderRef ref="rollingfile" />
 		</Logger>
 		<Logger name="edu.cleansweep.controlsystem.power.PowerState" level="info" additivity="false">
+			<AppenderRef ref="console" />
+			<AppenderRef ref="rollingfile" />
+		</Logger>
+		<Logger name="edu.cleansweep.controlsystem.power.ChargingPowerState" level="info" additivity="false">
+			<AppenderRef ref="console" />
+			<AppenderRef ref="rollingfile" />
+		</Logger>
+			<Logger name="edu.cleansweep.controlsystem.power.DischargingPowerState" level="info" additivity="false">
+			<AppenderRef ref="console" />
+			<AppenderRef ref="rollingfile" />
+		</Logger>
+			<Logger name="edu.cleansweep.controlsystem.power.FullyChargedPowerState" level="info" additivity="false">
+			<AppenderRef ref="console" />
+			<AppenderRef ref="rollingfile" />
+		</Logger>
+			<Logger name="edu.cleansweep.controlsystem.power.FullyDepletedPowerState" level="info" additivity="false">
 			<AppenderRef ref="console" />
 			<AppenderRef ref="rollingfile" />
 		</Logger>
