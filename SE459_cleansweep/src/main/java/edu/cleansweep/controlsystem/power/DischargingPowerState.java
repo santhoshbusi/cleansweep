@@ -8,7 +8,7 @@ class DischargingPowerState extends PowerState {
 	private static final Logger logger = LogManager.getLogger(DischargingPowerState.class.getName());
 
 	DischargingPowerState(double chargeValue){
-		System.out.println("[PowerState] Entering DischargingPowerState");
+		logger.info("Entering DischargingPowerState");
 		_currentCharge = chargeValue;
 		if (logger.isDebugEnabled()) {
 			logger.debug("DischargingPowerState() was called.");

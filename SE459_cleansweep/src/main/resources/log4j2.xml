@@ -4,14 +4,14 @@
 	<Appenders>
 		<Console name="console" target="SYSTEM_OUT">
 			<PatternLayout
-				pattern="[%-5level] %d{yyyyMMdd-HHmmss} [%t] %M- %msg%n" />
+				pattern="[%-5level] %d{yyyy.MM.dd HH:mm:ss} [%C{1}] %M - %msg%n" />
 		</Console>
 		
 		<RollingFile name="rollingfile" fileName="./logs/cleansweep.log"
 			filePattern="./logs/cleansweep-%d{yyyyMMddHHmmss}.log">
 			<PatternLayout>
 				<pattern>
-					[%-5level] %d{yyyyMMdd-HHmmss} [%t] %M- %msg%n
+					[%-5level] %d{yyyy.MM.dd HH:mm:ss} [%C{1}] %M - %msg%n
 				</pattern>
 			</PatternLayout>
 			<Policies>
@@ -20,9 +20,29 @@
 	</Appenders>
 	
 	<Loggers>
-		<Root level="all">
-			<AppenderRef ref="console" level="all" />
-			<AppenderRef ref="rollingfile" level="all" />
+		<Logger name="edu.cleansweep.floor.BareFloorCell" level="debug" additivity="false">
+			<AppenderRef ref="console" />
+			<AppenderRef ref="rollingfile" />
+		</Logger>
+		<Logger name="edu.cleansweep.floor.AbstractCell" level="info" additivity="false">
+			<AppenderRef ref="console" />
+			<AppenderRef ref="rollingfile" />
+		</Logger>
+		<Logger name="edu.cleansweep.floor.DoorCell" level="info" additivity="false">
+			<AppenderRef ref="console" />
+			<AppenderRef ref="rollingfile" />
+		</Logger>
+		<Logger name="edu.cleansweep.controlsystem.power.PowerState" level="info" additivity="false">
+			<AppenderRef ref="console" />
+			<AppenderRef ref="rollingfile" />
+		</Logger>
+		<Logger name="edu.cleansweep.controlsystem.power.PowerManager" level="info" additivity="false">
+			<AppenderRef ref="console" />
+			<AppenderRef ref="rollingfile" />
+		</Logger>
+		<Root level="error">
+			<AppenderRef ref="console" />
+			<AppenderRef ref="rollingfile" />
 		</Root>
 	</Loggers>
 </Configuration>

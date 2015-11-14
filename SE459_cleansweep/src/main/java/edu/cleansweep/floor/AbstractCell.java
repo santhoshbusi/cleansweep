@@ -53,10 +53,14 @@ abstract class AbstractCell {
 	int getDirt(){
 		if(!this.isClean()){
 			_dirt -= 1;
+			logger.info("Dirt Being Removed From Cell");
 			return 1;
 		}
-		else
+		else{
+			logger.info("No Dirt Present to Be Removed");
 			return 0;
+		}
+			
 	}
 	
 	/**

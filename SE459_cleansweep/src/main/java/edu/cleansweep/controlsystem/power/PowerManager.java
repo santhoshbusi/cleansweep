@@ -63,6 +63,7 @@ public class PowerManager {
 	public void update(Location starting, Location ending){
 		_currentState.update(starting, ending);
 		_currentState.nextPowerState(this);
+		logger.info(this);
 	}
 	
 	/**
@@ -83,6 +84,6 @@ public class PowerManager {
 	
 	@Override
 	public String toString() {
-		return new StringBuilder().append("[PowerManager] Current Charge : ").append(_currentState.getCurrentCharge()).toString();
+		return new StringBuilder().append("Current Charge : ").append(_currentState.getCurrentCharge()).toString();
 	}
 }

@@ -43,7 +43,6 @@ public class FloorNavigationProxy {
 		if(peakCell.getClass() == DoorCell.class){
 			DoorCell d = (DoorCell) peakCell;
 			
-			System.out.println(new StringBuilder().append("[DoorCell] is Closed? : ").append(d.isObstructed()));
 			// If Door is closed we need to return false else we need to get the cell directly after it
 			if(d.isObstructed())
 				return false;
@@ -96,11 +95,7 @@ public class FloorNavigationProxy {
 	 */
 	public void clean(Location location){
 		AbstractCell cell = _floor.getCellAt(location.getLongitude(), location.getLatitude());
-		int x = cell.getDirt();
-		if(x == 0)
-			System.out.println("[FloorNavigationProxy] No Dirt Present to Be Removed");
-		else
-			System.out.println("[FloorNavigationProxy] Dirt Being Removed From Floor");
+		cell.getDirt();
 	}
 	
 	/**

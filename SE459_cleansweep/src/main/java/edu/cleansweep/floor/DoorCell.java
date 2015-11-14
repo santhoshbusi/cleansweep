@@ -46,6 +46,7 @@ class DoorCell extends AbstractCell implements Serializable {
 	
 	@Override
 	boolean isObstructed() {
+		logger.info("is Closed? : " + !_open);
 		return !_open;
 	}
 	

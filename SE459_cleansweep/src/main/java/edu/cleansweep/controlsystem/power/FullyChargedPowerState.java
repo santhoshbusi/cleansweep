@@ -9,7 +9,7 @@ class FullyChargedPowerState extends PowerState {
 	private static final Logger logger = LogManager.getLogger(FullyChargedPowerState.class.getName());
 
 	FullyChargedPowerState(){
-		System.out.println("[PowerState] Entering FullyChargedPowerState");
+		logger.info("Entering FullyChargedPowerState");
 		_currentCharge = 100;
 		if (logger.isDebugEnabled()) {
 			logger.debug("FullyChargedPowerState() was called.");

@@ -9,7 +9,7 @@ class FullyDepletedPowerState extends PowerState {
 	private static final Logger logger = LogManager.getLogger(FullyDepletedPowerState.class.getName());
 
 	FullyDepletedPowerState(){
-		System.out.println("[PowerState] Entering FullyDepletedPowerState");
+		logger.info("Entering FullyDepletedPowerState");
 		_currentCharge = 0;
 	}
 	

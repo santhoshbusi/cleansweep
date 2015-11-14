@@ -79,7 +79,6 @@ public class ControlSystem {
 
 		// Update Power Consumption
 		powerManager.update(_currentLocation, newLocation);
-		System.out.println(powerManager.toString());
 		
 		if(_direction.equals(Direction.NORTH)){
 			this.currentX++;
