@@ -29,5 +29,9 @@ class ChargingPowerState extends PowerState {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "ChargingPowerState";
+	}
 
 }

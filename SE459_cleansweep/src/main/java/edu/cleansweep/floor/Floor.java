@@ -1,12 +1,13 @@
 package edu.cleansweep.floor;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.apache.logging.log4j.Logger; 
 import org.apache.logging.log4j.LogManager;
@@ -317,9 +318,12 @@ class Floor {
 	 * @param filename name of .cft file
 	 * @return true if floor construction is successful , false if not.
 	 */
-	boolean createFloorPlanFromFile(String filename){
+	boolean createFloorPlanFromFile(String filename) throws InvalidPathException{
 		//ArrayList<ArrayList<AbstractCell>> cellsFromLine = new ArrayList<ArrayList<AbstractCell>>();
 		Path path = FileSystems.getDefault().getPath("src/main/resources",filename);
+		
+		if(path == null)
+			throw new InvalidPathException(filename, "path is null");
 		
 		//Reset list of charging stations
 		_setOfChargingStations = new ArrayList<ChargingStationCell>();

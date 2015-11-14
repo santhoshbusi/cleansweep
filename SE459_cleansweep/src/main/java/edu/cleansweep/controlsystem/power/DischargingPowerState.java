@@ -21,4 +21,9 @@ class DischargingPowerState extends PowerState {
 		if(powerManager.getCurrentState().getPercentCharge() <= 0)
 			powerManager.setCurrentState(new FullyDepletedPowerState());
 	}
+	
+	@Override
+	public String toString() {
+		return "DischargingPowerState";
+	}
 }

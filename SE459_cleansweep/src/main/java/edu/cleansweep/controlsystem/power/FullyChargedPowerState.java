@@ -22,5 +22,9 @@ class FullyChargedPowerState extends PowerState {
 		powerManager.setCurrentState(new DischargingPowerState(_currentCharge));	
 	}
 
+	@Override
+	public String toString() {
+		return "FullyChargedPowerState";
+	}
 
 }

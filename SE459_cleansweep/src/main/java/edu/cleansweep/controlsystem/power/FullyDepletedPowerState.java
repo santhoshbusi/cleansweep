@@ -20,4 +20,9 @@ class FullyDepletedPowerState extends PowerState {
 			logger.debug("nextPowerState() was called.");
 			}		
 	}
+	
+	@Override
+	public String toString() {
+		return "FullyDepletedPowerState";
+	}
 }
