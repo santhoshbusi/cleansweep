@@ -77,7 +77,7 @@ public class FloorNavigationProxy {
 	 */
 	public Location move(Location location, Direction direction){
 		
-		logger.debug("Moving " +  direction);
+		logger.debug("Moving " +  direction + " from (" + location.getLongitude() + "," + location.getLatitude() + ")");
 		AbstractCell newCell = _floor.getCellAt(location.getLongitude(), location.getLatitude()).getAdjacentCell(direction);
 		_headingDirection = direction;
 		
