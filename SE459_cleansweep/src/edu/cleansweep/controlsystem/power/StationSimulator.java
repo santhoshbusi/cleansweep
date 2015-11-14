@@ -1,4 +1,4 @@
-package edu.cleansweep.simulator.power;
+package edu.cleansweep.controlsystem.power;
 
 public interface StationSimulator {
 

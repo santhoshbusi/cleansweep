@@ -1,4 +1,4 @@
-package edu.cleansweep.simulator.power;
+package edu.cleansweep.controlsystem.power;
 
 import edu.cleansweep.floor.Location;
 import org.apache.logging.log4j.Logger; 
