@@ -32,6 +32,10 @@
 			<AppenderRef ref="console" />
 			<AppenderRef ref="rollingfile" />
 		</Logger>
+		<Logger name="edu.cleansweep.floor.FloorNavigationProxy" level="debug" additivity="false">
+			<AppenderRef ref="console" />
+			<AppenderRef ref="rollingfile" />
+		</Logger>
 		<Logger name="edu.cleansweep.controlsystem.power.PowerState" level="info" additivity="false">
 			<AppenderRef ref="console" />
 			<AppenderRef ref="rollingfile" />
