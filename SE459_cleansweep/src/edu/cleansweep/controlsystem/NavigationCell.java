@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import edu.cleansweep.floor.Direction;
 import edu.cleansweep.floor.FloorNavigationProxy;
 import edu.cleansweep.floor.Location;
-import edu.cleansweep.simulator.power.PowerManager;
+import edu.cleansweep.controlsystem.power.*;
 
 import org.apache.logging.log4j.Logger; 
 import org.apache.logging.log4j.LogManager;

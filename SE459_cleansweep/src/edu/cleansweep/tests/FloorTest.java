@@ -4,7 +4,7 @@ import edu.cleansweep.floor.Direction;
 import edu.cleansweep.floor.FloorNavigationProxy;
 import edu.cleansweep.floor.FloorType;
 import edu.cleansweep.floor.Location;
-import edu.cleansweep.simulator.power.PowerManager;
+import edu.cleansweep.controlsystem.power.*;
 
 import static org.junit.Assert.*;
 import org.junit.Test;

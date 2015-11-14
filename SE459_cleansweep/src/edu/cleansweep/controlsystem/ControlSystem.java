@@ -9,7 +9,7 @@ import java.util.Stack;
 import edu.cleansweep.floor.Direction;
 import edu.cleansweep.floor.FloorNavigationProxy;
 import edu.cleansweep.floor.Location;
-import edu.cleansweep.simulator.power.PowerManager;
+import edu.cleansweep.controlsystem.power.*;
 
 /**
  * Control System is responsible for controlling navigation,
