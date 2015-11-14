@@ -18,6 +18,7 @@ class DoorCell extends AbstractCell implements Serializable {
 	DoorCell(int x, int y){
 		super(x,y);
 		_open = new Random().nextBoolean();
+		logger.debug("Creating " + (_open ? "open" : "closed")  + " door");
 	}
 	
 	@Override

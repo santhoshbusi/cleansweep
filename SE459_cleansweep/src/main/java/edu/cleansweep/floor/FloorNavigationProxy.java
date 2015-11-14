@@ -42,7 +42,7 @@ public class FloorNavigationProxy {
 		// If peakCell is a door cell it needs to get the cell immediately after it instead
 		if(peakCell.getClass() == DoorCell.class){
 			DoorCell d = (DoorCell) peakCell;
-			
+
 			// If Door is closed we need to return false else we need to get the cell directly after it
 			if(d.isObstructed())
 				return false;
