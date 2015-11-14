@@ -329,7 +329,13 @@ public class PowerManagerTest {
 			if(moves == 8){
 				assertEquals(FullyDepletedPowerState.class, powerManager.getCurrentState().getClass());
 				System.out.println("[PowerManagerTest] " + powerManager.getCurrentState());
+				// Charge
+				powerManager.charge();
+				assertEquals(FullyChargedPowerState.class, powerManager.getCurrentState().getClass());
+				System.out.println("[PowerManagerTest] " + powerManager.getCurrentState());
+				assertEquals(100.0, powerManager.getCurrentCharge(), 0.0);
 			}
+			
 		}
 	
 	}
