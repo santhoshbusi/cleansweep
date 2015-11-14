@@ -46,18 +46,40 @@ public class ControlSystem {
 	 * @param _navCell the destination Navigation Cell
 	 * @return current location after move
 	 */
-	public Location moveToCell(NavigationCell _navCell){
+	private Location moveToCell(NavigationCell _navCell){
 		for(Direction _dir: _navCell.getStepsToNavCell()){
 			currentLocation = executeMove(currentLocation, _dir);
 		}
 		return currentLocation;
 	}
 	
-	public Location moveToChargeStation(NavigationCell _navCell){
+	private Location moveToChargeStation(NavigationCell _navCell){
 		for(Direction _dir: _navCell.getStepsToChargeStation()){
 			currentLocation = executeMove(currentLocation, _dir);
 		}
 		return currentLocation;
+	}
+	
+	public int getCurrentX(){
+		return currentX;
+	}
+	
+	public int getCurrentY(){
+		return currentY;
+	}
+	
+	public boolean getEmptyMeLight(){
+		return emptyMeLight;
+	}
+	
+	public int countPotentiallyDirtyCells(){
+		int cnt = 0;
+		for(NavigationCell _navCell: discoveryMap.getNavigationCells()){
+			if(_navCell.isCleanedLastVisit()){
+				cnt++;
+			}
+		}
+		return cnt;
 	}
 	
 	/**
@@ -127,7 +149,7 @@ public class ControlSystem {
 	 * |C|1|2|3|
 	 */
 	
-	public void discoverFloor()
+	private void discoverFloor()
 	{
 		//Store Starting Location Information
 		NavigationCell homeCell = discoveryMap.addNewNavigationCell(0, 0, 0, currentLocation);
@@ -216,14 +238,15 @@ public class ControlSystem {
 	 * navigate to the next dirty location.
 	 * @return void
 	 */
-	
-	public void goToDirt()
-	{
-		for(NavigationCell _navCell: discoveryMap.getNavigationCells()){
-			if(_navCell.isCleanedLastVisit()){
-				moveToCell(_navCell);
-				moveToChargeStation(_navCell);
-				powerManager.charge();
+	private void goToDirt(){
+		
+		while(discoveryMap.dirtyCellsRemain() && emptyMeLight == false){
+			for(NavigationCell _navCell: discoveryMap.getNavigationCells()){
+				if(_navCell.isCleanedLastVisit()){
+					moveToCell(_navCell);
+					moveToChargeStation(_navCell);
+					powerManager.charge();
+				}
 			}
 		}
 	}
@@ -300,16 +323,21 @@ public class ControlSystem {
            return path;
         }
 	
-	public static void main(String [] args)
+	public void start(){
+		discoverFloor();
+		goToDirt();
+	}
+	
+	public void printCleaningCycleStats(){
+		System.out.println("Cells Discovered: " + discoveryMap.getNavigationCells().size());
+		System.out.println("Dirt Collected: " + vacuum.getDirtCount());
+		System.out.println("Empty Indicator On (?): " + emptyMeLight);
+	}
+    
+    public static void main(String [] args)
 	{
 		ControlSystem cs = new ControlSystem("TEST_A.cft");
-		cs.discoverFloor();
-		
-		while(cs.discoveryMap.dirtyCellsRemain() && cs.emptyMeLight == false){
-			cs.goToDirt();
-		}
-		
-		cs.discoveryMap.printMap();
-		cs.floorNavProxy.displayLocationOnFloorInConsole(cs.currentLocation, true);
+		cs.start();
+		cs.printCleaningCycleStats();
 	}
 }
