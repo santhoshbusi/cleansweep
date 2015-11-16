@@ -17,6 +17,14 @@ public class ControlSystemTest {
 	}
 	
 	@Test
+	public void FloorFileTest() {
+		
+		ControlSystem cs = new ControlSystem("TEST_A.cft");
+		
+		assertNotNull(cs);
+	}
+	
+	@Test
 	public void CompletionTest() {
 		
 		ControlSystem cs = new ControlSystem("TEST_A.cft");

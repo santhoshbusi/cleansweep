@@ -13,7 +13,7 @@ import edu.cleansweep.controlsystem.power.*;
 
 /**
  * Control System is responsible for controlling navigation,
- * cleaning, repository tracking, & power management
+ * cleaning, repository, & power management
  * @author pmathieu
  */
 public class ControlSystem {
@@ -23,7 +23,6 @@ public class ControlSystem {
 	private DiscoveryMap discoveryMap;
 	private static final Logger logger = LogManager.getLogger(ControlSystem.class.getName());
 
-	
 	private Location currentLocation;
 	private FloorNavigationProxy floorNavProxy;
 	private Vacuum vacuum;
@@ -31,6 +30,7 @@ public class ControlSystem {
 	private boolean emptyMeLight;
 
 	public ControlSystem(String floorFile){
+
 		currentX = 0;
 		currentY = 0;
 		
@@ -41,6 +41,7 @@ public class ControlSystem {
 		powerManager = new PowerManager();
 		emptyMeLight = false;
 	}
+	
 	/**
 	 * Used to move to a particular navigation cell
 	 * @param _navCell the destination Navigation Cell
@@ -52,7 +53,12 @@ public class ControlSystem {
 		}
 		return currentLocation;
 	}
-	
+	/**
+	 * Used to move back to the control station from a particular
+	 * navigation cell
+	 * @param _navCell the destination Navigation Cell
+	 * @return current location after move
+	 */
 	private Location moveToChargeStation(NavigationCell _navCell){
 		for(Direction _dir: _navCell.getStepsToChargeStation()){
 			currentLocation = executeMove(currentLocation, _dir);
@@ -71,7 +77,11 @@ public class ControlSystem {
 	public boolean getEmptyMeLight(){
 		return emptyMeLight;
 	}
-	
+	/**
+	 * Counts the number of cells where "cleaned last visit"
+	 * is equal to true.
+	 * @return number of potentially dirt cells
+	 */
 	public int countPotentiallyDirtyCells(){
 		int cnt = 0;
 		for(NavigationCell _navCell: discoveryMap.getNavigationCells()){
@@ -119,6 +129,10 @@ public class ControlSystem {
 		return newLocation;
 	}
 	
+	/**
+	 * Checks to see if a particular Navigation Cell is clean.
+	 * @param _navCell of the cell to check
+	 */
 	private void checkClean(NavigationCell _navCell){
 		if(!_navCell.getLocationData().isClean()){
 			 boolean cleaned = vacuum.doClean(_navCell.getLocationData());
@@ -322,7 +336,10 @@ public class ControlSystem {
            }
            return path;
         }
-	
+	/**
+		This Method starts the clean sweeper
+	 * @return void
+	 */
 	public void start(){
 		discoverFloor();
 		goToDirt();
@@ -332,12 +349,5 @@ public class ControlSystem {
 		System.out.println("Cells Discovered: " + discoveryMap.getNavigationCells().size());
 		System.out.println("Dirt Collected: " + vacuum.getDirtCount());
 		System.out.println("Empty Indicator On (?): " + emptyMeLight);
-	}
-    
-    public static void main(String [] args)
-	{
-		ControlSystem cs = new ControlSystem("TEST_A.cft");
-		cs.start();
-		cs.printCleaningCycleStats();
 	}
 }
